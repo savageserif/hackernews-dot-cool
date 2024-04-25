@@ -3,14 +3,21 @@
     <PageColumnControls>
       <template #center>
         <span>
-          <span>ia.net</span>
-          <span class="text-gray-500">/topics/ia-writer-in-paper</span>
+          <span>
+            {{ url.hostname }}
+          </span>
+          <span
+            v-if="url.pathname !== '/'"
+            class="text-gray-500"
+          >
+            {{ url.pathname }}
+          </span>
         </span>
         <BaseButton
           icon="external"
           small
           title="Open in External Tab"
-          @click="openExternalPage()"
+          @click="openExternalLink()"
         />
       </template>
     </PageColumnControls>
@@ -18,24 +25,25 @@
       <object
         ref="objectElement"
         class="h-full w-full"
-        :data="currentUrl"
+        :data="url.href"
       />
     </PageColumnBody>
   </PageColumn>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import BaseButton from '@/components/BaseButton.vue';
 
-const currentUrl = ref('https://ia.net/topics/ia-writer-in-paper');
+const link = ref('https://ia.net/topics/ia-writer-in-paper');
+const url = computed(() => new URL(link.value));
 
-function openExternalPage() {
-  window.open(currentUrl.value, '_blank');
+function openExternalLink() {
+  window.open(url.value.href, '_blank');
 }
 
 const objectElement = ref<Element | null>(null);

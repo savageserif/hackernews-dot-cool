@@ -51,6 +51,7 @@ export default {
     extend: {
       spacing: {
         90: '22.5rem', // 360px
+        150: '37.5rem', // 600px
       },
       transitionDuration: {
         200: '200ms',

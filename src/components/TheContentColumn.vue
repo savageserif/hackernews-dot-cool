@@ -1,6 +1,6 @@
 <template>
   <PageColumn>
-    <PageColumnControls>
+    <PageColumnControls :divider="!view.secondaryColumnVisible ? 'right' : undefined">
       <template #center>
         <span>
           <span>
@@ -20,6 +20,16 @@
           @click="openExternalLink()"
         />
       </template>
+      <template #right>
+        <BaseButton
+          v-show="!view.secondaryColumnVisible"
+          icon="comment"
+          title="245 Comments"
+          @click="view.secondaryColumnVisible = true"
+        >
+          245
+        </BaseButton>
+      </template>
     </PageColumnControls>
     <PageColumnBody>
       <object
@@ -38,6 +48,9 @@ import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import BaseButton from '@/components/BaseButton.vue';
+import { useViewStore } from '@/stores/ViewStore';
+
+const view = useViewStore();
 
 const link = ref('https://ia.net/topics/ia-writer-in-paper');
 const url = computed(() => new URL(link.value));

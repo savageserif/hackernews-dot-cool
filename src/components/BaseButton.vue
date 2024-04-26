@@ -5,7 +5,9 @@
       small ? 'h-6 p-0.5' : 'h-8 p-1',
       $slots.default && !icon ? 'px-2' : '',
       $slots.default && icon ? 'pr-2' : '',
-      bordered ? 'border border-gray-200' : '',
+      bordered
+        ? 'rounded-[0.15625rem] border border-gray-200 hover:border-gray-700/15 active:border-gray-700/15'
+        : '',
     ]"
   >
     <BaseLabel

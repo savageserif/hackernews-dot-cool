@@ -32,22 +32,18 @@
       </template>
     </PageColumnControls>
     <PageColumnBody>
-      <object
-        ref="objectElement"
-        class="h-full w-full"
-        :data="url.href"
-      />
+      <TheExternalContent :url="url.href" />
     </PageColumnBody>
   </PageColumn>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-
+import { ref, computed } from 'vue';
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import BaseButton from '@/components/BaseButton.vue';
+import TheExternalContent from '@/components/TheExternalContent.vue';
 import { useViewStore } from '@/stores/ViewStore';
 
 const view = useViewStore();
@@ -58,16 +54,4 @@ const url = computed(() => new URL(link.value));
 function openExternalLink() {
   window.open(url.value.href, '_blank');
 }
-
-const objectElement = ref<Element | null>(null);
-
-onMounted(() => {
-  objectElement.value?.addEventListener('load', () => {
-    console.log('object loaded');
-  });
-
-  objectElement.value?.addEventListener('error', () => {
-    console.log('error loading object');
-  });
-});
 </script>

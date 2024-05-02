@@ -1,5 +1,7 @@
 <template>
-  <main class="flex h-full select-none gap-px bg-gray-200 font-sans text-base text-gray-950">
+  <main
+    class="flex h-full select-none gap-px bg-gray-200 font-sans text-base font-normal text-gray-950 antialiased"
+  >
     <ThePostsColumn class="flex-none basis-90" />
     <TheContentColumn class="min-w-90 flex-1" />
     <TheCommentsColumn

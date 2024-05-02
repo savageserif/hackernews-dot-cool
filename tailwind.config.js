@@ -3,14 +3,27 @@ export default {
   content: ['./src/**/*.vue'],
   theme: {
     fontFamily: {
-      sans: ['"Source Sans 3 VF"', 'sans-serif'],
-      'serif-text': ['"Nice Text"', 'serif'],
-      'serif-micro': ['"Nice Micro"', 'serif'],
+      sans: '"Source Sans 3 Var", sans-serif',
+      'serif-text': [
+        '"Nice Var", serif',
+        {
+          fontVariationSettings: '',
+        },
+      ],
+      'serif-micro': [
+        '"Nice Var", serif',
+        {
+          fontVariationSettings: '',
+        },
+      ],
     },
     fontSize: {
       base: ['1.03125rem', '1.125rem'],
       'base-serif': ['1rem', '1.1875rem'],
       small: '0.90625rem',
+    },
+    fontWeight: {
+      normal: '450',
     },
     lineHeight: {
       base: '1.125rem',

@@ -1,7 +1,10 @@
 <template>
   <PageColumn>
     <PageColumnControls>
-      <template #left>
+      <template
+        #left
+        v-if="view.secondaryColumnExpandable"
+      >
         <BaseButton
           v-if="view.secondaryColumnSize === 'collapsed'"
           icon="column-expand"

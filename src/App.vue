@@ -7,7 +7,12 @@
     <TheCommentsColumn
       v-show="view.secondaryColumnVisible"
       class="flex-none"
-      :class="[view.secondaryColumnSize === 'collapsed' ? 'basis-90' : 'basis-150']"
+      :style="{
+        flexBasis:
+          view.secondaryColumnExpandable && view.secondaryColumnSize === 'expanded'
+            ? view.secondaryColumnExpandedWidth
+            : '22.5rem',
+      }"
     />
   </main>
 </template>

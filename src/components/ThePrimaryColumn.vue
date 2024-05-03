@@ -1,16 +1,16 @@
 <template>
   <PageColumn>
-    <PageColumnControls :divider="!view.secondaryColumnVisible ? 'right' : undefined">
+    <PageColumnControls :divider="!view.secondaryColumn.open ? 'right' : undefined">
       <template #center>
         <span>
           <span>
-            {{ url.hostname }}
+            {{ content.currentUrl.hostname }}
           </span>
           <span
-            v-if="url.pathname !== '/'"
+            v-if="content.currentUrl.pathname !== '/'"
             class="text-gray-500"
           >
-            {{ url.pathname }}
+            {{ content.currentUrl.pathname }}
           </span>
         </span>
         <BaseButton
@@ -22,36 +22,34 @@
       </template>
       <template #right>
         <BaseButton
-          v-show="!view.secondaryColumnVisible"
+          v-show="!view.secondaryColumn.open"
           icon="comment"
-          title="245 Comments"
-          @click="view.secondaryColumnVisible = true"
+          :title="content.currentItem.descendants + ' Comments'"
+          @click="view.secondaryColumn.actions.open()"
         >
-          245
+          {{ content.currentItem.descendants }}
         </BaseButton>
       </template>
     </PageColumnControls>
     <PageColumnBody>
-      <TheExternalContent :url="url.href" />
+      <TheLinkView :url="content.currentUrl.href" />
     </PageColumnBody>
   </PageColumn>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import BaseButton from '@/components/BaseButton.vue';
-import TheExternalContent from '@/components/TheExternalContent.vue';
+import TheLinkView from '@/components/TheLinkView.vue';
 import { useViewStore } from '@/stores/ViewStore';
+import { useContentStore } from '@/stores/ContentStore';
 
 const view = useViewStore();
-
-const link = ref('https://ia.net/topics/ia-writer-in-paper');
-const url = computed(() => new URL(link.value));
+const content = useContentStore();
 
 function openExternalLink() {
-  window.open(url.value.href, '_blank');
+  window.open(content.currentUrl.href, '_blank');
 }
 </script>

@@ -3,27 +3,27 @@
     <PageColumnControls>
       <template
         #left
-        v-if="view.secondaryColumnExpandable"
+        v-if="view.secondaryColumn.expandable"
       >
         <BaseButton
-          v-if="view.secondaryColumnSize === 'collapsed'"
+          v-show="!view.secondaryColumn.expanded"
           icon="column-expand"
           title="Expand Comments"
-          @click="view.secondaryColumnSize = 'expanded'"
+          @click="view.secondaryColumn.actions.expand()"
         />
         <BaseButton
-          v-else
+          v-show="view.secondaryColumn.expanded"
           icon="column-collapse"
           title="Collapse Comments"
-          @click="view.secondaryColumnSize = 'collapsed'"
+          @click="view.secondaryColumn.actions.collapse()"
         />
       </template>
-      <template #center>245 Comments</template>
+      <template #center>{{ content.currentItem.descendants }} Comments</template>
       <template #right>
         <BaseButton
           icon="close"
           title="Close Comments"
-          @click="view.secondaryColumnVisible = false"
+          @click="view.secondaryColumn.actions.close()"
         />
       </template>
     </PageColumnControls>
@@ -37,6 +37,8 @@ import PageColumnControls from '@/components/PageColumnControls.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import { useViewStore } from '@/stores/ViewStore';
+import { useContentStore } from '@/stores/ContentStore';
 
 const view = useViewStore();
+const content = useContentStore();
 </script>

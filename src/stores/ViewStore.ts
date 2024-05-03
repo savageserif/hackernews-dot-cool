@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue';
+import type { ComputedRef } from 'vue';
 import { defineStore } from 'pinia';
 import { useWindowSize } from '@vueuse/core';
 
@@ -11,21 +12,38 @@ export const useViewStore = defineStore('view', () => {
     else return 3;
   });
 
-  // secondary column expandable once it has at least 480px of space
-  const secondaryColumnExpandable = computed(() => width.value >= 1202);
-  // flexible width of expanded secondary column up to 600px (150tw / 37.5rem)
-  const secondaryColumnExpandedWidth = computed(
-    () => Math.min(width.value - 722, 600) / 16 + 'rem'
-  );
-
-  const secondaryColumnVisible = ref(true);
-  const secondaryColumnSize = ref<'collapsed' | 'expanded'>('collapsed');
+  const secondaryColumn = ref<{
+    open: boolean;
+    expanded: boolean;
+    expandable: ComputedRef<boolean>;
+    expandedWidth: ComputedRef<string>;
+    actions: {
+      [key: string]: () => void;
+    };
+  }>({
+    open: true,
+    expanded: false,
+    expandable: computed(() => width.value >= 1202), // secondary column expandable once it has at least 480px of space
+    expandedWidth: computed(() => Math.min(width.value - 722, 600) / 16 + 'rem'), // flexible width of expanded secondary column up to 600px (150tw / 37.5rem)
+    actions: {
+      open: () => {
+        secondaryColumn.value.open = true;
+      },
+      close: () => {
+        secondaryColumn.value.open = false;
+      },
+      expand: () => {
+        secondaryColumn.value.expanded = true;
+      },
+      collapse: () => {
+        secondaryColumn.value.expanded = false;
+      },
+    },
+  });
 
   return {
+    width,
     availableColumns,
-    secondaryColumnExpandable,
-    secondaryColumnExpandedWidth,
-    secondaryColumnVisible,
-    secondaryColumnSize,
+    secondaryColumn,
   };
 });

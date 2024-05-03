@@ -9,7 +9,7 @@
     v-show="error"
     class="flex h-full flex-col items-center justify-center gap-4 bg-gray-100"
   >
-    <div class="text-balance px-8 text-center leading-paragraph-narrow text-gray-500">
+    <div class="max-w-150 text-balance px-8 text-center leading-paragraph-narrow text-gray-500">
       Unfortunately, this website does not allow an inline preview. You can open the link externally
       instead.
     </div>

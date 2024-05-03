@@ -2,6 +2,7 @@
   <div
     class="pl-6 pr-3"
     :class="[
+      viewed && !active ? 'text-gray-600' : '',
       active ? 'shadow-border-y bg-orange-200 text-orange-950 shadow-orange-200' : 'cursor-pointer',
     ]"
   >
@@ -10,12 +11,17 @@
       :class="[!active ? 'shadow-border-b shadow-gray-200' : '']"
     >
       <div class="font-serif space-y-0.5 text-base-serif">
-        <h2 class="font-serif-heading font-bold">{{ item.title }}</h2>
+        <h2 class="font-serif-heading font-bold">
+          {{ item.title }}
+        </h2>
         <div>
           {{ item.url?.hostname }}
           <span
             class="italic"
-            :class="[active ? 'text-orange-950/60' : 'text-gray-500']"
+            :class="[
+              viewed && !active ? 'text-gray-500/70' : '',
+              active ? 'text-orange-950/60' : 'text-gray-500',
+            ]"
           >
             via {{ item.by }}
           </span>
@@ -58,6 +64,7 @@ import type { HackerNewsItem } from '@/types';
 
 const props = defineProps<{
   item: HackerNewsItem;
+  viewed?: boolean;
   active?: boolean;
 }>();
 </script>

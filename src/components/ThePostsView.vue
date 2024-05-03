@@ -5,7 +5,10 @@
       :item="content.currentItem"
       active
     />
-    <PostItem :item="content.currentItem" />
+    <PostItem
+      :item="content.currentItem"
+      viewed
+    />
     <PostItem :item="content.currentItem" />
   </div>
 </template>

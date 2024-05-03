@@ -1,8 +1,7 @@
 <template>
   <component
     :is="iconComponent"
-    class="text-gray-500"
-    :class="[small ? 'h-5 w-5' : 'h-6 w-6']"
+    :class="[small ? 'h-5 w-5' : 'h-6 w-6', inheritColor ? 'text-inherit' : 'text-gray-500']"
   />
 </template>
 
@@ -12,6 +11,7 @@ import { computed, defineAsyncComponent } from 'vue';
 const props = defineProps<{
   name: string;
   small?: boolean;
+  inheritColor?: boolean;
 }>();
 
 const iconComponent = computed(() => {

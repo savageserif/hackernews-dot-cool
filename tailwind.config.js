@@ -4,29 +4,18 @@ export default {
   theme: {
     fontFamily: {
       sans: '"Source Sans 3 Var", sans-serif',
-      'serif-text': [
-        '"Nice Var", serif',
-        {
-          fontVariationSettings: '',
-        },
-      ],
-      'serif-micro': [
-        '"Nice Var", serif',
-        {
-          fontVariationSettings: '',
-        },
-      ],
+      serif: ['"Nice Var", serif', { fontVariationSettings: '"opsz" 6' }],
+      'serif-heading': ['"Nice Var", serif', { fontVariationSettings: '"opsz" 12' }],
     },
     fontSize: {
-      base: ['1.03125rem', '1.125rem'],
-      'base-serif': ['1rem', '1.1875rem'],
+      base: ['1.03125rem', { lineHeight: '1.125rem', fontWeight: '450' }],
+      'base-serif': ['1rem', { lineHeight: '1.1875rem', fontWeight: '400' }],
       small: '0.90625rem',
     },
     fontWeight: {
-      normal: '450',
+      bold: '700',
     },
     lineHeight: {
-      base: '1.125rem',
       'paragraph-narrow': '1.3125rem',
       'paragraph-wide': '1.375rem',
     },
@@ -40,31 +29,35 @@ export default {
         200: '#DBDDE6', // borders
         300: '#C7CAD6',
         400: '#AFB3C0', // indentation
-        500: '#9598A4', // icons
+        500: '#9598A4', // secondary
         600: '#82879C',
         700: '#707794',
         800: '#5C6484',
         900: '#3E4560',
-        950: '#2A2F46', // text
+        950: '#2A2F46', // primary
       },
       orange: {
         50: '#FFF9F5',
         100: '#FFF3EB',
-        200: '#FFE3D1',
+        200: '#FFE3D1', // active bg
         300: '#FFD4B8',
         400: '#FFC299',
         500: '#FFAF7A',
         600: '#FF944D',
         700: '#FF7519', // accent
-        800: '#E05A00',
-        900: '#9E3F00',
-        950: '#752F00',
+        800: '#DB5800',
+        900: '#8F3900',
+        950: '#522100', // primary & secondary (60% opacity)
       },
     },
     extend: {
       spacing: {
         90: '22.5rem', // 360px
         150: '37.5rem', // 600px
+      },
+      boxShadow: {
+        'border-y': '0 0.0625rem, 0 -0.0625rem',
+        'border-b': '0 0.0625rem',
       },
       transitionDuration: {
         200: '200ms',

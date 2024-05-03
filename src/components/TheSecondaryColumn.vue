@@ -3,42 +3,60 @@
     <PageColumnControls>
       <template
         #left
-        v-if="view.secondaryColumn.expandable"
+        v-if="view.secondaryColumn.isExpandable"
       >
         <BaseButton
-          v-show="!view.secondaryColumn.expanded"
+          v-show="!view.secondaryColumn.isExpanded"
           icon="column-expand"
-          title="Expand Comments"
+          :title="`Expand ${columnName}`"
           @click="view.secondaryColumn.actions.expand()"
         />
         <BaseButton
-          v-show="view.secondaryColumn.expanded"
+          v-show="view.secondaryColumn.isExpanded"
           icon="column-collapse"
-          title="Collapse Comments"
+          :title="`Collapse ${columnName}`"
           @click="view.secondaryColumn.actions.collapse()"
         />
       </template>
-      <template #center>{{ content.currentItem.descendants }} Comments</template>
+      <template #center>
+        <template v-if="settings.prioritizedView === 'link'">
+          {{ content.currentItem.descendants }} Comments
+        </template>
+        <TheLinkColumnTitle v-else />
+      </template>
       <template #right>
         <BaseButton
           icon="close"
-          title="Close Comments"
+          :title="`Close ${columnName}`"
           @click="view.secondaryColumn.actions.close()"
         />
       </template>
     </PageColumnControls>
-    <PageColumnBody></PageColumnBody>
+    <PageColumnBody>
+      <TheCommentsView v-if="settings.prioritizedView === 'link'" />
+      <TheLinkView v-else />
+    </PageColumnBody>
   </PageColumn>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import BaseButton from '@/components/BaseButton.vue';
+import TheLinkColumnTitle from '@/components/TheLinkColumnTitle.vue';
+import TheLinkView from '@/components/TheLinkView.vue';
+import TheCommentsView from '@/components/TheCommentsView.vue';
 import { useViewStore } from '@/stores/ViewStore';
+import { useSettingsStore } from '@/stores/SettingsStore';
 import { useContentStore } from '@/stores/ContentStore';
 
 const view = useViewStore();
+const settings = useSettingsStore();
 const content = useContentStore();
+
+const columnName = computed(() =>
+  settings.prioritizedView === 'link' ? 'Comments' : 'Link Preview'
+);
 </script>

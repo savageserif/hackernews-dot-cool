@@ -3,7 +3,7 @@
     v-show="!error"
     ref="objectElement"
     class="h-full w-full"
-    :data="url"
+    :data="content.currentItem.url?.href"
   />
   <div
     v-show="error"
@@ -26,16 +26,15 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue';
 import BaseButton from '@/components/BaseButton.vue';
+import { useContentStore } from '@/stores/ContentStore';
 
-const props = defineProps<{
-  url?: string;
-}>();
+const content = useContentStore();
 
 const objectElement = ref<Element | null>(null);
 const error = ref(false);
 
 watch(
-  () => props.url,
+  () => content.currentItem,
   () => {
     error.value = false;
   }
@@ -48,6 +47,6 @@ onMounted(() => {
 });
 
 function openExternalLink() {
-  window.open(props.url, '_blank');
+  window.open(content.currentItem.url?.href, '_blank');
 }
 </script>

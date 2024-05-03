@@ -13,37 +13,40 @@ export const useViewStore = defineStore('view', () => {
   });
 
   const secondaryColumn = ref<{
-    open: boolean;
-    expanded: boolean;
-    expandable: ComputedRef<boolean>;
-    expandedWidth: ComputedRef<string>;
+    isOpen: boolean;
+    isExpanded: boolean;
+    isExpandable: ComputedRef<boolean>;
     actions: {
       [key: string]: () => void;
     };
   }>({
-    open: true,
-    expanded: false,
-    expandable: computed(() => width.value >= 1202), // secondary column expandable once it has at least 480px of space
-    expandedWidth: computed(() => Math.min(width.value - 722, 600) / 16 + 'rem'), // flexible width of expanded secondary column up to 600px (150tw / 37.5rem)
+    isOpen: true,
+    isExpanded: false,
+    isExpandable: computed(() => width.value >= 1202), // secondary column expandable once it has at least 480px of space
     actions: {
       open: () => {
-        secondaryColumn.value.open = true;
+        secondaryColumn.value.isOpen = true;
       },
       close: () => {
-        secondaryColumn.value.open = false;
+        secondaryColumn.value.isOpen = false;
       },
       expand: () => {
-        secondaryColumn.value.expanded = true;
+        secondaryColumn.value.isExpanded = true;
       },
       collapse: () => {
-        secondaryColumn.value.expanded = false;
+        secondaryColumn.value.isExpanded = false;
       },
     },
+  });
+
+  const commentsColumn = ref({
+    maxWidth: computed(() => Math.min(width.value - 722, 600) / 16 + 'rem'), // flexible width of expanded comments column up to 600px
   });
 
   return {
     width,
     availableColumns,
     secondaryColumn,
+    commentsColumn,
   };
 });

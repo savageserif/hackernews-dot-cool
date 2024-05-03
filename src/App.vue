@@ -5,15 +5,31 @@
     <ThePostsColumn :class="[view.availableColumns < 2 ? 'flex-1' : 'flex-none basis-90']" />
     <ThePrimaryColumn
       v-show="view.availableColumns >= 2"
-      class="min-w-90 flex-1"
+      class="min-w-90"
+      :class="[
+        settings.prioritizedView === 'comments' &&
+        view.availableColumns >= 3 &&
+        view.secondaryColumn.isExpandable &&
+        view.secondaryColumn.isOpen
+          ? 'flex-none'
+          : 'flex-1',
+      ]"
+      :style="{
+        flexBasis: !view.secondaryColumn.isExpanded ? view.commentsColumn.maxWidth : '22.5rem',
+      }"
     />
     <TheSecondaryColumn
-      v-show="view.availableColumns >= 3 && view.secondaryColumn.open"
-      class="flex-none"
+      v-show="view.availableColumns >= 3 && view.secondaryColumn.isOpen"
+      class="min-w-90"
+      :class="[
+        settings.prioritizedView === 'link' || !view.secondaryColumn.isExpandable
+          ? 'flex-none'
+          : 'flex-1',
+      ]"
       :style="{
         flexBasis:
-          view.secondaryColumn.expandable && view.secondaryColumn.expanded
-            ? view.secondaryColumn.expandedWidth
+          view.secondaryColumn.isExpandable && view.secondaryColumn.isExpanded
+            ? view.commentsColumn.maxWidth
             : '22.5rem',
       }"
     />
@@ -25,8 +41,10 @@ import ThePostsColumn from '@/components/ThePostsColumn.vue';
 import ThePrimaryColumn from '@/components/ThePrimaryColumn.vue';
 import TheSecondaryColumn from '@/components/TheSecondaryColumn.vue';
 import { useViewStore } from '@/stores/ViewStore';
+import { useSettingsStore } from '@/stores/SettingsStore';
 
 const view = useViewStore();
+const settings = useSettingsStore();
 </script>
 
 <style>

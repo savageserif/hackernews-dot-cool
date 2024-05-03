@@ -9,7 +9,7 @@ export interface HackerNewsItem {
   parent?: number;
   poll?: number;
   kids?: number[];
-  url?: string;
+  url?: URL;
   score?: number;
   title?: string;
   parts?: number[];

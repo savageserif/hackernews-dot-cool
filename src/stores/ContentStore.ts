@@ -16,13 +16,10 @@ export const useContentStore = defineStore('content', () => {
     time: 1702054197,
     title: 'iA Writer in Paper',
     type: 'story',
-    url: 'https://ia.net/topics/ia-writer-in-paper',
+    url: new URL('https://ia.net/topics/ia-writer-in-paper'),
   });
-
-  const currentUrl = computed(() => new URL(currentItem.value.url!));
 
   return {
     currentItem,
-    currentUrl,
   };
 });

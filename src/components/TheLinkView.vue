@@ -1,4 +1,4 @@
-<template>
+<template v-if="url">
   <object
     v-show="!error"
     ref="objectElement"
@@ -28,7 +28,7 @@ import { ref, watch, onMounted } from 'vue';
 import BaseButton from '@/components/BaseButton.vue';
 
 const props = defineProps<{
-  url: string;
+  url?: string;
 }>();
 
 const objectElement = ref<Element | null>(null);

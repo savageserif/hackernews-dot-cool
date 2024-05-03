@@ -1,16 +1,18 @@
 <template>
   <PageColumn>
-    <PageColumnControls :divider="!view.secondaryColumn.open ? 'right' : undefined">
+    <PageColumnControls
+      :divider="view.availableColumns >= 3 && !view.secondaryColumn.open ? 'right' : undefined"
+    >
       <template #center>
         <span>
           <span>
-            {{ content.currentUrl.hostname }}
+            {{ content.currentItem.url?.hostname }}
           </span>
           <span
-            v-if="content.currentUrl.pathname !== '/'"
+            v-if="content.currentItem.url?.pathname !== '/'"
             class="text-gray-500"
           >
-            {{ content.currentUrl.pathname }}
+            {{ content.currentItem.url?.pathname }}
           </span>
         </span>
         <BaseButton
@@ -22,7 +24,7 @@
       </template>
       <template #right>
         <BaseButton
-          v-show="!view.secondaryColumn.open"
+          v-show="view.availableColumns >= 3 && !view.secondaryColumn.open"
           icon="comment"
           :title="content.currentItem.descendants + ' Comments'"
           @click="view.secondaryColumn.actions.open()"
@@ -32,7 +34,7 @@
       </template>
     </PageColumnControls>
     <PageColumnBody>
-      <TheLinkView :url="content.currentUrl.href" />
+      <TheLinkView :url="content.currentItem.url?.href" />
     </PageColumnBody>
   </PageColumn>
 </template>
@@ -50,6 +52,6 @@ const view = useViewStore();
 const content = useContentStore();
 
 function openExternalLink() {
-  window.open(content.currentUrl.href, '_blank');
+  window.open(content.currentItem.url?.href, '_blank');
 }
 </script>

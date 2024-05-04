@@ -5,26 +5,24 @@
     >
       <template #center>
         <TheLinkColumnTitle v-if="settings.prioritizedView === 'link'" />
-        <template v-else>{{ content.currentItem.descendants }} Comments</template>
+        <template v-else>{{ content.currentPostItem?.descendants }} Comments</template>
       </template>
       <template #right>
         <BaseButton
-          v-if="settings.prioritizedView === 'link'"
           v-show="view.availableColumns >= 3 && !view.secondaryColumn.isOpen"
-          icon="comment"
-          :title="content.currentItem.descendants + ' Comments'"
+          :icon="settings.prioritizedView === 'link' ? 'comment' : 'link'"
+          :title="
+            settings.prioritizedView === 'link'
+              ? `${content.currentPostItem?.descendants} Comments`
+              : `Preview of ${content.currentPostItem?.url?.hostname}`
+          "
           @click="view.secondaryColumn.actions.open()"
         >
-          {{ content.currentItem.descendants }}
-        </BaseButton>
-        <BaseButton
-          v-else
-          v-show="view.availableColumns >= 3 && !view.secondaryColumn.isOpen"
-          icon="link"
-          :title="`Preview of ${content.currentItem.url?.hostname}`"
-          @click="view.secondaryColumn.actions.open()"
-        >
-          {{ content.currentItem.url?.hostname }}
+          {{
+            settings.prioritizedView === 'link'
+              ? content.currentPostItem?.descendants
+              : content.currentPostItem?.url?.hostname
+          }}
         </BaseButton>
       </template>
     </PageColumnControls>
@@ -50,8 +48,4 @@ import { useContentStore } from '@/stores/ContentStore';
 const view = useViewStore();
 const settings = useSettingsStore();
 const content = useContentStore();
-
-function openExternalLink() {
-  window.open(content.currentItem.url?.href, '_blank');
-}
 </script>

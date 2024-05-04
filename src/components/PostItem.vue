@@ -23,7 +23,7 @@
               active ? 'text-orange-950/60' : 'text-gray-500',
             ]"
           >
-            via {{ item.by }}
+            via&nbsp;{{ item.by }}
           </span>
         </div>
       </div>
@@ -46,6 +46,7 @@
           {{ item.time }}
         </BaseLabel>
         <BaseLabel
+          v-if="item.descendants !== undefined"
           class="ml-auto"
           icon="comment"
           small
@@ -59,8 +60,8 @@
 </template>
 
 <script setup lang="ts">
-import BaseLabel from '@/components/BaseLabel.vue';
 import type { HackerNewsItem } from '@/types';
+import BaseLabel from '@/components/BaseLabel.vue';
 
 const props = defineProps<{
   item: HackerNewsItem;

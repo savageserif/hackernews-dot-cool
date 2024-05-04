@@ -1,15 +1,12 @@
 <template>
   <div class="space-y-px">
-    <PostItem :item="content.currentItem" />
     <PostItem
-      :item="content.currentItem"
-      active
+      v-for="(postItem, index) in content.currentCategoryPostItems?.items"
+      :key="index"
+      :item="postItem"
+      :active="postItem.id === content.currentPostItem?.id"
+      @click="content.setCurrentPostItem(postItem)"
     />
-    <PostItem
-      :item="content.currentItem"
-      viewed
-    />
-    <PostItem :item="content.currentItem" />
   </div>
 </template>
 

@@ -20,7 +20,7 @@
       </template>
       <template #center>
         <template v-if="settings.prioritizedView === 'link'">
-          {{ content.currentItem.descendants }} Comments
+          {{ content.currentPostItem?.descendants }} Comments
         </template>
         <TheLinkColumnTitle v-else />
       </template>

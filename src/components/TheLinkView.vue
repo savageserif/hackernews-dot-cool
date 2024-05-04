@@ -3,7 +3,7 @@
     v-show="!error"
     ref="objectElement"
     class="h-full w-full"
-    :data="content.currentItem.url?.href"
+    :data="content.currentPostItem?.url?.href"
   />
   <div
     v-show="error"
@@ -34,7 +34,7 @@ const objectElement = ref<Element | null>(null);
 const error = ref(false);
 
 watch(
-  () => content.currentItem,
+  () => content.currentPostItem,
   () => {
     error.value = false;
   }
@@ -47,6 +47,6 @@ onMounted(() => {
 });
 
 function openExternalLink() {
-  window.open(content.currentItem.url?.href, '_blank');
+  window.open(content.currentPostItem?.url?.href, '_blank');
 }
 </script>

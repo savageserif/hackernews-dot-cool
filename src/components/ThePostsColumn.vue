@@ -8,12 +8,13 @@
         />
       </template>
       <template #center>
-        <BaseButton>Top Stories</BaseButton>
+        <BaseButton>{{ content.currentCategoryName }}</BaseButton>
       </template>
       <template #right>
         <BaseButton
           icon="refresh"
-          @click="togglePrioritizedView()"
+          :title="`Refresh ${content.currentCategoryName}`"
+          @click="content.fetchPostIds()"
         />
       </template>
     </PageColumnControls>
@@ -22,10 +23,13 @@
     </PageColumnBody>
     <PageColumnControls>
       <template #center>
-        <span class="mb-px text-small text-gray-500">Last updated 4 minutes ago</span>
+        <span class="mb-px text-small text-gray-500">Last refreshed just now</span>
       </template>
       <template #right>
-        <BaseButton icon="settings" />
+        <BaseButton
+          icon="settings"
+          @click="togglePrioritizedView()"
+        />
       </template>
     </PageColumnControls>
   </PageColumn>
@@ -40,8 +44,11 @@ import BaseButton from '@/components/BaseButton.vue';
 import ThePostsView from '@/components/ThePostsView.vue';
 import logoAsset from '@/assets/logo.png';
 import { useSettingsStore } from '@/stores/SettingsStore';
+import { useContentStore } from '@/stores/ContentStore';
 
 const settings = useSettingsStore();
+const content = useContentStore();
+
 const { prioritizedView } = storeToRefs(settings);
 
 function togglePrioritizedView() {

@@ -1,13 +1,13 @@
 <template>
   <span>
     <span>
-      {{ content.currentItem.url?.hostname }}
+      {{ content.currentPostItem?.url?.hostname }}
     </span>
     <span
-      v-if="content.currentItem.url?.pathname !== '/'"
+      v-if="content.currentPostItem?.url?.pathname !== '/'"
       class="text-gray-500"
     >
-      {{ content.currentItem.url?.pathname }}
+      {{ content.currentPostItem?.url?.pathname }}
     </span>
   </span>
   <BaseButton
@@ -25,6 +25,6 @@ import { useContentStore } from '@/stores/ContentStore';
 const content = useContentStore();
 
 function openExternalLink() {
-  window.open(content.currentItem.url?.href, '_blank');
+  window.open(content.currentPostItem?.url?.href, '_blank');
 }
 </script>

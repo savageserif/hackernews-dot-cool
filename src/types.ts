@@ -1,4 +1,6 @@
-export interface HackerNewsItem {
+export type HackerNewsCategory = 'top' | 'new' | 'best' | 'ask' | 'show';
+
+export interface HackerNewsItemData {
   id: number;
   deleted?: boolean;
   type?: string;
@@ -9,11 +11,15 @@ export interface HackerNewsItem {
   parent?: number;
   poll?: number;
   kids?: number[];
-  url?: URL;
+  url?: string;
   score?: number;
   title?: string;
   parts?: number[];
   descendants?: number;
+}
+
+export interface HackerNewsItem extends Omit<HackerNewsItemData, 'url'> {
+  url?: URL;
 }
 
 export interface HackerNewsUser {

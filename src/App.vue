@@ -35,6 +35,10 @@
         }"
       />
     </template>
+    <TheEmptyView
+      v-else
+      v-show="view.availableColumns >= 2"
+    />
   </main>
 </template>
 
@@ -42,6 +46,7 @@
 import ThePostsColumn from '@/components/ThePostsColumn.vue';
 import ThePrimaryColumn from '@/components/ThePrimaryColumn.vue';
 import TheSecondaryColumn from '@/components/TheSecondaryColumn.vue';
+import TheEmptyView from '@/components/TheEmptyView.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useSettingsStore } from '@/stores/SettingsStore';
 import { useContentStore } from '@/stores/ContentStore';

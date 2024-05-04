@@ -62,6 +62,21 @@ export default {
       transitionDuration: {
         200: '200ms',
       },
+      animation: {
+        step: 'step 0.75s infinite',
+      },
+      keyframes: {
+        step: {
+          '0%, 12.4999%': { transform: 'rotate(0deg)' },
+          '12.5%, 24.9999%': { transform: 'rotate(45deg)' },
+          '25%, 37.4999%': { transform: 'rotate(90deg)' },
+          '37.5%, 49.9999%': { transform: 'rotate(135deg)' },
+          '50%, 62.4999%': { transform: 'rotate(180deg)' },
+          '62.5%, 74.9999%': { transform: 'rotate(225deg)' },
+          '75%, 87.4999%': { transform: 'rotate(270deg)' },
+          '87.5%, 100%': { transform: 'rotate(315deg)' },
+        },
+      },
     },
   },
   plugins: [],

@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent } from 'vue';
+import { shallowRef, watchEffect } from 'vue';
 
 const props = defineProps<{
   name: string;
@@ -14,9 +14,11 @@ const props = defineProps<{
   inheritColor?: boolean;
 }>();
 
-const iconComponent = computed(() => {
-  return defineAsyncComponent(
-    () => import(`@/assets/icons/${props.name + (props.small ? '.small' : '')}.svg`)
-  );
+const iconComponent = shallowRef();
+
+watchEffect(() => {
+  import(`@/assets/icons/${props.name + (props.small ? '.small' : '')}.svg`).then((imported) => {
+    iconComponent.value = imported.default;
+  });
 });
 </script>

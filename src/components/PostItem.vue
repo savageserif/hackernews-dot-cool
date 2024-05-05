@@ -34,6 +34,7 @@
         :class="[active ? 'text-orange-950/60' : 'text-gray-500']"
       >
         <BaseLabel
+          v-if="item.score !== undefined"
           icon="upvote"
           small
           inherit-color
@@ -41,12 +42,13 @@
           {{ item.score }}
         </BaseLabel>
         <BaseLabel
+          v-if="item.time !== undefined"
           icon="clock"
           small
           inherit-color
+          :title="absoluteTimestamp"
         >
           <RelativeTimestamp
-            v-if="item.time"
             :timestamp="item.time"
             capitalized
           />
@@ -76,4 +78,14 @@ const props = defineProps<{
   viewed?: boolean;
   active?: boolean;
 }>();
+
+const absoluteTimestamp = props.item.time
+  ? new Intl.DateTimeFormat('en-GB', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }).format(props.item.time * 1000)
+  : '';
 </script>

@@ -21,7 +21,13 @@
     <ThePostsView />
     <PageColumnControls>
       <template #center>
-        <span class="mb-px text-small text-gray-500">Last refreshed just now</span>
+        <span
+          v-if="content.currentCategoryPostIds"
+          class="mb-px text-small text-gray-500"
+        >
+          Last refreshed
+          <RelativeTimestamp :timestamp="content.currentCategoryPostIds?.timestamp" />
+        </span>
       </template>
       <template #right>
         <BaseButton
@@ -39,6 +45,7 @@ import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import ThePostsView from '@/components/ThePostsView.vue';
+import RelativeTimestamp from '@/components/RelativeTimestamp.vue';
 import logoAsset from '@/assets/logo.png';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';

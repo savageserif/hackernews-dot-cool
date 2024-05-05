@@ -1,7 +1,7 @@
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import type { ComputedRef } from 'vue';
 import { defineStore } from 'pinia';
-import { useStorage, useWindowSize } from '@vueuse/core';
+import { useInterval, useStorage, useWindowSize } from '@vueuse/core';
 import type { RemovableRef } from '@vueuse/core';
 
 export const useViewStore = defineStore('view', () => {
@@ -50,6 +50,9 @@ export const useViewStore = defineStore('view', () => {
     maxWidth: computed(() => Math.min(windowWidth.value - 722, 600) / 16 + 'rem'), // flexible width of expanded comments column up to 600px
   };
 
+  // ticker which increases every minute to trigger relative timestamp refreshes
+  const timestampTicker = useInterval(60000);
+
   return {
     colorScheme,
     prioritizedView,
@@ -57,5 +60,6 @@ export const useViewStore = defineStore('view', () => {
     availableColumns,
     secondaryColumn,
     commentsColumn,
+    timestampTicker,
   };
 });

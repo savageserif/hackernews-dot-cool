@@ -45,7 +45,11 @@
           small
           inherit-color
         >
-          {{ item.time }}
+          <RelativeTimestamp
+            v-if="item.time"
+            :timestamp="item.time"
+            capitalized
+          />
         </BaseLabel>
         <BaseLabel
           v-if="item.descendants !== undefined"
@@ -65,6 +69,7 @@
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
 import BaseLabel from '@/components/BaseLabel.vue';
+import RelativeTimestamp from '@/components/RelativeTimestamp.vue';
 
 const props = defineProps<{
   item: HackerNewsItem;

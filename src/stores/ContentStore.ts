@@ -52,7 +52,7 @@ export const useContentStore = defineStore('content', () => {
 
     postIds.value[currentCategory.value] = {
       ids: [],
-      timestamp: Date.now(),
+      timestamp: Math.floor(Date.now() / 1000),
       error: null,
       isLoading: true,
     };

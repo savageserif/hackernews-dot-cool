@@ -1,7 +1,8 @@
 import { ref, computed } from 'vue';
 import type { ComputedRef } from 'vue';
 import { defineStore } from 'pinia';
-import { useWindowSize } from '@vueuse/core';
+import { useStorage, useWindowSize } from '@vueuse/core';
+import type { RemovableRef } from '@vueuse/core';
 
 export const useViewStore = defineStore('view', () => {
   const colorScheme = useStorage<'light' | 'dark' | 'system'>('colorScheme', 'system');
@@ -16,38 +17,38 @@ export const useViewStore = defineStore('view', () => {
     else return 3;
   });
 
-  const secondaryColumn = ref<{
-    isOpen: boolean;
-    isExpanded: boolean;
   // state/properties of the secondary column
+  const secondaryColumn: {
+    isOpen: RemovableRef<boolean>;
+    isExpanded: RemovableRef<boolean>;
     isExpandable: ComputedRef<boolean>;
     actions: {
       [key: string]: () => void;
     };
-  }>({
-    isOpen: true,
-    isExpanded: false,
+  } = {
+    isOpen: useStorage('secondaryColumnIsOpen', true),
+    isExpanded: useStorage('secondaryColumnIsExpanded', false),
     isExpandable: computed(() => windowWidth.value >= 1202), // secondary column expandable once it has at least 480px of space
     actions: {
       open: () => {
-        secondaryColumn.value.isOpen = true;
+        secondaryColumn.isOpen.value = true;
       },
       close: () => {
-        secondaryColumn.value.isOpen = false;
+        secondaryColumn.isOpen.value = false;
       },
       expand: () => {
-        secondaryColumn.value.isExpanded = true;
+        secondaryColumn.isExpanded.value = true;
       },
       collapse: () => {
-        secondaryColumn.value.isExpanded = false;
+        secondaryColumn.isExpanded.value = false;
       },
     },
-  });
+  };
 
-  const commentsColumn = ref({
-  });
   // properties of the comments column
+  const commentsColumn = {
     maxWidth: computed(() => Math.min(windowWidth.value - 722, 600) / 16 + 'rem'), // flexible width of expanded comments column up to 600px
+  };
 
   return {
     colorScheme,

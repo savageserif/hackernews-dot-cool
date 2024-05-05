@@ -6,7 +6,7 @@ import { categoryNames, apiCategoryUrl, apiItemUrl, parseUrl } from '@/utils';
 
 export const useContentStore = defineStore('content', () => {
   // currently selected category
-  const currentCategory = ref<HackerNewsCategory>('top');
+  const currentCategory = useStorage<HackerNewsCategory>('currentCategory', 'top');
   const currentCategoryName = computed(() => categoryNames[currentCategory.value]);
 
   // post IDs for each category

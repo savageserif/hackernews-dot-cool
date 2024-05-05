@@ -2,8 +2,10 @@
   <div
     class="pl-6 pr-3"
     :class="[
+      active
+        ? 'shadow-border-y bg-orange-200 text-orange-950 shadow-orange-200'
+        : 'cursor-pointer hover:bg-gray-50',
       viewed && !active ? 'text-gray-600' : '',
-      active ? 'shadow-border-y bg-orange-200 text-orange-950 shadow-orange-200' : 'cursor-pointer',
     ]"
   >
     <div

@@ -7,6 +7,7 @@
       v-for="(postItem, index) in content.currentCategoryPostItems?.items"
       :key="index"
       :item="postItem"
+      :viewed="content.viewedPostIds.includes(postItem.id)"
       :active="postItem.id === content.currentPostItem?.id"
       @click="content.setCurrentPostItem(postItem)"
     />

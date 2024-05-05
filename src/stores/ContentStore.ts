@@ -1,5 +1,6 @@
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { defineStore } from 'pinia';
+import { useStorage } from '@vueuse/core';
 import type { HackerNewsCategory, HackerNewsItemData, HackerNewsItem } from '@/types';
 import { categoryNames, apiCategoryUrl, apiItemUrl, parseUrl } from '@/utils';
 
@@ -122,6 +123,19 @@ export const useContentStore = defineStore('content', () => {
     currentPostItem.value = postItem;
   }
 
+  // IDs of posts that have previously been viewed
+  const viewedPostIds = useStorage<number[]>('viewedPostIds', []);
+
+  // mark a post as viewed when it becomes the current post item
+  watch(
+    () => currentPostItem.value,
+    () => {
+      if (!viewedPostIds.value.includes(currentPostItem.value!.id)) {
+        viewedPostIds.value.push(currentPostItem.value!.id);
+      }
+    }
+  );
+
   return {
     currentCategory,
     currentCategoryName,
@@ -136,5 +150,6 @@ export const useContentStore = defineStore('content', () => {
     fetchPostItems,
     currentPostItem,
     setCurrentPostItem,
+    viewedPostIds,
   };
 });

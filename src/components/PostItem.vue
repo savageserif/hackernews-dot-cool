@@ -5,7 +5,7 @@
       active
         ? 'shadow-border-y bg-orange-200 text-orange-950 shadow-orange-200'
         : 'cursor-pointer hover:bg-gray-50',
-      viewed && !active ? 'text-gray-600' : '',
+      viewed && !active ? 'text-gray-500' : '',
     ]"
   >
     <div

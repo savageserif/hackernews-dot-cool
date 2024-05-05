@@ -1,6 +1,6 @@
 <template>
   <div
-    class="pl-6 pr-3"
+    class="px-3.5"
     :class="[
       active
         ? 'shadow-border-y bg-orange-200 text-orange-950 shadow-orange-200'

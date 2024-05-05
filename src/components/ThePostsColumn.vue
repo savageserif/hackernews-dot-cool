@@ -3,7 +3,7 @@
     <PageColumnControls>
       <template #left>
         <img
-          class="mx-1 w-10"
+          class="mx-1 h-6"
           :src="logoAsset"
         />
       </template>

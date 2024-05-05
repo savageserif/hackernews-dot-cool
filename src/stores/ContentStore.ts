@@ -31,6 +31,19 @@ export const useContentStore = defineStore('content', () => {
   const currentCategoryPostIds = computed(() => postIds.value[currentCategory.value]);
   const currentCategoryPostItems = computed(() => postItems.value[currentCategory.value]);
 
+  // whether some post items of currently selected category have been fetched
+  const currentCategoryHasSomePostItems = computed(
+    () => currentCategoryPostItems.value?.items && currentCategoryPostItems.value?.items.length > 0
+  );
+
+  // whether all post items of currently selected category have been fetched
+  const currentCategoryHasAllPostItems = computed(
+    () =>
+      currentCategoryPostIds.value?.ids &&
+      currentCategoryPostItems.value?.items &&
+      currentCategoryPostItems.value?.items.length === currentCategoryPostIds.value?.ids.length
+  );
+
   // fetch post IDs from API for a specific category
   async function fetchPostIds(category: HackerNewsCategory = currentCategory.value) {
     // remove old post items for selected category in case they exist
@@ -115,6 +128,8 @@ export const useContentStore = defineStore('content', () => {
     postItems,
     currentCategoryPostIds,
     currentCategoryPostItems,
+    currentCategoryHasSomePostItems,
+    currentCategoryHasAllPostItems,
     fetchPostIds,
     fetchPostItem,
     fetchPostItems,

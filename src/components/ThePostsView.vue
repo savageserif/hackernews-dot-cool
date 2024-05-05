@@ -9,12 +9,7 @@
       :active="postItem.id === content.currentPostItem?.id"
       @click="content.setCurrentPostItem(postItem)"
     />
-    <LoadingItem
-      v-show="
-        content.currentCategoryPostIds?.isLoading || content.currentCategoryPostItems?.isLoading
-      "
-    />
-  </div>
+    <LoadingItem />
   </PageColumnBody>
 </template>
 

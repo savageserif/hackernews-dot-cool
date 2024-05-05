@@ -40,13 +40,13 @@ import PageColumnControls from '@/components/PageColumnControls.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import ThePostsView from '@/components/ThePostsView.vue';
 import logoAsset from '@/assets/logo.png';
-import { useSettingsStore } from '@/stores/SettingsStore';
+import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 
-const settings = useSettingsStore();
+const view = useViewStore();
 const content = useContentStore();
 
-const { prioritizedView } = storeToRefs(settings);
+const { prioritizedView } = storeToRefs(view);
 
 function togglePrioritizedView() {
   if (prioritizedView.value === 'link') {

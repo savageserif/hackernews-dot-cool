@@ -4,29 +4,29 @@
       :divider="view.availableColumns >= 3 && !view.secondaryColumn.isOpen ? 'right' : undefined"
     >
       <template #center>
-        <TheLinkColumnTitle v-if="settings.prioritizedView === 'link'" />
+        <TheLinkColumnTitle v-if="view.prioritizedView === 'link'" />
         <template v-else>{{ content.currentPostItem?.descendants }} Comments</template>
       </template>
       <template #right>
         <BaseButton
           v-show="view.availableColumns >= 3 && !view.secondaryColumn.isOpen"
-          :icon="settings.prioritizedView === 'link' ? 'comment' : 'link'"
+          :icon="view.prioritizedView === 'link' ? 'comment' : 'link'"
           :title="
-            settings.prioritizedView === 'link'
+            view.prioritizedView === 'link'
               ? `${content.currentPostItem?.descendants} Comments`
               : `Preview of ${content.currentPostItem?.url?.hostname}`
           "
           @click="view.secondaryColumn.actions.open()"
         >
           {{
-            settings.prioritizedView === 'link'
+            view.prioritizedView === 'link'
               ? content.currentPostItem?.descendants
               : content.currentPostItem?.url?.hostname
           }}
         </BaseButton>
       </template>
     </PageColumnControls>
-    <TheLinkView v-if="settings.prioritizedView === 'link'" />
+    <TheLinkView v-if="view.prioritizedView === 'link'" />
     <TheCommentsView v-else />
   </PageColumn>
 </template>
@@ -39,10 +39,8 @@ import TheLinkColumnTitle from '@/components/TheLinkColumnTitle.vue';
 import TheLinkView from '@/components/TheLinkView.vue';
 import TheCommentsView from '@/components/TheCommentsView.vue';
 import { useViewStore } from '@/stores/ViewStore';
-import { useSettingsStore } from '@/stores/SettingsStore';
 import { useContentStore } from '@/stores/ContentStore';
 
 const view = useViewStore();
-const settings = useSettingsStore();
 const content = useContentStore();
 </script>

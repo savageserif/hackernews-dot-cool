@@ -8,7 +8,7 @@
         v-show="view.availableColumns >= 2"
         class="min-w-90"
         :class="[
-          settings.prioritizedView === 'comments' &&
+          view.prioritizedView === 'comments' &&
           view.availableColumns >= 3 &&
           view.secondaryColumn.isExpandable &&
           view.secondaryColumn.isOpen
@@ -23,7 +23,7 @@
         v-show="view.availableColumns >= 3 && view.secondaryColumn.isOpen"
         class="min-w-90"
         :class="[
-          settings.prioritizedView === 'link' || !view.secondaryColumn.isExpandable
+          view.prioritizedView === 'link' || !view.secondaryColumn.isExpandable
             ? 'flex-none'
             : 'flex-1',
         ]"
@@ -48,11 +48,9 @@ import ThePrimaryColumn from '@/components/ThePrimaryColumn.vue';
 import TheSecondaryColumn from '@/components/TheSecondaryColumn.vue';
 import TheEmptyView from '@/components/TheEmptyView.vue';
 import { useViewStore } from '@/stores/ViewStore';
-import { useSettingsStore } from '@/stores/SettingsStore';
 import { useContentStore } from '@/stores/ContentStore';
 
 const view = useViewStore();
-const settings = useSettingsStore();
 const content = useContentStore();
 
 content.fetchPostIds();

@@ -93,6 +93,7 @@ export const useContentStore = defineStore('content', () => {
         isLoading: true,
       };
     } else {
+      if (postItems.value[category]!.isLoading) return;
       postItems.value[category]!.isLoading = true;
     }
 

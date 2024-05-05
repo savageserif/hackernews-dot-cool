@@ -12,7 +12,7 @@
     >
       <div class="font-serif space-y-0.5 text-base-serif">
         <h2 class="font-serif-heading font-bold">
-          {{ item.title }}
+          {{ smartquotes(item.title) }}
         </h2>
         <div>
           {{ item.url?.hostname }}
@@ -60,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
 import BaseLabel from '@/components/BaseLabel.vue';
 

@@ -1,7 +1,12 @@
 <template>
   <component
+    v-if="iconComponent"
     :is="iconComponent"
     :class="[small ? 'h-5 w-5' : 'h-6 w-6', inheritColor ? 'text-inherit' : 'text-gray-500']"
+  />
+  <div
+    v-else
+    :class="[small ? 'h-5 w-5' : 'h-6 w-6']"
   />
 </template>
 
@@ -16,7 +21,9 @@ const props = defineProps<{
 
 const iconComponent = shallowRef();
 
-watchEffect(() => {
+watchEffect(async () => {
+  iconComponent.value = null;
+
   import(`@/assets/icons/${props.name + (props.small ? '.small' : '')}.svg`).then((imported) => {
     iconComponent.value = imported.default;
   });

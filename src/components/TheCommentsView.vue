@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <PageColumnBody></PageColumnBody>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import PageColumnBody from '@/components/PageColumnBody.vue';
+</script>

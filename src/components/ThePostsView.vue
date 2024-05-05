@@ -1,5 +1,7 @@
 <template>
-  <div class="space-y-px">
+  <PageColumnBody
+    class="space-y-px"
+  >
     <PostItem
       v-for="(postItem, index) in content.currentCategoryPostItems?.items"
       :key="index"
@@ -13,9 +15,11 @@
       "
     />
   </div>
+  </PageColumnBody>
 </template>
 
 <script setup lang="ts">
+import PageColumnBody from '@/components/PageColumnBody.vue';
 import PostItem from '@/components/PostItem.vue';
 import LoadingItem from '@/components/LoadingItem.vue';
 import { useContentStore } from '@/stores/ContentStore';

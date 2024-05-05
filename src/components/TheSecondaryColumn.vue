@@ -32,10 +32,8 @@
         />
       </template>
     </PageColumnControls>
-    <PageColumnBody>
-      <TheCommentsView v-if="settings.prioritizedView === 'link'" />
-      <TheLinkView v-else />
-    </PageColumnBody>
+    <TheCommentsView v-if="settings.prioritizedView === 'link'" />
+    <TheLinkView v-else />
   </PageColumn>
 </template>
 
@@ -43,7 +41,6 @@
 import { computed } from 'vue';
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
-import PageColumnBody from '@/components/PageColumnBody.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import TheLinkColumnTitle from '@/components/TheLinkColumnTitle.vue';
 import TheLinkView from '@/components/TheLinkView.vue';

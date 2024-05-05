@@ -18,9 +18,7 @@
         />
       </template>
     </PageColumnControls>
-    <PageColumnBody>
-      <ThePostsView />
-    </PageColumnBody>
+    <ThePostsView />
     <PageColumnControls>
       <template #center>
         <span class="mb-px text-small text-gray-500">Last refreshed just now</span>
@@ -39,7 +37,6 @@
 import { storeToRefs } from 'pinia';
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
-import PageColumnBody from '@/components/PageColumnBody.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import ThePostsView from '@/components/ThePostsView.vue';
 import logoAsset from '@/assets/logo.png';

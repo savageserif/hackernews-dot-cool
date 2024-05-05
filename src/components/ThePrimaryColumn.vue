@@ -26,17 +26,14 @@
         </BaseButton>
       </template>
     </PageColumnControls>
-    <PageColumnBody>
-      <TheLinkView v-if="settings.prioritizedView === 'link'" />
-      <TheCommentsView v-else />
-    </PageColumnBody>
+    <TheLinkView v-if="settings.prioritizedView === 'link'" />
+    <TheCommentsView v-else />
   </PageColumn>
 </template>
 
 <script setup lang="ts">
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
-import PageColumnBody from '@/components/PageColumnBody.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import TheLinkColumnTitle from '@/components/TheLinkColumnTitle.vue';
 import TheLinkView from '@/components/TheLinkView.vue';

@@ -63,9 +63,14 @@ export default {
         200: '200ms',
       },
       animation: {
+        appear: 'appear 0.2s',
         step: 'step 0.75s infinite',
       },
       keyframes: {
+        appear: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
         step: {
           '0%, 12.4999%': { transform: 'rotate(0deg)' },
           '12.5%, 24.9999%': { transform: 'rotate(45deg)' },

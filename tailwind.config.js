@@ -10,7 +10,7 @@ export default {
     fontSize: {
       base: ['1.03125rem', { lineHeight: '1.125rem', fontWeight: '450' }],
       'base-serif': ['1rem', { lineHeight: '1.1875rem', fontWeight: '400' }],
-      small: '0.90625rem',
+      small: ['0.90625rem', { lineHeight: '1.0625rem' }],
     },
     fontWeight: {
       bold: '700',

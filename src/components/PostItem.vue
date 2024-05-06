@@ -48,10 +48,7 @@
           inherit-color
           :title="absoluteTimestamp"
         >
-          <RelativeTimestamp
-            :timestamp="item.time"
-            capitalized
-          />
+          {{ relativeTimestamp }}
         </BaseLabel>
         <BaseLabel
           v-if="item.descendants !== undefined"
@@ -71,13 +68,15 @@
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
 import BaseLabel from '@/components/BaseLabel.vue';
-import RelativeTimestamp from '@/components/RelativeTimestamp.vue';
+import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 
 const props = defineProps<{
   item: HackerNewsItem;
   viewed?: boolean;
   active?: boolean;
 }>();
+
+const { text: relativeTimestamp } = useRelativeTimestamp(props.item.time, true);
 
 const absoluteTimestamp = props.item.time
   ? new Intl.DateTimeFormat('en-GB', {

@@ -25,8 +25,16 @@
           v-if="content.currentCategoryPostIds"
           class="mb-px text-small text-gray-500"
         >
-          Last refreshed
-          <RelativeTimestamp :timestamp="content.currentCategoryPostIds?.timestamp" />
+          <template
+            v-if="
+              content.currentCategoryPostIds.isLoading ||
+              (!content.currentCategoryHasSomePostItems &&
+                content.currentCategoryPostItems?.isLoading)
+            "
+          >
+            Loading stories…
+          </template>
+          <template v-else>Last refreshed {{ refreshTimestamp }}</template>
         </span>
       </template>
       <template #right>
@@ -40,18 +48,23 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import ThePostsView from '@/components/ThePostsView.vue';
-import RelativeTimestamp from '@/components/RelativeTimestamp.vue';
 import logoAsset from '@/assets/logo.png';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
+import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 
 const view = useViewStore();
 const content = useContentStore();
+
+const { text: refreshTimestamp } = useRelativeTimestamp(
+  computed(() => content.currentCategoryPostIds?.timestamp)
+);
 
 const { prioritizedView } = storeToRefs(view);
 

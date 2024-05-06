@@ -25,7 +25,7 @@
               active ? 'text-orange-950/60' : 'text-gray-500',
             ]"
           >
-            via&nbsp;{{ item.by }}
+            {{ item.url ? 'via' : 'by' }}&nbsp;{{ item.by }}
           </span>
         </div>
       </div>

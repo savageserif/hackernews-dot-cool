@@ -11,8 +11,7 @@
         <BaseButton>{{ content.currentCategoryName }}</BaseButton>
       </template>
       <template #right>
-        <BaseButton
-          icon="refresh"
+        <RefreshButton
           :title="`Refresh ${content.currentCategoryName}`"
           @click="content.fetchPostIds()"
         />
@@ -53,6 +52,7 @@ import { storeToRefs } from 'pinia';
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
 import BaseButton from '@/components/BaseButton.vue';
+import RefreshButton from '@/components/RefreshButton.vue';
 import ThePostsView from '@/components/ThePostsView.vue';
 import logoAsset from '@/assets/logo.png';
 import { useViewStore } from '@/stores/ViewStore';

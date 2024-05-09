@@ -46,7 +46,7 @@
           icon="clock"
           small
           inherit-color
-          :title="absoluteTimestamp"
+          :title="absoluteTimestamp(props.item.time)"
         >
           {{ relativeTimestamp }}
         </BaseLabel>
@@ -67,6 +67,7 @@
 <script setup lang="ts">
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
+import { absoluteTimestamp } from '@/utils';
 import BaseLabel from '@/components/BaseLabel.vue';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 
@@ -77,14 +78,4 @@ const props = defineProps<{
 }>();
 
 const { text: relativeTimestamp } = useRelativeTimestamp(props.item.time, true);
-
-const absoluteTimestamp = props.item.time
-  ? new Intl.DateTimeFormat('en-GB', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }).format(props.item.time * 1000)
-  : '';
 </script>

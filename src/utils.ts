@@ -23,3 +23,15 @@ export function parseUrl(url: string) {
   parsedUrl.hostname = parsedUrl.hostname.replace(/^www\./g, '');
   return parsedUrl;
 }
+
+export function absoluteTimestamp(time?: number) {
+  if (time === undefined) return undefined;
+
+  return new Intl.DateTimeFormat('en-GB', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  }).format(time * 1000);
+}

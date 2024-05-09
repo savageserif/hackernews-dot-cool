@@ -11,7 +11,14 @@
       :active="postItem.id === content.currentPostItem?.id"
       @click="content.setCurrentPostItem(postItem)"
     />
-    <LoadingItem />
+    <LoadingItem
+      :full-height="!content.currentCategoryHasSomePostItems"
+      :message="
+        content.currentCategoryHasAllPostItems
+          ? `You have browsed all “${content.currentCategoryName.replace(' ', '&nbsp;')}” entries. Refresh the list to view newer posts.`
+          : undefined
+      "
+    />
   </PageColumnBody>
 </template>
 

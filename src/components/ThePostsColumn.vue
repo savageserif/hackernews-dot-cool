@@ -63,7 +63,7 @@ const view = useViewStore();
 const content = useContentStore();
 
 const { text: refreshTimestamp } = useRelativeTimestamp(
-  computed(() => content.currentCategoryPostIds?.timestamp)
+  computed(() => content.currentCategoryPostIds?.time)
 );
 
 const { prioritizedView } = storeToRefs(view);

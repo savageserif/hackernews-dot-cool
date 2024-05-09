@@ -13,7 +13,7 @@ export const useContentStore = defineStore('content', () => {
   const postIds = ref<{
     [key in HackerNewsCategory]?: {
       ids: number[];
-      timestamp: number;
+      time: number;
       error: null | unknown;
       isLoading: boolean;
     };
@@ -52,7 +52,7 @@ export const useContentStore = defineStore('content', () => {
 
     postIds.value[currentCategory.value] = {
       ids: [],
-      timestamp: Math.floor(Date.now() / 1000),
+      time: Math.floor(Date.now() / 1000),
       error: null,
       isLoading: true,
     };

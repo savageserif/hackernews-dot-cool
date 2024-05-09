@@ -2,10 +2,7 @@ import { ref, watch, toValue, isRef } from 'vue';
 import type { Ref } from 'vue';
 import { useViewStore } from '@/stores/ViewStore';
 
-export function useRelativeTimestamp(
-  timestamp?: number | Ref<number | undefined>,
-  capitalized = false
-) {
+export function useRelativeTimestamp(time?: number | Ref<number | undefined>, capitalized = false) {
   const view = useViewStore();
 
   const relativeTimestampText = (past?: number) => {
@@ -34,13 +31,13 @@ export function useRelativeTimestamp(
     }
   };
 
-  const text = ref(relativeTimestampText(toValue(timestamp)));
+  const text = ref(relativeTimestampText(toValue(time)));
 
-  // refresh text when either the timestamp changes or the global interval ticker counts up
+  // refresh text when either the time argument changes or the global interval ticker counts up
   watch(
-    () => [isRef(timestamp) ? timestamp.value : undefined, view.timestampTicker],
+    () => [isRef(time) ? time.value : undefined, view.timestampTicker],
     () => {
-      text.value = relativeTimestampText(toValue(timestamp));
+      text.value = relativeTimestampText(toValue(time));
     }
   );
 

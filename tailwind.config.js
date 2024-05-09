@@ -3,7 +3,7 @@ export default {
   content: ['./src/**/*.vue'],
   theme: {
     fontFamily: {
-      sans: '"Source Sans 3 Var", sans-serif',
+      sans: ['"Source Sans 3 Var", sans-serif', { fontFeatureSettings: '"cv04", "cv17"' }],
       serif: ['"Nice Var", serif', { fontVariationSettings: '"opsz" 6' }],
       'serif-heading': ['"Nice Var", serif', { fontVariationSettings: '"opsz" 12' }],
     },
@@ -14,10 +14,6 @@ export default {
     },
     fontWeight: {
       bold: '700',
-    },
-    lineHeight: {
-      'paragraph-narrow': '1.3125rem',
-      'paragraph-wide': '1.375rem',
     },
     colors: {
       transparent: 'transparent',
@@ -51,6 +47,10 @@ export default {
       },
     },
     extend: {
+      lineHeight: {
+        'paragraph-narrow': '1.3125rem',
+        'paragraph-wide': '1.375rem',
+      },
       spacing: {
         90: '22.5rem', // 360px
         150: '37.5rem', // 600px

@@ -13,8 +13,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@types/dompurify": "^3.0.5",
     "@vueuse/core": "^10.9.0",
     "autoprefixer": "^10.4.19",
+    "dompurify": "^3.1.2",
     "pinia": "^2.1.7",
     "postcss": "^8.4.38",
     "smartquotes-ts": "^0.0.2",

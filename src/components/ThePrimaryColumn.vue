@@ -5,7 +5,7 @@
     >
       <template #center>
         <TheLinkColumnTitle v-if="view.prioritizedView === 'link'" />
-        <template v-else>{{ content.currentPostItem?.descendants }} Comments</template>
+        <TheCommentsColumnTitle v-else />
       </template>
       <template #right>
         <BaseButton
@@ -37,6 +37,7 @@ import PageColumnControls from '@/components/PageColumnControls.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import TheLinkColumnTitle from '@/components/TheLinkColumnTitle.vue';
 import TheLinkView from '@/components/TheLinkView.vue';
+import TheCommentsColumnTitle from '@/components/TheCommentsColumnTitle.vue';
 import TheCommentsView from '@/components/TheCommentsView.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';

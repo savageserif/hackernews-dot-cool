@@ -39,7 +39,7 @@
           small
           inherit-color
         >
-          {{ item.score }}
+          {{ formatNumber(item.score) }}
         </BaseLabel>
         <BaseLabel
           v-if="item.time !== undefined"
@@ -57,7 +57,7 @@
           small
           inherit-color
         >
-          {{ item.descendants }}
+          {{ formatNumber(item.descendants) }}
         </BaseLabel>
       </div>
     </div>
@@ -67,7 +67,7 @@
 <script setup lang="ts">
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
-import { absoluteTimestamp } from '@/utils';
+import { formatNumber, absoluteTimestamp } from '@/utils';
 import BaseLabel from '@/components/BaseLabel.vue';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 

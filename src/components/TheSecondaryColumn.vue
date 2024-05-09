@@ -19,9 +19,7 @@
         />
       </template>
       <template #center>
-        <template v-if="view.prioritizedView === 'link'">
-          {{ content.currentPostItem?.descendants }} Comments
-        </template>
+        <TheCommentsColumnTitle v-if="view.prioritizedView === 'link'" />
         <TheLinkColumnTitle v-else />
       </template>
       <template #right>
@@ -44,12 +42,11 @@ import PageColumnControls from '@/components/PageColumnControls.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import TheLinkColumnTitle from '@/components/TheLinkColumnTitle.vue';
 import TheLinkView from '@/components/TheLinkView.vue';
+import TheCommentsColumnTitle from '@/components/TheCommentsColumnTitle.vue';
 import TheCommentsView from '@/components/TheCommentsView.vue';
 import { useViewStore } from '@/stores/ViewStore';
-import { useContentStore } from '@/stores/ContentStore';
 
 const view = useViewStore();
-const content = useContentStore();
 
 const columnName = computed(() => (view.prioritizedView === 'link' ? 'Comments' : 'Link Preview'));
 </script>

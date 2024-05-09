@@ -24,6 +24,11 @@ export function parseUrl(url: string) {
   return parsedUrl;
 }
 
+export function formatNumber(number?: number) {
+  if (number === undefined) return undefined;
+  return new Intl.NumberFormat('gb-GB').format(number);
+}
+
 export function absoluteTimestamp(time?: number) {
   if (time === undefined) return undefined;
 

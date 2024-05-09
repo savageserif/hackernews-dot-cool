@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="select-text">
     <span>
       {{ content.currentPostItem?.url?.hostname }}
     </span>

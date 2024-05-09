@@ -7,7 +7,7 @@
       v-if="content.currentPostItem?.url?.pathname !== '/'"
       class="text-gray-500"
     >
-      {{ content.currentPostItem?.url?.pathname }}
+      {{ content.currentPostItem?.url?.pathname }}{{ content.currentPostItem?.url?.search }}
     </span>
   </span>
   <BaseButton

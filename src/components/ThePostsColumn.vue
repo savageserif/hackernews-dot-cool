@@ -54,7 +54,7 @@ import PageColumnControls from '@/components/PageColumnControls.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import RefreshButton from '@/components/RefreshButton.vue';
 import ThePostsView from '@/components/ThePostsView.vue';
-import logoAsset from '@/assets/logo.png';
+import logoAsset from '@/assets/images/logo.png';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';

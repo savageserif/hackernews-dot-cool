@@ -13,5 +13,5 @@
 </template>
 
 <script setup lang="ts">
-import placeholderAsset from '@/assets/placeholder.png';
+import placeholderAsset from '@/assets/images/placeholder.png';
 </script>

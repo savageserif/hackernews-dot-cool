@@ -9,7 +9,7 @@ export default {
     },
     fontSize: {
       base: ['1.03125rem', { lineHeight: '1.125rem', fontWeight: '450' }],
-      'base-serif': ['1rem', { lineHeight: '1.1875rem', fontWeight: '400' }],
+      'base-serif': ['1rem', { lineHeight: '1.1875rem', fontWeight: '420' }],
       small: ['0.90625rem', { lineHeight: '1.0625rem' }],
     },
     fontWeight: {
@@ -58,6 +58,7 @@ export default {
       boxShadow: {
         'border-y': '0 0.0625rem, 0 -0.0625rem',
         'border-b': '0 0.0625rem',
+        'indentation-t': '0 -2rem',
       },
       transitionDuration: {
         200: '200ms',

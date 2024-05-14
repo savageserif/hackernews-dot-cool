@@ -3,11 +3,14 @@
     <template v-if="commentsRendered">
       <Suspense v-if="content.currentPostItem?.kids && content.currentPostItem.kids.length !== 0">
         <CommentItem
-          v-for="(commentId, index) in content.currentPostItem?.kids"
+          v-for="(commentId, index) in content.currentPostItem.kids"
           :key="index"
           :id="commentId"
-          :level="1"
-          :post-by="content.currentPostItem?.by"
+          :level="0"
+          :first-of-level="index === 0"
+          :last-of-level="false"
+          :consecutive-last-levels="0"
+          :post-by="content.currentPostItem.by"
         />
         <template #fallback>
           <LoadingItem full-height />

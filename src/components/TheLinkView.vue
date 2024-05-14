@@ -9,9 +9,13 @@
     />
     <div
       v-show="error"
-      class="flex h-full flex-col items-center justify-center gap-4 bg-gray-100"
+      class="flex h-full flex-col items-center justify-center gap-3 bg-gray-100 pb-4"
       :class="[firstErrorForPostId ? 'animate-appear' : '']"
     >
+      <img
+        :src="currentErrorAsset"
+        class="w-32"
+      />
       <div class="max-w-150 text-balance px-8 text-center leading-paragraph-narrow text-gray-500">
         Unfortunately, this website does not allow an inline preview. You can open the link
         externally instead.
@@ -19,6 +23,7 @@
       <BaseButton
         icon="external"
         bordered
+        class="mt-1"
         @click="openExternalLink()"
       >
         Open in External Tab
@@ -31,8 +36,12 @@
 import { ref, computed, watch, nextTick } from 'vue';
 import { useEventListener } from '@vueuse/core';
 import BaseButton from '@/components/BaseButton.vue';
+import PageColumnBody from '@/components/PageColumnBody.vue';
 import { useContentStore } from '@/stores/ContentStore';
-import PageColumnBody from './PageColumnBody.vue';
+import errorAsset01 from '@/assets/images/error-01.png';
+import errorAsset02 from '@/assets/images/error-02.png';
+import errorAsset03 from '@/assets/images/error-03.png';
+import errorAsset04 from '@/assets/images/error-04.png';
 
 const content = useContentStore();
 
@@ -67,7 +76,7 @@ watch(
   }
 );
 
-const objectElement = ref<Element | null>(null);
+const objectElement = ref<HTMLElement | null>(null);
 
 useEventListener(objectElement, 'error', () => {
   // when an error occurs, push ID of unloadable post to errorPostIds array
@@ -76,6 +85,17 @@ useEventListener(objectElement, 'error', () => {
     firstErrorForPostId.value = true;
   }
 });
+
+const errorAssets = [errorAsset01, errorAsset02, errorAsset03, errorAsset04];
+const currentErrorAsset = ref(errorAsset01);
+
+watch(
+  () => content.currentPostItem,
+  () => {
+    const otherErrorAssets = errorAssets.filter((asset) => asset !== currentErrorAsset.value);
+    currentErrorAsset.value = otherErrorAssets[Math.floor(Math.random() * otherErrorAssets.length)];
+  }
+);
 
 function openExternalLink() {
   window.open(content.currentPostItem?.url?.href, '_blank');

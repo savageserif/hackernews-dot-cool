@@ -24,16 +24,7 @@
           v-if="content.currentCategoryPostIds"
           class="mb-0.5 text-small text-gray-500"
         >
-          <template
-            v-if="
-              content.currentCategoryPostIds.isLoading ||
-              (!content.currentCategoryHasSomePostItems &&
-                content.currentCategoryPostItems?.isLoading)
-            "
-          >
-            Loading stories…
-          </template>
-          <template v-else>Last refreshed {{ refreshTimestamp }}</template>
+          {{ refreshStatus }}
         </span>
       </template>
       <template #right>
@@ -65,6 +56,19 @@ const content = useContentStore();
 const { text: refreshTimestamp } = useRelativeTimestamp(
   computed(() => content.currentCategoryPostIds?.time)
 );
+
+const refreshStatus = computed(() => {
+  if (
+    content.currentCategoryPostIds?.isLoading ||
+    (!content.currentCategoryHasSomePostItems && content.currentCategoryPostItems?.isLoading)
+  ) {
+    return 'Loading stories…';
+  } else if (content.currentCategoryPostIds?.error) {
+    return '';
+  } else {
+    return `Last refreshed ${refreshTimestamp.value}`;
+  }
+});
 
 const { prioritizedView } = storeToRefs(view);
 

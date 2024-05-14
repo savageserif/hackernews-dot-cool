@@ -13,17 +13,13 @@
     />
     <LoadingItem
       :full-height="!content.currentCategoryHasSomePostItems"
-      :message="
-        content.currentCategoryHasAllPostItems
-          ? `You have browsed all “${content.currentCategoryName.replace(' ', '&nbsp;')}” entries. Refresh the list to view newer posts.`
-          : undefined
-      "
+      :message="loadingMessage"
     />
   </PageColumnBody>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useInfiniteScroll } from '@vueuse/core';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import PostItem from '@/components/PostItem.vue';
@@ -44,5 +40,13 @@ onMounted(() => {
     },
     { distance: 60 }
   );
+});
+
+const loadingMessage = computed(() => {
+  if (content.currentCategoryHasAllPostItems)
+    return `You have browsed all “${content.currentCategoryName.replace(' ', '&nbsp;')}” entries. Refresh the list to view newer posts.`;
+  else if (content.currentCategoryPostIds?.error)
+    return `An error has occurred while loading new stories (${content.currentCategoryPostIds.error}).`;
+  else return undefined;
 });
 </script>

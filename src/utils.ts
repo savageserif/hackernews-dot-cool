@@ -20,8 +20,22 @@ export function apiItemUrl(id: number) {
 
 export function parseUrl(url: string) {
   const parsedUrl = new URL(url);
-  parsedUrl.hostname = parsedUrl.hostname.replace(/^www\./g, '');
-  return parsedUrl;
+  // const { ...customUrl } = parsedUrl;
+  const customUrl = {
+    hostname: parsedUrl.hostname,
+    pathname: parsedUrl.pathname,
+    href: parsedUrl.href,
+    search: parsedUrl.search,
+  };
+
+  customUrl.hostname = customUrl.hostname.replace(/^www\./g, '');
+
+  if (customUrl.hostname === 'github.com') {
+    customUrl.hostname = customUrl.hostname + '/' + customUrl.pathname.split('/')[1];
+    customUrl.pathname = '/' + customUrl.pathname.split('/').slice(2).join('/');
+  }
+
+  return customUrl;
 }
 
 export function formatNumber(number?: number) {

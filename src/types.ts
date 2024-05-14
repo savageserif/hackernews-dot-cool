@@ -19,7 +19,12 @@ export interface HackerNewsItemData {
 }
 
 export interface HackerNewsItem extends Omit<HackerNewsItemData, 'url'> {
-  url?: URL;
+  url?: {
+    hostname: string;
+    pathname: string;
+    href: string;
+    search: string;
+  };
 }
 
 export interface HackerNewsUser {

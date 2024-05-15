@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="commentItem && !(commentItem.deleted || commentItem.dead) && commentItem.text"
-    class="max-w-150 mx-auto flex pl-3.5 pr-3.5 hover:bg-gray-50"
+    class="@container max-w-150 mx-auto flex pl-3.5 pr-3.5 hover:bg-gray-50"
   >
     <div
       v-for="index in outsideIndentations"
@@ -38,7 +38,7 @@
           </span>
         </div>
         <div
-          class="select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere]"
+          class="@sm:leading-paragraph-wide @sm:space-y-1.5 select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere]"
           v-html="commentText"
         />
       </div>

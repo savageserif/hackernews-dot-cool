@@ -85,5 +85,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/container-queries')],
 };

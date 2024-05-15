@@ -13,7 +13,7 @@
           : ''
       "
     />
-    <div class="shadow-border-b flex flex-1 pb-3 pt-2.5 shadow-gray-200">
+    <div class="shadow-border-b flex w-full min-w-0 flex-1 pb-3 pt-2.5 shadow-gray-200">
       <div
         v-for="index in insideIndentations"
         :key="index"
@@ -22,7 +22,7 @@
           index < insideIndentations || !firstOfLevel ? 'shadow-indentation-t shadow-gray-400' : ''
         "
       />
-      <div class="flex-1 space-y-2">
+      <div class="w-full flex-1 space-y-2">
         <div class="flex items-baseline text-gray-500">
           <div class="flex-1">
             <span class="font-serif text-base-serif italic">{{ commentItem.by }}</span>
@@ -38,7 +38,7 @@
           </span>
         </div>
         <div
-          class="select-text space-y-[0.4375rem] break-words leading-paragraph-narrow"
+          class="select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere]"
           v-html="commentText"
         />
       </div>

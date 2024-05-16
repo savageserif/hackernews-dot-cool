@@ -6,7 +6,7 @@
     <div class="flex items-center gap-0.5 px-1">
       <slot name="center" />
     </div>
-    <div class="flex flex-1 items-center justify-end gap-1 px-1">
+    <div class="relative flex flex-1 items-center justify-end gap-1 px-1">
       <div
         v-if="$slots.right && divider === 'right'"
         class="h-10 w-px bg-gray-200"

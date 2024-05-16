@@ -5,7 +5,7 @@ import { useInterval, useStorage, useWindowSize } from '@vueuse/core';
 import type { RemovableRef } from '@vueuse/core';
 
 export const useViewStore = defineStore('view', () => {
-  const colorScheme = useStorage<'light' | 'dark' | 'system'>('colorScheme', 'system');
+  const colorScheme = useStorage<'system' | 'light' | 'dark'>('colorScheme', 'system');
   const prioritizedView = useStorage<'link' | 'comments'>('prioritizedView', 'link');
 
   const { width: windowWidth } = useWindowSize();

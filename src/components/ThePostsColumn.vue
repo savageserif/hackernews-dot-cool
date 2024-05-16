@@ -8,7 +8,7 @@
         />
       </template>
       <template #center>
-        <BaseButton>{{ content.currentCategoryName }}</BaseButton>
+        <TheCategorySelect />
       </template>
       <template #right>
         <RefreshButton
@@ -45,6 +45,7 @@ import PageColumnControls from '@/components/PageColumnControls.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import RefreshButton from '@/components/RefreshButton.vue';
 import ThePostsView from '@/components/ThePostsView.vue';
+import TheCategorySelect from '@/components/TheCategorySelect.vue';
 import logoAsset from '@/assets/images/logo.png';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';

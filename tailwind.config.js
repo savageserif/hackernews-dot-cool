@@ -60,6 +60,7 @@ export default {
       boxShadow: {
         'border-y': '0 0.0625rem, 0 -0.0625rem',
         'border-b': '0 0.0625rem',
+        menu: '0 0 0 1px rgb(0 0 0 / 0.1), 0 2px 4px rgb(0 0 0 / 0.07), 0 4px 8px rgb(0 0 0 / 0.07);',
         'indentation-t': '0 -2rem',
       },
       transitionDuration: {
@@ -87,5 +88,5 @@ export default {
       },
     },
   },
-  plugins: [require('@tailwindcss/container-queries')],
+  plugins: [require('@tailwindcss/container-queries'), require('@headlessui/tailwindcss')],
 };

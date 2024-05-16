@@ -2,9 +2,17 @@ import { ref, computed, watch } from 'vue';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import type { HackerNewsCategory, HackerNewsItemData, HackerNewsItem } from '@/types';
-import { categoryNames, apiCategoryUrl, apiItemUrl, parseUrl } from '@/utils';
+import { apiCategoryUrl, apiItemUrl, parseUrl } from '@/utils';
 
 export const useContentStore = defineStore('content', () => {
+  const categoryNames: { [key in HackerNewsCategory]: string } = {
+    top: 'Top Stories',
+    new: 'New Stories',
+    best: 'Best Stories',
+    ask: 'Ask HN',
+    show: 'Show HN',
+  };
+
   // currently selected category
   const currentCategory = useStorage<HackerNewsCategory>('currentCategory', 'top');
   const currentCategoryName = computed(() => categoryNames[currentCategory.value]);
@@ -72,6 +80,16 @@ export const useContentStore = defineStore('content', () => {
     }
   }
 
+  // fetch post IDs when the current category changes and IDs for it have not yet been fetched
+  watch(
+    () => currentCategory.value,
+    () => {
+      if (currentCategoryPostIds.value === undefined) {
+        fetchPostIds();
+      }
+    }
+  );
+
   // fetch item details for a specific post ID
   async function fetchPostItem(id: number) {
     const fetchedItem: HackerNewsItemData = await fetch(apiItemUrl(id)).then((response) =>
@@ -94,6 +112,7 @@ export const useContentStore = defineStore('content', () => {
         isLoading: true,
       };
     } else {
+      // return if post items are already being fetched (isLoading true)
       if (postItems.value[category]!.isLoading) return;
       postItems.value[category]!.isLoading = true;
     }
@@ -137,6 +156,7 @@ export const useContentStore = defineStore('content', () => {
   );
 
   return {
+    categoryNames,
     currentCategory,
     currentCategoryName,
     postIds,

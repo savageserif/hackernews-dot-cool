@@ -13,12 +13,14 @@ export default {
       small: ['0.90625rem', { lineHeight: '1.0625rem' }],
     },
     fontWeight: {
+      medium: '500',
       bold: '700',
     },
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
       white: '#ffffff',
+      blue: '#4C9EFF',
       gray: {
         50: '#F9F9FB',
         100: '#EFF1F5', // header bg

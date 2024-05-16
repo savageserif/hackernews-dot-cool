@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex items-center rounded-sm transition-colors duration-200 hover:bg-gray-700/15 hover:duration-0 active:bg-gray-700/20"
+    class="ring-blue flex items-center rounded-sm ring-offset-1 ring-offset-gray-100 transition-colors duration-200 hover:bg-gray-700/15 hover:duration-0 focus:outline-none focus-visible:ring-2 active:bg-gray-700/20"
     :class="[
       small ? 'h-6 p-0.5' : 'h-8 p-1',
       $slots.default && !icon ? 'px-2' : '',

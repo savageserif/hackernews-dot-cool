@@ -121,8 +121,16 @@ div[class*='leading-paragraph'] a:hover {
   @apply decoration-orange-600 duration-0;
 }
 
+div[class*='leading-paragraph'] a:focus {
+  @apply: outline-none;
+}
+
+div[class*='leading-paragraph'] a:focus-visible {
+  @apply outline-blue;
+}
+
 div[class*='leading-paragraph'] em,
 div[class*='leading-paragraph'] i {
-  font-weight: 500;
+  @apply font-medium;
 }
 </style>

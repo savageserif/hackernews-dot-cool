@@ -137,6 +137,14 @@ export const useContentStore = defineStore('content', () => {
   // current post item whose value gets copied/replaced from postItems
   const currentPostItem = ref<HackerNewsItem | undefined>(undefined);
 
+  // change page title to that of the current post item
+  watch(
+    () => currentPostItem.value,
+    () => {
+      document.title = `${currentPostItem.value!.title} · Hacker News` ?? 'Hacker News';
+    }
+  );
+
   // set a new current post item
   function setCurrentPostItem(postItem: HackerNewsItem) {
     currentPostItem.value = postItem;

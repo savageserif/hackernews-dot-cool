@@ -15,20 +15,20 @@
             : ''
         "
       />
-      <div class="shadow-border-b flex w-full min-w-0 flex-1 pb-3 pt-2.5 shadow-gray-200">
+      <div class="shadow-border-b flex w-full min-w-0 flex-1 shadow-gray-200">
         <div
           v-for="index in insideIndentations"
           :key="index"
-          class="mb-0.5 mr-3 mt-1 w-0.5 flex-none self-stretch rounded bg-gray-400"
+          class="my-3.5 mr-3 w-0.5 flex-none self-stretch rounded bg-gray-400"
           :class="
             index < insideIndentations || !firstOfLevel
               ? 'shadow-indentation-t shadow-gray-400'
               : ''
           "
         />
-        <div class="w-full flex-1 space-y-2">
+        <div class="w-full flex-1">
           <div
-            class="flex items-baseline text-gray-500"
+            class="flex items-baseline pb-3 pt-2.5 text-gray-500"
             :class="[isCollapsed ? 'cursor-s-resize' : 'cursor-n-resize']"
             @click="isCollapsed = !isCollapsed"
           >
@@ -47,7 +47,7 @@
           </div>
           <div
             v-show="!isCollapsed"
-            class="@sm:leading-paragraph-wide @sm:space-y-1.5 select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere]"
+            class="@sm:leading-paragraph-wide @sm:space-y-1.5 -mt-1 mb-3 select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere]"
             v-html="commentText"
           />
         </div>

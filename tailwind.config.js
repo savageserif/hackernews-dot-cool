@@ -4,6 +4,7 @@ export default {
   theme: {
     fontFamily: {
       sans: ['"Source Sans 3 Var", sans-serif', { fontFeatureSettings: '"cv04", "cv17"' }],
+      mono: ['"Source Code Var", monospace', { fontFeatureSettings: '"ss04"' }],
       serif: ['"Nice Var", serif', { fontVariationSettings: '"opsz" 6' }],
       'serif-heading': ['"Nice Var", serif', { fontVariationSettings: '"opsz" 12' }],
     },

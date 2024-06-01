@@ -108,6 +108,19 @@ const { text: relativeTimestamp } = useRelativeTimestamp(commentItem?.time, true
 // run text content of comments through smartquotes
 DOMPurify.addHook('afterSanitizeElements', (node) => {
   if (node.nodeName && node.nodeName === '#text') {
+    if (!node.textContent) return;
+
+    const leadingSpaces = node.textContent.match(/^ {2,}/);
+
+    if (leadingSpaces) {
+      const spacesCount = leadingSpaces[0].length;
+      const firstLinePattern = new RegExp(`^ {${spacesCount}}`);
+      const subsequentLinePattern = new RegExp(`\n {${spacesCount}}`, 'g');
+      node.textContent = node.textContent
+        .replace(firstLinePattern, '')
+        .replace(subsequentLinePattern, '\n');
+    }
+
     node.textContent = smartquotes(node.textContent);
   }
 });
@@ -146,5 +159,9 @@ div[class*='leading-paragraph'] a:focus-visible {
 div[class*='leading-paragraph'] em,
 div[class*='leading-paragraph'] i {
   @apply font-medium;
+}
+
+div[class*='leading-paragraph'] pre {
+  @apply !my-3 overflow-x-auto rounded-sm bg-gray-500/10 px-3 pb-2.5 pt-2 text-small;
 }
 </style>

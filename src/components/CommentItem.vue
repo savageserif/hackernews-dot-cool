@@ -2,7 +2,7 @@
   <div class="space-y-px">
     <div
       v-if="commentItem && !(commentItem.deleted || commentItem.dead) && commentItem.text"
-      class="@container max-w-150 mx-auto flex pl-3.5 pr-3.5"
+      class="mx-auto flex max-w-150 pl-3.5 pr-3.5 @container"
       :class="[isCollapsed ? 'bg-gray-100 hover:bg-gray-100' : 'hover:bg-gray-50']"
     >
       <div
@@ -15,11 +15,14 @@
             : ''
         "
       />
-      <div class="shadow-border-b flex w-full min-w-0 flex-1 shadow-gray-200">
+      <div
+        class="flex w-full min-w-0 flex-1"
+        :class="[!isPostDescription ? 'shadow-border-b shadow-gray-200' : '']"
+      >
         <div
           v-for="index in insideIndentations"
           :key="index"
-          class="my-3.5 mr-3 w-0.5 flex-none self-stretch rounded bg-gray-400"
+          class="mb-3.5 mr-3 mt-3.5 w-0.5 flex-none self-stretch rounded bg-gray-400"
           :class="
             index < insideIndentations || !firstOfLevel
               ? 'shadow-indentation-t shadow-gray-400'
@@ -36,7 +39,7 @@
               <span class="font-serif text-base-serif italic">{{ commentItem.by }}</span>
               <span
                 v-if="commentItem.by === postBy"
-                class="leading-3 my-[-0.25rem] ml-1.5 inline-block rounded-sm bg-orange-200/90 px-1 pb-[0.21875rem] pt-[0.0625rem] text-orange-700 [font-feature-settings:'smcp','c2sc']"
+                class="my-[-0.25rem] ml-1.5 inline-block rounded-sm bg-orange-200/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-orange-700 [font-feature-settings:'smcp','c2sc']"
               >
                 OP
               </span>
@@ -60,7 +63,7 @@
           </div>
           <div
             v-show="!isCollapsed"
-            class="@sm:leading-paragraph-wide @sm:space-y-1.5 -mt-1 mb-3 select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere]"
+            class="-mt-1 mb-3 select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere] @sm:space-y-1.5 @sm:leading-paragraph-wide"
             v-html="commentText"
           />
         </div>
@@ -97,9 +100,10 @@ import { apiItemUrl, absoluteTimestamp } from '@/utils';
 import BaseIcon from '@/components/BaseIcon.vue';
 import CommentItem from '@/components/CommentItem.vue';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
+import { useContentStore } from '@/stores/ContentStore';
 
 const props = defineProps<{
-  id: number;
+  id?: number;
   level: number;
   firstOfLevel: boolean;
   lastOfLevel: boolean;
@@ -107,9 +111,19 @@ const props = defineProps<{
   postBy?: string;
 }>();
 
-const commentItem: HackerNewsItem | null = await fetch(apiItemUrl(props.id)).then((response) =>
-  response.json()
-);
+const content = useContentStore();
+
+// if no ID prop is set, this is a post’s description text that appears above the comment threads
+const isPostDescription = !props.id;
+
+// fetch comment item or return object containing the current post’s data
+const commentItem: HackerNewsItem | null = !isPostDescription
+  ? await fetch(apiItemUrl(props.id)).then((response) => response.json())
+  : {
+      text: content.currentPostItem?.text,
+      by: content.currentPostItem?.by,
+      time: content.currentPostItem?.time,
+    };
 
 const isValid = commentItem && !(commentItem.deleted || !commentItem.dead) && commentItem.text;
 const hasKids = commentItem && commentItem.kids && commentItem.kids.length !== 0 ? true : false;

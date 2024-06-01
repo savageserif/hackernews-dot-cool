@@ -1,17 +1,10 @@
 <template>
-  <PageColumnBody class="space-y-px">
-    <template v-if="commentsRendered">
+  <PageColumnBody class="scroll-pt-[2.625rem] space-y-px">
+    <template v-if="renderComments">
       <Suspense v-if="content.currentPostItem?.kids && content.currentPostItem.kids.length !== 0">
-        <CommentItem
-          v-for="(commentId, index) in content.currentPostItem.kids"
-          :key="index"
-          :id="commentId"
-          :level="0"
-          :first-of-level="index === 0"
-          :last-of-level="false"
-          :consecutive-last-levels="0"
-          :post-by="content.currentPostItem.by"
-        />
+        <template #default>
+          <TheCommentsList />
+        </template>
         <template #fallback>
           <LoadingItem full-height />
         </template>
@@ -28,21 +21,21 @@
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
-import CommentItem from '@/components/CommentItem.vue';
+import TheCommentsList from '@/components/TheCommentsList.vue';
 import LoadingItem from '@/components/LoadingItem.vue';
 import { useContentStore } from '@/stores/ContentStore';
 
 const content = useContentStore();
 
-const commentsRendered = ref(true);
+const renderComments = ref(true);
 
 watch(
   () => content.currentPostItem,
   async () => {
     // force comment items to re-render when post item changes
-    commentsRendered.value = false;
+    renderComments.value = false;
     await nextTick();
-    commentsRendered.value = true;
+    renderComments.value = true;
     await nextTick();
   }
 );

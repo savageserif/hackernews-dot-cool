@@ -6,9 +6,8 @@
     <span
       v-if="message"
       class="mx-10 text-balance text-center text-small text-gray-500"
-    >
-      {{ message }}
-    </span>
+      v-html="message"
+    />
     <BaseIcon
       v-else
       name="loading"

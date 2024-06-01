@@ -28,7 +28,7 @@
         />
         <div class="w-full flex-1">
           <div
-            class="flex items-baseline pb-3 pt-2.5 text-gray-500"
+            class="flex items-center pb-3 pt-2.5 text-gray-500"
             :class="[isCollapsed ? 'cursor-s-resize' : 'cursor-n-resize']"
             @click="isCollapsed = !isCollapsed"
           >
@@ -41,9 +41,22 @@
                 OP
               </span>
             </div>
-            <span :title="absoluteTimestamp(commentItem.time)">
-              {{ relativeTimestamp }}
-            </span>
+            <div
+              class="flex items-center gap-1"
+              :title="!isCollapsed ? absoluteTimestamp(commentItem.time) : ''"
+            >
+              <BaseIcon
+                v-show="isCollapsed"
+                class="-my-1"
+                name="comment-collapse"
+                small
+              />
+              {{
+                isCollapsed
+                  ? `${descendants} comment${descendants !== 1 ? 's' : ''}`
+                  : relativeTimestamp
+              }}
+            </div>
           </div>
           <div
             v-show="!isCollapsed"
@@ -66,6 +79,10 @@
           index === commentItem.kids!.length - 1 ? consecutiveLastLevels + 1 : 0
         "
         :post-by="postBy"
+        @count-descendant="
+          descendants += 1;
+          $emit('countDescendant');
+        "
       />
     </template>
   </div>
@@ -77,6 +94,7 @@ import DOMPurify from 'dompurify';
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
 import { apiItemUrl, absoluteTimestamp } from '@/utils';
+import BaseIcon from '@/components/BaseIcon.vue';
 import CommentItem from '@/components/CommentItem.vue';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 
@@ -93,7 +111,16 @@ const commentItem: HackerNewsItem | null = await fetch(apiItemUrl(props.id)).the
   response.json()
 );
 
+const isValid = commentItem && !(commentItem.deleted || !commentItem.dead) && commentItem.text;
 const hasKids = commentItem && commentItem.kids && commentItem.kids.length !== 0 ? true : false;
+
+// count total recursive descendants by emitting events to potential higher-level comment instances
+const descendants = ref(1);
+const emit = defineEmits(['countDescendant']);
+
+if (isValid) {
+  emit('countDescendant');
+}
 
 // if a comment is the last of its current level and has no kids, it needs an inside indentation
 // for each consecutive last level counting down from the current one. in all other cases,

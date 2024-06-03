@@ -52,8 +52,8 @@
         />
       </Suspense>
     </template>
-    <LoadingItem
-      ref="loadingItemInstance"
+    <StatusItem
+      ref="statusItemInstance"
       v-show="!hasComments || !someThreadInstancesVisible || !allThreadInstancesVisible"
       :full-height="!hasDescription && (!hasComments || !someThreadInstancesVisible)"
       :message="!hasComments ? 'So far, no comments have been left on this story.' : undefined"
@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, nextTick } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import { useInfiniteScroll } from '@vueuse/core';
 import type { HackerNewsItem } from '@/types';
@@ -70,7 +70,7 @@ import { apiItemUrl } from '@/utils';
 import BaseButton from '@/components/BaseButton.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import CommentItem from '@/components/CommentItem.vue';
-import LoadingItem from '@/components/LoadingItem.vue';
+import StatusItem from '@/components/StatusItem.vue';
 import { useContentStore } from '@/stores/ContentStore';
 
 const content = useContentStore();
@@ -124,13 +124,14 @@ async function fetchThreadItems() {
   loadThreadGroup();
 }
 
-// if this is true, it prevents infinite scrolling callbacks from lading multiple thread groups at once
+// if this is true, it prevents infinite scrolling callbacks from loading multiple thread groups at once
 const isLoadingThreadGroup = ref(false);
 
 // push the next slice of threadItems as a new thread group
 function loadThreadGroup() {
   if (isLoadingThreadGroup.value) return;
 
+  // when the Suspense component surrounding the thread group's items resolves, this is set back to false
   isLoadingThreadGroup.value = true;
 
   threadGroups.value.push(
@@ -205,7 +206,7 @@ onMounted(() => {
   );
 });
 
-const loadingItemInstance = ref<ComponentPublicInstance | null>(null);
+const statusItemInstance = ref<ComponentPublicInstance | null>(null);
 
 function scrollThreadIntoView(index: number) {
   if (index < 0 || index >= threadItemCount.value) return;
@@ -214,7 +215,7 @@ function scrollThreadIntoView(index: number) {
   // (triggering loadThreadGroup)
   const element =
     index >= threadInstanceCount.value
-      ? loadingItemInstance.value?.$el
+      ? statusItemInstance.value?.$el
       : threadInstances.value[index].$el;
 
   element.scrollIntoView({

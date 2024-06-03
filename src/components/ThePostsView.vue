@@ -11,9 +11,9 @@
       :active="postItem.id === content.currentPostItem?.id"
       @click="content.setCurrentPostItem(postItem)"
     />
-    <LoadingItem
+    <StatusItem
       :full-height="!content.currentCategoryHasSomePostItems"
-      :message="loadingMessage"
+      :message="statusMessage"
     />
   </PageColumnBody>
 </template>
@@ -23,7 +23,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useInfiniteScroll } from '@vueuse/core';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import PostItem from '@/components/PostItem.vue';
-import LoadingItem from '@/components/LoadingItem.vue';
+import StatusItem from '@/components/StatusItem.vue';
 import { useContentStore } from '@/stores/ContentStore';
 
 const content = useContentStore();
@@ -42,7 +42,7 @@ onMounted(() => {
   );
 });
 
-const loadingMessage = computed(() => {
+const statusMessage = computed(() => {
   if (content.currentCategoryHasAllPostItems)
     return `You have browsed all “${content.currentCategoryName.replace(' ', '&nbsp;')}” entries. Refresh the list to view newer posts.`;
   else if (content.currentCategoryPostIds?.error)

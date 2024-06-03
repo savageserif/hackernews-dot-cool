@@ -1,9 +1,8 @@
 <template>
   <div class="space-y-px">
     <div
-      v-if="commentItem && !(commentItem.deleted || commentItem.dead) && commentItem.text"
       class="mx-auto flex max-w-150 pl-3.5 pr-3.5 @container"
-      :class="[isCollapsed ? 'bg-gray-100 hover:bg-gray-100' : 'hover:bg-gray-50']"
+      :class="[isCollapsed ? 'bg-gray-100' : '']"
     >
       <div
         v-for="index in outsideIndentations"
@@ -36,9 +35,9 @@
             @click="isCollapsed = !isCollapsed"
           >
             <div class="flex-1">
-              <span class="font-serif text-base-serif italic">{{ commentItem.by }}</span>
+              <span class="font-serif text-base-serif italic">{{ item.by }}</span>
               <span
-                v-if="commentItem.by === postBy"
+                v-if="item.by === content.currentPostItem?.by"
                 class="my-[-0.25rem] ml-1.5 inline-block rounded-sm bg-orange-200/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-orange-700 [font-feature-settings:'smcp','c2sc']"
               >
                 OP
@@ -46,7 +45,7 @@
             </div>
             <div
               class="flex items-center gap-1"
-              :title="!isCollapsed ? absoluteTimestamp(commentItem.time) : ''"
+              :title="!isCollapsed ? absoluteTimestamp(item.time) : ''"
             >
               <BaseIcon
                 v-show="isCollapsed"
@@ -69,30 +68,25 @@
         </div>
       </div>
     </div>
-    <template v-if="commentItem && hasKids">
-      <CommentItem
-        v-for="(commentId, index) in commentItem.kids"
-        v-show="!isCollapsed"
-        :key="index"
-        :id="commentId"
-        :level="level + 1"
-        :first-of-level="index === 0"
-        :last-of-level="index === commentItem.kids!.length - 1"
-        :consecutive-last-levels="
-          index === commentItem.kids!.length - 1 ? consecutiveLastLevels + 1 : 0
-        "
-        :post-by="postBy"
-        @count-descendant="
-          descendants += 1;
-          $emit('countDescendant');
-        "
-      />
-    </template>
+    <CommentItem
+      v-for="(kidItem, index) in kidItems"
+      v-show="!isCollapsed"
+      :key="index"
+      :item="kidItem"
+      :level="level + 1"
+      :first-of-level="index === 0"
+      :last-of-level="index === kidItems.length - 1"
+      :consecutive-last-levels="index === kidItems.length - 1 ? consecutiveLastLevels + 1 : 0"
+      @count-descendant="
+        descendants += 1;
+        $emit('countDescendant');
+      "
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
 import DOMPurify from 'dompurify';
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
@@ -102,52 +96,67 @@ import CommentItem from '@/components/CommentItem.vue';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 import { useContentStore } from '@/stores/ContentStore';
 
-const props = defineProps<{
-  id?: number;
-  level: number;
-  firstOfLevel: boolean;
-  lastOfLevel: boolean;
-  consecutiveLastLevels: number;
-  postBy?: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    item: HackerNewsItem;
+    level?: number;
+    firstOfLevel?: boolean;
+    lastOfLevel?: boolean;
+    consecutiveLastLevels?: number;
+  }>(),
+  {
+    level: 0,
+    firstOfLevel: true,
+    lastOfLevel: true,
+    consecutiveLastLevels: 0,
+  }
+);
 
 const content = useContentStore();
 
-// if no ID prop is set, this is a post’s description text that appears above the comment threads
-const isPostDescription = !props.id;
+// if item data does not contain 'parent' key, this is a post’s description text that appears above the comment threads
+const isPostDescription = !('parent' in props.item);
 
-// fetch comment item or return object containing the current post’s data
-const commentItem: HackerNewsItem | null = !isPostDescription
-  ? await fetch(apiItemUrl(props.id)).then((response) => response.json())
-  : {
-      text: content.currentPostItem?.text,
-      by: content.currentPostItem?.by,
-      time: content.currentPostItem?.time,
-    };
-
-const isValid = commentItem && !(commentItem.deleted || !commentItem.dead) && commentItem.text;
-const hasKids = commentItem && commentItem.kids && commentItem.kids.length !== 0 ? true : false;
+const isCollapsed = ref(false);
 
 // count total recursive descendants by emitting events to potential higher-level comment instances
 const descendants = ref(1);
 const emit = defineEmits(['countDescendant']);
+emit('countDescendant');
 
-if (isValid) {
-  emit('countDescendant');
-}
+const kidIds = ref<number[]>(!isPostDescription && props.item.kids ? props.item.kids : []);
+const kidItems = ref<HackerNewsItem[]>([]);
+
+// fetch nested comments if kids exist
+const fetchedItems: HackerNewsItem[] = await Promise.all(
+  kidIds.value.map(async (id) => {
+    return await fetch(apiItemUrl(id)).then((response) => response.json());
+  })
+);
+
+const validItems = fetchedItems.filter(
+  (threadItem) => !threadItem.dead && !threadItem.deleted && threadItem.text
+);
+
+kidItems.value.push(...validItems);
 
 // if a comment is the last of its current level and has no kids, it needs an inside indentation
 // for each consecutive last level counting down from the current one. in all other cases,
 // only outside indentations are needed
-const insideIndentations = props.lastOfLevel && !hasKids ? props.consecutiveLastLevels : 0;
+const insideIndentations =
+  props.lastOfLevel && kidIds.value.length === 0 ? props.consecutiveLastLevels : 0;
 const outsideIndentations = props.level - insideIndentations;
 
-const isCollapsed = ref(false);
+const { text: relativeTimestamp } = useRelativeTimestamp(
+  computed(() => props.item.time),
+  true
+);
 
-const { text: relativeTimestamp } = useRelativeTimestamp(commentItem?.time, true);
 
-// run text content of comments through smartquotes
-DOMPurify.addHook('afterSanitizeElements', (node) => {
+const domPurifyInstance = DOMPurify();
+
+// optimize/format comment text
+domPurifyInstance.addHook('afterSanitizeElements', (node) => {
   if (node.nodeName && node.nodeName === '#text') {
     if (!node.textContent) return;
 
@@ -167,17 +176,19 @@ DOMPurify.addHook('afterSanitizeElements', (node) => {
 });
 
 // add target="_blank" attribute to all links
-DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+domPurifyInstance.addHook('afterSanitizeAttributes', (node) => {
   if ('target' in node) {
     node.setAttribute('target', '_blank');
   }
 });
 
-// add a prepended p tag because HN comments start with only a text node
-const commentText = DOMPurify.sanitize('<p>' + commentItem?.text);
+const commentText = ref('');
 
-// remove hooks, as they otherwise accumulate from all CommentItem instances
-DOMPurify.removeAllHooks();
+// re-format comment text if it changes
+watchEffect(() => {
+  // add a prepended p tag because HN comments start with only a text node
+  commentText.value = domPurifyInstance.sanitize('<p>' + props.item.text);
+});
 </script>
 
 <style lang="postcss">

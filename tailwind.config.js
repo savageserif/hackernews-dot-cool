@@ -49,6 +49,12 @@ export default {
         950: '#522100', // primary & secondary (60% opacity)
       },
     },
+    borderRadius: {
+      none: '0',
+      DEFAULT: '0.125rem',
+      sm: '0.125rem',
+      outline: '0.1875rem',
+    },
     extend: {
       lineHeight: {
         'paragraph-narrow': '1.3125rem',

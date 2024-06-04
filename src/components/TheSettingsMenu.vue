@@ -3,11 +3,11 @@
     <MenuButton
       :as="BaseButton"
       icon="settings"
-      class="ui-open:bg-gray-700/15 pr-[0.25rem]"
+      class="pr-[0.25rem] ui-open:bg-gray-700/15"
       title="Settings"
     />
     <MenuItems
-      class="shadow-menu absolute bottom-[2.1875rem] right-1 w-max divide-y divide-gray-200 rounded-sm bg-white focus:outline-none"
+      class="absolute bottom-[2.1875rem] right-1 w-max divide-y divide-gray-200 rounded bg-white shadow-menu focus:outline-none"
     >
       <div
         v-for="(group, index) in menuContents"
@@ -19,7 +19,7 @@
           :key="index"
           :as="item.heading ? 'div' : 'button'"
           :disabled="item.heading"
-          class="ui-active:bg-gray-100 ui-disabled:h-7 ui-disabled:font-medium ui-disabled:pb-[0.0625rem] ui-disabled:text-gray-500 ui-disabled:tracking-wide ui-disabled:[font-feature-settings:'smcp','c2sc'] flex h-8 w-full items-center gap-0.5 pl-1 pr-8 text-left *:flex-none"
+          class="flex h-8 w-full items-center gap-0.5 pl-1 pr-8 text-left *:flex-none ui-active:bg-gray-100 ui-disabled:h-7 ui-disabled:pb-[0.0625rem] ui-disabled:font-medium ui-disabled:tracking-wide ui-disabled:text-gray-500 ui-disabled:[font-feature-settings:'smcp','c2sc']"
           @click="item.action"
         >
           <BaseIcon

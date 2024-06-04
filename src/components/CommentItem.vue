@@ -38,7 +38,7 @@
               <span class="font-serif text-base-serif italic">{{ item.by }}</span>
               <span
                 v-if="item.by === content.currentPostItem?.by"
-                class="my-[-0.25rem] ml-1.5 inline-block rounded-sm bg-orange-200/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-orange-700 [font-feature-settings:'smcp','c2sc']"
+                class="my-[-0.25rem] ml-1.5 inline-block rounded bg-orange-200/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-orange-700 [font-feature-settings:'smcp','c2sc']"
               >
                 OP
               </span>
@@ -214,6 +214,6 @@ div[class*='leading-paragraph'] i {
 }
 
 div[class*='leading-paragraph'] pre {
-  @apply !my-3 overflow-x-auto rounded-sm bg-gray-500/10 px-3 pb-2.5 pt-2 text-small;
+  @apply !my-3 overflow-x-auto rounded bg-gray-500/10 px-3 pb-2.5 pt-2 text-small;
 }
 </style>

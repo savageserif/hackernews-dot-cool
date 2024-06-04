@@ -87,7 +87,7 @@ const threadGroups = ref<HackerNewsItem[][]>([]);
 
 // depending on the number of total comments, the number of items in a group is between 3 and 10
 const threadGroupSize = computed(() =>
-  Math.min(Math.max(Math.round(1000 / (content.currentPostItem?.descendants ?? 1)), 3), 10)
+  Math.min(Math.max(Math.round(500 / (content.currentPostItem?.descendants ?? 1)), 3), 10)
 );
 
 const groupedThreadItemsCount = computed(() => threadGroups.value.flat().length);

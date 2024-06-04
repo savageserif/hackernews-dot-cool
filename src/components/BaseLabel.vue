@@ -7,7 +7,7 @@
       v-if="icon"
       :name="icon"
       :small="small"
-      :inheritColor="inheritColor"
+      :inherit-color="inheritColor"
     />
     <slot />
   </div>

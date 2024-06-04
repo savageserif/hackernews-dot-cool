@@ -51,9 +51,8 @@ export default {
     },
     borderRadius: {
       none: '0',
-      DEFAULT: '0.125rem',
-      sm: '0.125rem',
-      outline: '0.1875rem',
+      DEFAULT: '0.1875rem',
+      outline: '0.21875rem',
     },
     extend: {
       lineHeight: {

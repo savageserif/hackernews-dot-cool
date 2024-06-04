@@ -45,10 +45,6 @@
           ref="threadInstances"
           :key="index"
           :item="threadItem"
-          :level="0"
-          :first-of-level="index === 0"
-          :last-of-level="false"
-          :consecutive-last-levels="0"
           class="scroll-mt-[2.625rem]"
         />
       </Suspense>

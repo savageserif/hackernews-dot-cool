@@ -106,8 +106,8 @@ const props = withDefaults(
   }>(),
   {
     level: 0,
-    firstOfLevel: true,
-    lastOfLevel: true,
+    firstOfLevel: false,
+    lastOfLevel: false,
     consecutiveLastLevels: 0,
   }
 );

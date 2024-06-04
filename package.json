@@ -23,6 +23,7 @@
     "pinia": "^2.1.7",
     "postcss": "^8.4.38",
     "smartquotes-ts": "^0.0.2",
+    "smooth-scroll-into-view-if-needed": "^2.0.2",
     "tailwindcss": "^3.4.3",
     "vue": "^3.4.21",
     "vue-inline-svg": "^3.1.2",

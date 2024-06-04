@@ -1,7 +1,7 @@
 <template>
   <PageColumnBody
     ref="containerElement"
-    class="scroll-pt-[2.625rem] space-y-px"
+    class="space-y-px"
   >
     <Suspense>
       <CommentItem
@@ -49,6 +49,7 @@
           :first-of-level="index === 0"
           :last-of-level="false"
           :consecutive-last-levels="0"
+          class="scroll-mt-[2.625rem]"
         />
       </Suspense>
     </template>
@@ -65,6 +66,7 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import { useInfiniteScroll } from '@vueuse/core';
+import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 import type { HackerNewsItem } from '@/types';
 import { apiItemUrl } from '@/utils';
 import BaseButton from '@/components/BaseButton.vue';
@@ -218,9 +220,10 @@ function scrollThreadIntoView(index: number) {
       ? statusItemInstance.value?.$el
       : threadInstances.value[index].$el;
 
-  element.scrollIntoView({
-    behavior: 'smooth',
+  scrollIntoView(element, {
     block: 'start',
+    duration: 250,
+    ease: (x) => (x === 1 ? 1 : 1 - Math.pow(2, -10 * x)),
   });
 }
 </script>

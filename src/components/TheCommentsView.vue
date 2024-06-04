@@ -1,8 +1,5 @@
 <template>
-  <PageColumnBody
-    ref="containerElement"
-    class="space-y-px"
-  >
+  <PageColumnBody ref="containerElement">
     <Suspense>
       <CommentItem
         v-if="hasDescription"
@@ -23,7 +20,7 @@
           <BaseButton
             icon="chevron-up"
             small
-            :disabled="currentThreadIndex <= 0"
+            :disabled="!firstThreadScrolledPastTop"
             @click="scrollThreadIntoView(currentThreadIndex - 1)"
           />
           <BaseButton
@@ -36,16 +33,17 @@
       </div>
     </div>
     <template
-      v-for="(threadItems, index) in threadGroups"
-      :key="index"
+      v-for="(threadItems, groupIndex) in threadGroups"
+      :key="groupIndex"
     >
       <Suspense @resolve="isLoadingThreadGroup = false">
         <CommentItem
-          v-for="(threadItem, index) in threadItems"
+          v-for="(threadItem, itemIndex) in threadItems"
           ref="threadInstances"
-          :key="index"
+          :key="itemIndex"
           :item="threadItem"
           class="scroll-mt-[2.625rem]"
+          :class="groupIndex * threadGroupSize + (itemIndex + 1) < threadItemCount ? 'mb-px' : ''"
         />
       </Suspense>
     </template>
@@ -61,7 +59,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
-import { useInfiniteScroll } from '@vueuse/core';
+import { useInfiniteScroll, useElementBounding } from '@vueuse/core';
 import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 import type { HackerNewsItem } from '@/types';
 import { apiItemUrl } from '@/utils';
@@ -204,10 +202,23 @@ onMounted(() => {
   );
 });
 
+// determine whether the first thread is scrolled past its top edge (enabling the "up" button)
+const { top: firstThreadTop } = useElementBounding(computed(() => threadInstances.value[0]));
+const firstThreadScrolledPastTop = computed(() => firstThreadTop.value < 83);
+
 const statusItemInstance = ref<ComponentPublicInstance | null>(null);
 
 function scrollThreadIntoView(index: number) {
-  if (index < 0 || index >= threadItemCount.value) return;
+  index = Math.min(Math.max(index, 0), threadItemCount.value - 1);
+
+  // if the direction is up and the current thread is scrolled past its top edge, scroll to the top
+  // of the current thread instead of scrolling to the previous one
+  if (
+    index < currentThreadIndex.value &&
+    threadInstances.value[currentThreadIndex.value].$el.getBoundingClientRect().top < 83
+  ) {
+    index = currentThreadIndex.value;
+  }
 
   // if the index points to a thread that is not yet visible, scroll the loading item into view instead
   // (triggering loadThreadGroup)

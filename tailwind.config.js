@@ -64,6 +64,10 @@ export default {
         90: '22.5rem', // 360px
         150: '37.5rem', // 600px
       },
+      containers: {
+        'comment-wide': '28rem',
+        'comment-detached': '37.5625rem',
+      },
       boxShadow: {
         'border-y': '0 0.0625rem, 0 -0.0625rem',
         'border-b': '0 0.0625rem',

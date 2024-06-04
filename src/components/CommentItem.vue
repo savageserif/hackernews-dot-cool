@@ -1,7 +1,7 @@
 <template>
-  <div class="space-y-px">
+  <div class="space-y-px @container">
     <div
-      class="mx-auto flex max-w-150 pl-3.5 pr-3.5 @container"
+      class="@comment-detached:rounded mx-auto flex max-w-150 pl-3.5 pr-3.5"
       :class="[isCollapsed ? 'bg-gray-100' : '']"
     >
       <div
@@ -62,7 +62,7 @@
           </div>
           <div
             v-show="!isCollapsed"
-            class="-mt-1 mb-3 select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere] @sm:space-y-1.5 @sm:leading-paragraph-wide"
+            class="@comment-wide:space-y-1.5 @comment-wide:leading-paragraph-wide -mt-1 mb-3 select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere]"
             v-html="commentText"
           />
         </div>

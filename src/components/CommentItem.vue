@@ -2,7 +2,7 @@
   <div class="space-y-px @container">
     <div
       class="@comment-detached:rounded mx-auto flex max-w-150 pl-3.5 pr-3.5"
-      :class="[isCollapsed ? 'bg-gray-100' : '']"
+      :class="[isCollapsed ? 'bg-gray-100 shadow-border-y shadow-gray-100' : '']"
     >
       <div
         v-for="index in outsideIndentations"
@@ -16,7 +16,7 @@
       />
       <div
         class="flex w-full min-w-0 flex-1"
-        :class="[!isPostDescription ? 'shadow-border-b shadow-gray-200' : '']"
+        :class="[!isPostDescription && !isCollapsed ? 'shadow-border-b shadow-gray-200' : '']"
       >
         <div
           v-for="index in insideIndentations"
@@ -31,8 +31,10 @@
         <div class="w-full flex-1">
           <div
             class="flex items-center pb-3 pt-2.5 text-gray-500"
-            :class="[isCollapsed ? 'cursor-s-resize' : 'cursor-n-resize']"
-            @click="isCollapsed = !isCollapsed"
+            :class="[
+              !isPostDescription ? (isCollapsed ? 'cursor-s-resize' : 'cursor-n-resize') : '',
+            ]"
+            @click="toggleCollapsed()"
           >
             <div class="flex-1">
               <span class="font-serif text-base-serif italic">{{ item.by }}</span>
@@ -118,6 +120,10 @@ const content = useContentStore();
 const isPostDescription = !('parent' in props.item);
 
 const isCollapsed = ref(false);
+function toggleCollapsed() {
+  if (isPostDescription) return;
+  isCollapsed.value = !isCollapsed.value;
+}
 
 // count total recursive descendants by emitting events to potential higher-level comment instances
 const descendants = ref(1);

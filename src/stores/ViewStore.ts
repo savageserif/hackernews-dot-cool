@@ -1,11 +1,17 @@
 import { computed } from 'vue';
 import type { ComputedRef } from 'vue';
 import { defineStore } from 'pinia';
-import { useInterval, useStorage, useWindowSize } from '@vueuse/core';
+import { useStorage, usePreferredColorScheme, useWindowSize, useInterval } from '@vueuse/core';
 import type { RemovableRef } from '@vueuse/core';
 
 export const useViewStore = defineStore('view', () => {
   const colorScheme = useStorage<'system' | 'light' | 'dark'>('colorScheme', 'system');
+  const darkColorSchemeIsActive = computed(
+    () =>
+      colorScheme.value === 'dark' ||
+      (colorScheme.value === 'system' && usePreferredColorScheme().value === 'dark')
+  );
+
   const prioritizedView = useStorage<'link' | 'comments'>('prioritizedView', 'link');
 
   const { width: windowWidth } = useWindowSize();
@@ -55,6 +61,7 @@ export const useViewStore = defineStore('view', () => {
 
   return {
     colorScheme,
+    darkColorSchemeIsActive,
     prioritizedView,
     windowWidth,
     availableColumns,

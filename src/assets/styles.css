@@ -49,3 +49,6 @@
   --color-accent: var(--accent-700);
   --color-focus: var(--focus-500);
 }
+
+.dark {
+}

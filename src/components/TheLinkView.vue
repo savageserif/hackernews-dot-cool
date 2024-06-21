@@ -1,7 +1,7 @@
 <template>
   <PageColumnBody>
     <object
-      v-if="objectRendered"
+      v-if="renderObject"
       v-show="!error"
       ref="objectElement"
       class="h-full w-full"
@@ -9,14 +9,16 @@
     />
     <div
       v-show="error"
-      class="flex h-full flex-col items-center justify-center gap-3 bg-gray-100 pb-4"
+      class="flex h-full flex-col items-center justify-center gap-3 bg-controls-color pb-4"
       :class="[firstErrorForPostId ? 'animate-appear' : '']"
     >
       <img
         :src="currentErrorAsset"
         class="w-32"
       />
-      <div class="max-w-150 text-balance px-8 text-center leading-paragraph-narrow text-gray-500">
+      <div
+        class="max-w-150 text-balance px-8 text-center leading-paragraph-narrow text-secondary-color"
+      >
         Unfortunately, this website does not allow an inline preview. You can open the link
         externally instead.
       </div>
@@ -57,7 +59,7 @@ const error = computed(() =>
 const firstErrorForPostId = ref(false);
 
 // whether the object element is being rendered (see comment below)
-const objectRendered = ref(true);
+const renderObject = ref(true);
 
 watch(
   () => content.currentPostItem,
@@ -69,9 +71,9 @@ watch(
 
     // force object element to be replaced when current post item changes
     // (object element seems to refuse to load new content once it encounters an error)
-    objectRendered.value = false;
+    renderObject.value = false;
     await nextTick();
-    objectRendered.value = true;
+    renderObject.value = true;
     await nextTick();
   }
 );

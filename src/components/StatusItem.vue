@@ -5,7 +5,7 @@
   >
     <span
       v-if="message"
-      class="mx-10 text-balance text-center text-small text-gray-500"
+      class="mx-10 text-balance text-center text-small text-secondary-color"
       v-html="message"
     />
     <BaseIcon

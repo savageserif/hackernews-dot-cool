@@ -2,7 +2,7 @@
   <Listbox v-model="currentCategory">
     <ListboxButton
       :as="BaseButton"
-      class="relative pr-1 ui-open:bg-gray-700/15"
+      class="relative pr-1 ui-open:bg-primary-color/10"
     >
       {{ content.currentCategoryName }}
       <BaseIcon
@@ -12,14 +12,14 @@
       />
     </ListboxButton>
     <ListboxOptions
-      class="absolute top-[2.4375rem] -translate-x-[1.375rem] rounded bg-white py-1.5 shadow-menu focus:outline-none"
+      class="absolute top-[2.4375rem] -translate-x-[1.375rem] rounded bg-base-color py-1.5 shadow-menu focus:outline-none"
     >
       <ListboxOption
         v-for="(categoryName, category) in content.categoryNames"
         v-slot="{ selected }"
         :key="category"
         :value="category"
-        class="flex h-8 cursor-pointer items-center gap-0.5 pl-1 pr-8 ui-active:bg-gray-100"
+        class="flex h-8 cursor-pointer items-center gap-0.5 pl-1 pr-8 ui-active:bg-controls-color"
       >
         <BaseIcon
           v-if="selected"

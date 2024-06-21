@@ -22,7 +22,7 @@
       <template #center>
         <span
           v-if="content.currentCategoryPostIds"
-          class="mb-0.5 text-small text-gray-500"
+          class="mb-0.5 text-small text-secondary-color"
         >
           {{ refreshStatus }}
         </span>

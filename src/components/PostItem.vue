@@ -3,26 +3,26 @@
     class="px-3.5"
     :class="[
       active
-        ? 'shadow-border-y bg-orange-200 text-orange-950 shadow-orange-200'
-        : 'cursor-pointer hover:bg-gray-50',
-      viewed && !active ? 'text-gray-500' : '',
+        ? 'bg-selection-color text-primary-selected-color shadow-border-y shadow-selection-color'
+        : 'cursor-pointer hover:bg-hover-color',
+      viewed && !active ? 'text-secondary-color' : '',
     ]"
   >
     <div
       class="space-y-2 pb-3 pt-2.5"
-      :class="[!active ? 'shadow-border-b shadow-gray-200' : '']"
+      :class="[!active ? 'shadow-border-b shadow-separator-color' : '']"
     >
-      <div class="font-serif space-y-0.5 text-base-serif">
+      <div class="space-y-0.5 font-serif text-base-serif">
         <h2 class="font-serif-heading font-bold">
           {{ smartquotes(item.title) }}
         </h2>
-        <div>
+        <div class="[overflow-wrap:anywhere]">
           {{ item.url?.hostname }}
           <span
             class="italic"
             :class="[
-              viewed && !active ? 'text-gray-500/70' : '',
-              active ? 'text-orange-950/60' : 'text-gray-500',
+              viewed && !active ? 'text-secondary-color/70' : '',
+              active ? 'text-primary-selected-color/60' : 'text-secondary-color',
             ]"
           >
             {{ item.url ? 'via' : 'by' }}&nbsp;{{ item.by }}
@@ -31,7 +31,7 @@
       </div>
       <div
         class="ml-[-0.125rem] flex gap-2.5"
-        :class="[active ? 'text-orange-950/60' : 'text-gray-500']"
+        :class="[active ? 'text-primary-selected-color/60' : 'text-secondary-color']"
       >
         <BaseLabel
           v-if="item.score !== undefined"

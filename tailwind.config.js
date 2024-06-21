@@ -20,34 +20,18 @@ export default {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      white: '#ffffff',
-      blue: '#4C9EFF',
-      gray: {
-        50: '#F9F9FB',
-        100: '#EFF1F5', // header bg
-        200: '#DBDDE6', // borders
-        300: '#C7CAD6',
-        400: '#AFB3C0', // indentation
-        500: '#9598A4', // secondary
-        600: '#82879C',
-        700: '#707794',
-        800: '#5C6484',
-        900: '#3E4560',
-        950: '#2A2F46', // primary
-      },
-      orange: {
-        50: '#FFF9F5',
-        100: '#FFF3EB',
-        200: '#FFE3D1', // active bg
-        300: '#FFD4B8',
-        400: '#FFC299',
-        500: '#FFAF7A',
-        600: '#FF944D',
-        700: '#FF7519', // accent
-        800: '#DB5800',
-        900: '#8F3900',
-        950: '#522100', // primary & secondary (60% opacity)
-      },
+      'base-color': 'hsl(var(--color-bg-base) / <alpha-value>)',
+      'hover-color': 'hsl(var(--color-bg-hover) / <alpha-value>)',
+      'controls-color': 'hsl(var(--color-bg-controls) / <alpha-value>)',
+      'selection-color': 'hsl(var(--color-bg-selection) / <alpha-value>)',
+      'primary-color': 'hsl(var(--color-text-primary) / <alpha-value>)',
+      'primary-selected-color': 'hsl(var(--color-text-primary-selected) / <alpha-value>)',
+      'secondary-color': 'hsl(var(--color-text-secondary) / <alpha-value>)',
+      'separator-color': 'hsl(var(--color-separator) / <alpha-value>)',
+      'indentation-color': 'hsl(var(--color-indentation) / <alpha-value>)',
+      'icon-color': 'hsl(var(--color-icon) / <alpha-value>)',
+      'accent-color': 'hsl(var(--color-accent) / <alpha-value>)',
+      'focus-color': 'hsl(var(--color-focus) / <alpha-value>)',
     },
     borderRadius: {
       none: '0',

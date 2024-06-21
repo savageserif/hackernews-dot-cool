@@ -3,3 +3,49 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+:root {
+  --light-0: 0 0% 100%; /* #fff */
+  --light-50: 240 20% 98%; /* #f9f9fb */
+  --light-100: 220 23% 95%; /* #eff1f5 */
+  --light-200: 229 18% 88%; /* #dbdde6 */
+  --light-300: 228 15% 81%; /* #c7cad6 */
+  --light-400: 226 12% 72%; /* #afb3c0 */
+  --light-500: 228 8% 61%; /* #9598a4 */
+  --light-600: 228 12% 56%; /* #82879c */
+  --light-700: 228 14% 51%; /* #707794 */
+  --light-800: 228 18% 44%; /* #5c6484 */
+  --light-900: 228 22% 31%; /* #3e4560 */
+  --light-950: 229 25% 22%; /* #2a2f46 */
+
+  --accent-50: 24 100% 98%; /* #fff9f5 */
+  --accent-100: 24 100% 96%; /* #fff3eb */
+  --accent-200: 24 100% 91%; /* #ffe3d1 */
+  --accent-300: 24 100% 86%; /* #ffd4b8 */
+  --accent-400: 24 100% 80%; /* #ffc299 */
+  --accent-500: 24 100% 74%; /* #ffaf7a */
+  --accent-600: 24 100% 65%; /* #ff944d */
+  --accent-700: 24 100% 55%; /* #ff7519 */
+  --accent-800: 24 100% 43%; /* #db5800 */
+  --accent-900: 24 100% 28%; /* #8f3900 */
+  --accent-950: 24 100% 16%; /* #522100 */
+
+  --focus-500: 213 100% 65%; /* #4c9eff */
+}
+
+:root {
+  --color-bg-base: var(--light-0);
+  --color-bg-hover: var(--light-50);
+  --color-bg-controls: var(--light-100);
+  --color-bg-selection: var(--accent-200);
+
+  --color-text-primary: var(--light-950);
+  --color-text-primary-selected: var(--accent-950);
+  --color-text-secondary: var(--light-500);
+
+  --color-separator: var(--light-200);
+  --color-indentation: var(--light-400);
+  --color-icon: var(--light-500);
+  --color-accent: var(--accent-700);
+  --color-focus: var(--focus-500);
+}

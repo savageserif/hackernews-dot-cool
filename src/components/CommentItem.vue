@@ -1,36 +1,38 @@
 <template>
   <div class="space-y-px @container">
     <div
-      class="@comment-detached:rounded mx-auto flex max-w-150 pl-3.5 pr-3.5"
-      :class="[isCollapsed ? 'bg-gray-100 shadow-border-y shadow-gray-100' : '']"
+      class="mx-auto flex max-w-150 pl-3.5 pr-3.5 @comment-detached:rounded"
+      :class="[isCollapsed ? 'bg-controls-color shadow-border-y shadow-controls-color' : '']"
     >
       <div
         v-for="index in outsideIndentations"
         :key="index"
-        class="my-3.5 mr-3 w-0.5 flex-none self-stretch rounded bg-gray-400"
+        class="my-3.5 mr-3 w-0.5 flex-none self-stretch rounded bg-indentation-color"
         :class="
           insideIndentations > 0 || index < outsideIndentations || !firstOfLevel
-            ? 'shadow-indentation-t shadow-gray-400'
+            ? 'shadow-indentation-t shadow-indentation-color'
             : ''
         "
       />
       <div
         class="flex w-full min-w-0 flex-1"
-        :class="[!isPostDescription && !isCollapsed ? 'shadow-border-b shadow-gray-200' : '']"
+        :class="[
+          !isPostDescription && !isCollapsed ? 'shadow-border-b shadow-separator-color' : '',
+        ]"
       >
         <div
           v-for="index in insideIndentations"
           :key="index"
-          class="mb-3.5 mr-3 mt-3.5 w-0.5 flex-none self-stretch rounded bg-gray-400"
+          class="mb-3.5 mr-3 mt-3.5 w-0.5 flex-none self-stretch rounded bg-indentation-color"
           :class="
             index < insideIndentations || !firstOfLevel
-              ? 'shadow-indentation-t shadow-gray-400'
+              ? 'shadow-indentation-t shadow-indentation-color'
               : ''
           "
         />
         <div class="w-full flex-1">
           <div
-            class="flex items-center pb-3 pt-2.5 text-gray-500"
+            class="flex items-center pb-3 pt-2.5 text-secondary-color"
             :class="[
               !isPostDescription ? (isCollapsed ? 'cursor-s-resize' : 'cursor-n-resize') : '',
             ]"
@@ -40,7 +42,7 @@
               <span class="font-serif text-base-serif italic">{{ item.by }}</span>
               <span
                 v-if="item.by === content.currentPostItem?.by"
-                class="my-[-0.25rem] ml-1.5 inline-block rounded bg-orange-200/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-orange-700 [font-feature-settings:'smcp','c2sc']"
+                class="my-[-0.25rem] ml-1.5 inline-block rounded bg-selection-color/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-accent-color [font-feature-settings:'smcp','c2sc']"
               >
                 OP
               </span>
@@ -64,7 +66,7 @@
           </div>
           <div
             v-show="!isCollapsed"
-            class="@comment-wide:space-y-1.5 @comment-wide:leading-paragraph-wide -mt-1 mb-3 select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere]"
+            class="-mt-1 mb-3 select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere] @comment-wide:space-y-1.5 @comment-wide:leading-paragraph-wide"
             v-html="commentText"
           />
         </div>
@@ -199,11 +201,11 @@ watchEffect(() => {
 
 <style lang="postcss">
 div[class*='leading-paragraph'] a {
-  @apply text-orange-700 underline decoration-transparent underline-offset-2 transition-colors duration-200;
+  @apply text-accent-color underline decoration-transparent underline-offset-2 transition-colors duration-200;
 }
 
 div[class*='leading-paragraph'] a:hover {
-  @apply decoration-orange-600 duration-0;
+  @apply decoration-accent-color/80 duration-0;
 }
 
 div[class*='leading-paragraph'] a:focus {
@@ -211,7 +213,7 @@ div[class*='leading-paragraph'] a:focus {
 }
 
 div[class*='leading-paragraph'] a:focus-visible {
-  @apply outline-blue;
+  @apply outline-focus-color;
 }
 
 div[class*='leading-paragraph'] em,
@@ -220,6 +222,6 @@ div[class*='leading-paragraph'] i {
 }
 
 div[class*='leading-paragraph'] pre {
-  @apply !my-3 overflow-x-auto rounded bg-gray-500/10 px-3 pb-2.5 pt-2 text-small;
+  @apply !my-3 overflow-x-auto rounded bg-controls-color px-3 pb-2.5 pt-2 text-small;
 }
 </style>

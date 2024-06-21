@@ -5,7 +5,7 @@
     </span>
     <span
       v-if="content.currentPostItem?.url?.pathname !== '/'"
-      class="text-gray-500"
+      class="text-secondary-color"
     >
       {{ content.currentPostItem?.url?.pathname }}{{ content.currentPostItem?.url?.search }}
     </span>

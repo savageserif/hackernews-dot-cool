@@ -1,6 +1,6 @@
 <template>
   <main
-    class="flex h-full select-none gap-px bg-gray-200 font-sans text-base text-gray-950 antialiased selection:bg-orange-200 selection:text-orange-950"
+    class="flex h-full select-none gap-px bg-separator-color font-sans text-base text-primary-color antialiased selection:bg-selection-color selection:text-primary-selected-color"
   >
     <ThePostsColumn :class="[view.availableColumns < 2 ? 'flex-1' : 'flex-none basis-90']" />
     <template v-if="content.currentPostItem">

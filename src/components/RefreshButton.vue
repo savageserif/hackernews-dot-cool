@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex h-8 items-center rounded p-1 ring-blue ring-offset-1 ring-offset-gray-100 transition-colors duration-200 hover:bg-gray-700/15 hover:duration-0 focus:outline-none focus-visible:ring-2 active:bg-gray-700/20"
+    class="flex h-8 items-center rounded p-1 ring-focus-color ring-offset-1 ring-offset-controls-color transition-colors duration-200 hover:bg-primary-color/10 hover:duration-0 focus:outline-none focus-visible:ring-2 active:bg-primary-color/15"
     @click="animate()"
   >
     <BaseLabel

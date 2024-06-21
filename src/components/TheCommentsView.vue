@@ -9,11 +9,11 @@
     </Suspense>
     <div
       v-show="hasComments && someThreadInstancesVisible"
-      class="sticky top-0 z-10 mx-auto max-w-150 bg-gradient-to-b from-white from-20% to-white/0 px-2 pt-2"
+      class="sticky top-0 z-10 mx-auto max-w-150 bg-gradient-to-b from-base-color from-20% to-base-color/0 px-2 pt-2"
     >
-      <div class="rounded-outline flex border border-gray-200 bg-gray-100 px-2 py-1">
+      <div class="flex rounded-outline border border-separator-color bg-controls-color px-2 py-1">
         <div class="flex flex-1 items-center gap-1"></div>
-        <div class="flex items-center gap-0.5 px-1 text-gray-500">
+        <div class="flex items-center gap-0.5 px-1 text-secondary-color">
           Thread {{ currentThreadIndex + 1 }} of {{ threadItemCount }}
         </div>
         <div class="flex flex-1 items-center justify-end gap-1">

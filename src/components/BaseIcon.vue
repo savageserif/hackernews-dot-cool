@@ -2,7 +2,7 @@
   <component
     v-if="iconComponent"
     :is="iconComponent"
-    :class="[small ? 'size-5' : 'size-6', inheritColor ? 'text-inherit' : 'text-gray-500']"
+    :class="[small ? 'size-5' : 'size-6', inheritColor ? 'text-inherit' : 'text-icon-color']"
   />
   <div
     v-else

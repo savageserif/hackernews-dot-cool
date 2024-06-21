@@ -20,7 +20,7 @@ export default {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      'base-color': 'hsl(var(--color-bg-base) / <alpha-value>)',
+      'blank-color': 'hsl(var(--color-bg-blank) / <alpha-value>)',
       'hover-color': 'hsl(var(--color-bg-hover) / <alpha-value>)',
       'controls-color': 'hsl(var(--color-bg-controls) / <alpha-value>)',
       'selection-color': 'hsl(var(--color-bg-selection) / <alpha-value>)',

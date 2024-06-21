@@ -9,7 +9,7 @@
     </Suspense>
     <div
       v-show="hasComments && someThreadInstancesVisible"
-      class="sticky top-0 z-10 mx-auto max-w-150 bg-gradient-to-b from-base-color from-20% to-base-color/0 px-2 pt-2"
+      class="sticky top-0 z-10 mx-auto max-w-150 bg-gradient-to-b from-blank-color from-20% to-blank-color/0 px-2 pt-2"
     >
       <div class="flex rounded-outline border border-separator-color bg-controls-color px-2 py-1">
         <div class="flex flex-1 items-center gap-1"></div>

@@ -12,7 +12,7 @@
       />
     </ListboxButton>
     <ListboxOptions
-      class="absolute top-[2.4375rem] -translate-x-[1.375rem] rounded bg-base-color py-1.5 shadow-menu focus:outline-none"
+      class="absolute top-[2.4375rem] -translate-x-[1.375rem] rounded bg-blank-color py-1.5 shadow-menu focus:outline-none"
     >
       <ListboxOption
         v-for="(categoryName, category) in content.categoryNames"

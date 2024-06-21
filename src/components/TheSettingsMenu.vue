@@ -7,7 +7,7 @@
       title="Settings"
     />
     <MenuItems
-      class="absolute bottom-[2.1875rem] right-1 w-max divide-y divide-separator-color rounded bg-base-color shadow-menu focus:outline-none"
+      class="absolute bottom-[2.1875rem] right-1 w-max divide-y divide-separator-color rounded bg-blank-color shadow-menu focus:outline-none"
     >
       <div
         v-for="(group, index) in menuContents"

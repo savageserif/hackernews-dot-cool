@@ -34,9 +34,9 @@
 }
 
 :root {
-  --color-bg-base: var(--light-0);
   --color-bg-hover: var(--light-50);
   --color-bg-controls: var(--light-100);
+  --color-bg-blank: var(--light-0);
   --color-bg-selection: var(--accent-200);
 
   --color-text-primary: var(--light-950);

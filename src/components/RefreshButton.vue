@@ -1,6 +1,7 @@
 <template>
   <button
-    class="flex h-8 items-center rounded p-1 ring-focus-color ring-offset-1 ring-offset-controls-color transition-colors duration-200 hover:bg-primary-color/10 hover:duration-0 focus:outline-none focus-visible:ring-2 active:bg-primary-color/15"
+    class="flex items-center rounded ring-focus-color ring-offset-1 ring-offset-controls-color transition-colors duration-200 hover:bg-primary-color/10 hover:duration-0 focus:outline-none focus-visible:ring-2 active:bg-primary-color/15"
+    :class="[view.isTouchDevice ? 'h-10 p-1.5' : 'h-8 p-1']"
     @click="animate()"
   >
     <BaseLabel
@@ -14,6 +15,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import BaseLabel from '@/components/BaseLabel.vue';
+import { useViewStore } from '@/stores/ViewStore';
+
+const view = useViewStore();
 
 const degrees = ref(0);
 

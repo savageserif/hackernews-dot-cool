@@ -1,16 +1,23 @@
 import { computed } from 'vue';
 import type { ComputedRef } from 'vue';
 import { defineStore } from 'pinia';
-import { useStorage, usePreferredColorScheme, useWindowSize, useInterval } from '@vueuse/core';
+import {
+  useStorage,
+  usePreferredDark,
+  useWindowSize,
+  useMediaQuery,
+  useInterval,
+} from '@vueuse/core';
 import type { RemovableRef } from '@vueuse/core';
 
 export const useViewStore = defineStore('view', () => {
   const colorScheme = useStorage<'system' | 'light' | 'dark'>('colorScheme', 'system');
   const darkColorSchemeIsActive = computed(
     () =>
-      colorScheme.value === 'dark' ||
-      (colorScheme.value === 'system' && usePreferredColorScheme().value === 'dark')
+      colorScheme.value === 'dark' || (colorScheme.value === 'system' && usePreferredDark().value)
   );
+
+  const isTouchDevice = useMediaQuery('(pointer: coarse)');
 
   const prioritizedView = useStorage<'link' | 'comments'>('prioritizedView', 'link');
 
@@ -62,6 +69,7 @@ export const useViewStore = defineStore('view', () => {
   return {
     colorScheme,
     darkColorSchemeIsActive,
+    isTouchDevice,
     prioritizedView,
     windowWidth,
     availableColumns,

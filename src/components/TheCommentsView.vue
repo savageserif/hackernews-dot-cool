@@ -16,7 +16,10 @@
         <div class="flex items-center gap-0.5 px-1 text-secondary-color">
           Thread {{ currentThreadIndex + 1 }} of {{ threadItemCount }}
         </div>
-        <div class="flex flex-1 items-center justify-end gap-1">
+        <div
+          class="flex flex-1 items-center justify-end"
+          :class="[!view.isTouchDevice ? 'gap-1' : '']"
+        >
           <BaseButton
             icon="chevron-up"
             small
@@ -42,8 +45,10 @@
           ref="threadInstances"
           :key="itemIndex"
           :item="threadItem"
-          class="scroll-mt-[2.625rem]"
-          :class="groupIndex * threadGroupSize + (itemIndex + 1) < threadItemCount ? 'mb-px' : ''"
+          :class="[
+            groupIndex * threadGroupSize + (itemIndex + 1) < threadItemCount ? 'mb-px' : '',
+            view.isTouchDevice ? 'scroll-mt-[3.125rem]' : 'scroll-mt-[2.625rem]',
+          ]"
         />
       </Suspense>
     </template>
@@ -67,8 +72,10 @@ import BaseButton from '@/components/BaseButton.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import CommentItem from '@/components/CommentItem.vue';
 import StatusItem from '@/components/StatusItem.vue';
+import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 
+const view = useViewStore();
 const content = useContentStore();
 
 const containerElement = ref<ComponentPublicInstance | null>(null);
@@ -183,7 +190,7 @@ onMounted(() => {
     },
     {
       root: containerElement.value?.$el,
-      rootMargin: '-42px 0px 0px 0px',
+      rootMargin: `${view.isTouchDevice ? -50 : -42}px 0px 0px 0px`,
     }
   );
 

@@ -2,7 +2,10 @@
   <component
     v-if="iconComponent"
     :is="iconComponent"
-    :class="[small ? 'size-5' : 'size-6', inheritColor ? 'text-inherit' : 'text-icon-color']"
+    :class="[
+      small ? 'size-5' : view.isTouchDevice ? 'size-7' : 'size-6',
+      inheritColor ? 'text-inherit' : 'text-icon-color',
+    ]"
   />
   <div
     v-else
@@ -12,12 +15,15 @@
 
 <script setup lang="ts">
 import { shallowRef, watchEffect } from 'vue';
+import { useViewStore } from '@/stores/ViewStore';
 
 const props = defineProps<{
   name: string;
   small?: boolean;
   inheritColor?: boolean;
 }>();
+
+const view = useViewStore();
 
 const iconComponent = shallowRef();
 

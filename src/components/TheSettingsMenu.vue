@@ -3,23 +3,26 @@
     <MenuButton
       :as="BaseButton"
       icon="settings"
-      class="pr-[0.25rem] ui-open:bg-primary-color/10"
+      class="ui-open:bg-primary-color/10"
+      :class="[view.isTouchDevice ? 'pr-[0.375rem]' : 'pr-[0.25rem]']"
       title="Settings"
     />
     <MenuItems
-      class="absolute bottom-[2.1875rem] right-1 w-max divide-y divide-separator-color rounded bg-blank-color shadow-menu focus:outline-none"
+      class="absolute right-1 w-max divide-y divide-separator-color rounded bg-blank-color shadow-menu focus:outline-none"
+      :class="[view.isTouchDevice ? 'bottom-[2.6875rem]' : 'bottom-[2.1875rem]']"
     >
       <div
         v-for="(group, index) in menuContents"
         :key="index"
-        class="py-2"
+        :class="[view.isTouchDevice ? 'py-2.5' : 'py-2']"
       >
         <MenuItem
           v-for="(item, index) in group"
           :key="index"
           :as="item.heading ? 'div' : 'button'"
           :disabled="item.heading"
-          class="flex h-8 w-full items-center gap-0.5 pl-1 pr-8 text-left *:flex-none ui-active:bg-controls-color ui-disabled:h-7 ui-disabled:pb-[0.0625rem] ui-disabled:font-medium ui-disabled:tracking-wide ui-disabled:text-secondary-color ui-disabled:[font-feature-settings:'smcp','c2sc']"
+          class="flex w-full items-center gap-0.5 pl-1 pr-8 text-left *:flex-none ui-active:bg-controls-color ui-disabled:pb-[0.0625rem] ui-disabled:font-medium ui-disabled:tracking-wide ui-disabled:text-secondary-color ui-disabled:[font-feature-settings:'smcp','c2sc']"
+          :class="[view.isTouchDevice ? 'h-9 ui-disabled:h-8' : 'h-8 ui-disabled:h-7']"
           @click="item.action"
         >
           <BaseIcon
@@ -28,7 +31,7 @@
           />
           <div
             v-else
-            class="size-6"
+            :class="[view.isTouchDevice ? 'size-7' : 'size-6']"
           />
           <span>{{ item.text }}</span>
         </MenuItem>

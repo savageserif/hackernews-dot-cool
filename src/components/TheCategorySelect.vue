@@ -2,7 +2,8 @@
   <Listbox v-model="currentCategory">
     <ListboxButton
       :as="BaseButton"
-      class="relative pr-1 ui-open:bg-primary-color/10"
+      class="relative ui-open:bg-primary-color/10"
+      :class="[view.isTouchDevice ? 'pr-1' : 'pr-0.5']"
     >
       {{ content.currentCategoryName }}
       <BaseIcon
@@ -12,14 +13,20 @@
       />
     </ListboxButton>
     <ListboxOptions
-      class="absolute top-[2.4375rem] -translate-x-[1.375rem] rounded bg-blank-color py-1.5 shadow-menu focus:outline-none"
+      class="absolute rounded bg-blank-color shadow-menu focus:outline-none"
+      :class="[
+        view.isTouchDevice
+          ? 'top-[2.9375rem] -translate-x-[1.5rem] py-2'
+          : 'top-[2.4375rem] -translate-x-[1.375rem] py-1.5',
+      ]"
     >
       <ListboxOption
         v-for="(categoryName, category) in content.categoryNames"
         v-slot="{ selected }"
         :key="category"
         :value="category"
-        class="flex h-8 cursor-pointer items-center gap-0.5 pl-1 pr-8 ui-active:bg-controls-color"
+        class="flex cursor-pointer items-center gap-0.5 pl-1 pr-8 ui-active:bg-controls-color"
+        :class="[view.isTouchDevice ? 'h-9' : 'h-8']"
       >
         <BaseIcon
           v-if="selected"
@@ -27,7 +34,7 @@
         />
         <div
           v-else
-          class="size-6"
+          :class="[view.isTouchDevice ? 'size-7' : 'size-6']"
         />
         {{ categoryName }}
       </ListboxOption>
@@ -40,7 +47,10 @@ import { storeToRefs } from 'pinia';
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue';
 import BaseIcon from '@/components/BaseIcon.vue';
 import BaseButton from '@/components/BaseButton.vue';
+import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
+
+const view = useViewStore();
 
 const content = useContentStore();
 const { currentCategory } = storeToRefs(content);

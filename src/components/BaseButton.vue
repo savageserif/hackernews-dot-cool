@@ -2,9 +2,15 @@
   <button
     class="flex items-center ring-focus-color ring-offset-1 ring-offset-controls-color transition-colors duration-200 hover:duration-0 focus:outline-none focus-visible:ring-2"
     :class="[
-      small ? 'h-6 p-0.5' : 'h-8 p-1',
-      $slots.default && !icon ? 'px-2' : '',
-      $slots.default && icon ? 'pr-2' : '',
+      small
+        ? view.isTouchDevice
+          ? 'h-8 p-1.5'
+          : 'h-6 p-0.5'
+        : view.isTouchDevice
+          ? 'h-10 p-1.5'
+          : 'h-8 p-1',
+      $slots.default && !icon ? (view.isTouchDevice ? 'px-2.5' : 'px-2') : '',
+      $slots.default && icon ? (view.isTouchDevice ? 'pr-2.5' : 'pr-2') : '',
       bordered
         ? 'rounded-outline border border-separator-color hover:border-primary-color/10 active:border-primary-color/10'
         : 'rounded',
@@ -23,6 +29,7 @@
 
 <script setup lang="ts">
 import BaseLabel from '@/components/BaseLabel.vue';
+import { useViewStore } from '@/stores/ViewStore';
 
 const props = defineProps<{
   icon?: string;
@@ -30,4 +37,6 @@ const props = defineProps<{
   bordered?: boolean;
   disabled?: boolean;
 }>();
+
+const view = useViewStore();
 </script>

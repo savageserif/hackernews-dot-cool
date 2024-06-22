@@ -1,7 +1,7 @@
 <template>
   <main
     class="flex h-full select-none gap-px bg-separator-color font-sans text-base text-primary-color antialiased selection:bg-selection-color selection:text-primary-selected-color"
-    :class="view.darkColorSchemeIsActive ? 'dark' : ''"
+    :class="[view.darkColorSchemeIsActive ? 'dark' : '']"
   >
     <ThePostsColumn :class="[view.availableColumns < 2 ? 'flex-1' : 'flex-none basis-90']" />
     <template v-if="content.currentPostItem">

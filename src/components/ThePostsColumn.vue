@@ -3,7 +3,7 @@
     <PageColumnControls>
       <template #left>
         <img
-          class="mx-1 h-6"
+          :class="[view.isTouchDevice ? 'mx-1.5 h-7' : 'mx-1 h-6']"
           :src="logoAsset"
         />
       </template>
@@ -43,9 +43,11 @@ import ThePostsView from '@/components/ThePostsView.vue';
 import TheCategorySelect from '@/components/TheCategorySelect.vue';
 import TheSettingsMenu from '@/components/TheSettingsMenu.vue';
 import logoAsset from '@/assets/images/logo.png';
+import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 
+const view = useViewStore();
 const content = useContentStore();
 
 const { text: refreshTimestamp } = useRelativeTimestamp(

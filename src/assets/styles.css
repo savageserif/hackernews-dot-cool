@@ -62,8 +62,7 @@
   --focus-500: 213 100% 55%; /* #1a83ff */
 }
 
-:root,
-.dark {
+:root {
   --color-bg-blank: var(--base-0);
   --color-bg-hover: var(--base-50);
   --color-bg-controls: var(--base-100);

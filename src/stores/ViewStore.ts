@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { computed, watchEffect, nextTick } from 'vue';
 import type { ComputedRef } from 'vue';
 import { defineStore } from 'pinia';
 import {
@@ -16,6 +16,23 @@ export const useViewStore = defineStore('view', () => {
     () =>
       colorScheme.value === 'dark' || (colorScheme.value === 'system' && usePreferredDark().value)
   );
+
+  watchEffect(async () => {
+    if (darkColorSchemeIsActive.value) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    await nextTick();
+
+    document.head
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute(
+        'content',
+        `hsl(${getComputedStyle(document.documentElement).getPropertyValue('--color-bg-controls')})`
+      );
+  });
 
   const isTouchDevice = useMediaQuery('(pointer: coarse)');
 

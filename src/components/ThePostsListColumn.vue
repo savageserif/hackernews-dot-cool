@@ -17,7 +17,7 @@
         />
       </template>
     </PageColumnControls>
-    <ThePostsView />
+    <ThePostsListColumnBody />
     <PageColumnControls>
       <template #center>
         <span
@@ -39,7 +39,7 @@ import { computed } from 'vue';
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
 import RefreshButton from '@/components/RefreshButton.vue';
-import ThePostsView from '@/components/ThePostsView.vue';
+import ThePostsListColumnBody from '@/components/ThePostsListColumnBody.vue';
 import TheCategorySelect from '@/components/TheCategorySelect.vue';
 import TheSettingsMenu from '@/components/TheSettingsMenu.vue';
 import logoAsset from '@/assets/images/logo.png';

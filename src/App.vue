@@ -2,7 +2,7 @@
   <main
     class="flex h-dvh select-none gap-px bg-separator-color font-sans text-base text-primary-color antialiased selection:bg-selection-color selection:text-primary-selected-color"
   >
-    <ThePostsColumn :class="[view.availableColumns < 2 ? 'flex-1' : 'flex-none basis-90']" />
+    <ThePostsListColumn :class="[view.availableColumns < 2 ? 'flex-1' : 'flex-none basis-90']" />
     <template v-if="content.currentPostItem">
       <ThePrimaryColumn
         v-show="view.availableColumns >= 2"
@@ -35,7 +35,7 @@
         }"
       />
     </template>
-    <TheEmptyView
+    <ThePlaceholderColumn
       v-else
       v-show="view.availableColumns >= 2"
     />
@@ -43,10 +43,10 @@
 </template>
 
 <script setup lang="ts">
-import ThePostsColumn from '@/components/ThePostsColumn.vue';
+import ThePostsListColumn from '@/components/ThePostsListColumn.vue';
 import ThePrimaryColumn from '@/components/ThePrimaryColumn.vue';
 import TheSecondaryColumn from '@/components/TheSecondaryColumn.vue';
-import TheEmptyView from '@/components/TheEmptyView.vue';
+import ThePlaceholderColumn from '@/components/ThePlaceholderColumn.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 

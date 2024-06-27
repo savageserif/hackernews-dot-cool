@@ -3,7 +3,7 @@
     ref="containerElement"
     class="space-y-px"
   >
-    <PostItem
+    <PostsListItem
       v-for="(postItem, index) in content.currentCategoryPostItems?.items"
       :key="index"
       :item="postItem"
@@ -22,7 +22,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useInfiniteScroll } from '@vueuse/core';
 import PageColumnBody from '@/components/PageColumnBody.vue';
-import PostItem from '@/components/PostItem.vue';
+import PostsListItem from '@/components/PostsListItem.vue';
 import StatusItem from '@/components/StatusItem.vue';
 import { useContentStore } from '@/stores/ContentStore';
 

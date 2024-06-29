@@ -97,7 +97,14 @@ export const useContentStore = defineStore('content', () => {
         response.json()
       );
 
-      if (fetchedItem === null) return null;
+      // if request returns null or fetched item is not a post, return null
+      if (
+        fetchedItem === null ||
+        !fetchedItem.type ||
+        !['story', 'poll', 'job'].includes(fetchedItem.type)
+      ) {
+        return null;
+      }
 
       // parse URL string of fetched item to separate hostname and pathname
       const postItem: HackerNewsItem = Object.assign({}, fetchedItem, {

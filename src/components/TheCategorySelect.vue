@@ -13,7 +13,7 @@
       />
     </ListboxButton>
     <ListboxOptions
-      class="absolute rounded bg-blank-color shadow-menu focus:outline-none"
+      class="absolute rounded bg-blank-color shadow-menu focus:outline-none dark:bg-controls-color dark:shadow-menu-dark"
       :class="[
         view.isTouchDevice
           ? 'top-[2.9375rem] -translate-x-[1.5rem] py-2'
@@ -25,7 +25,7 @@
         v-slot="{ selected }"
         :key="category"
         :value="category"
-        class="flex cursor-pointer items-center gap-0.5 pl-1 pr-8 ui-active:bg-controls-color"
+        class="flex cursor-pointer items-center gap-0.5 pl-1 pr-8 ui-active:bg-controls-color dark:ui-active:bg-blank-color/75"
         :class="[view.isTouchDevice ? 'h-9' : 'h-8']"
       >
         <BaseIcon

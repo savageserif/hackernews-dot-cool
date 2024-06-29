@@ -8,7 +8,7 @@
       title="Settings"
     />
     <MenuItems
-      class="absolute right-1 w-max divide-y divide-separator-color rounded bg-blank-color shadow-menu focus:outline-none"
+      class="absolute right-1 w-max divide-y divide-separator-color rounded bg-blank-color shadow-menu focus:outline-none dark:bg-controls-color dark:shadow-menu-dark"
       :class="[view.isTouchDevice ? 'bottom-[2.6875rem]' : 'bottom-[2.1875rem]']"
     >
       <div
@@ -21,7 +21,7 @@
           :key="index"
           :as="item.heading ? 'div' : 'button'"
           :disabled="item.heading"
-          class="flex w-full items-center gap-0.5 pl-1 pr-8 text-left *:flex-none ui-active:bg-controls-color ui-disabled:pb-[0.0625rem] ui-disabled:font-medium ui-disabled:tracking-wide ui-disabled:text-secondary-color ui-disabled:[font-feature-settings:'smcp','c2sc']"
+          class="flex w-full items-center gap-0.5 pl-1 pr-8 text-left *:flex-none ui-active:bg-controls-color ui-disabled:pb-[0.0625rem] ui-disabled:font-medium ui-disabled:tracking-wide ui-disabled:text-secondary-color ui-disabled:[font-feature-settings:'smcp','c2sc'] dark:ui-active:bg-blank-color/75"
           :class="[view.isTouchDevice ? 'h-9 ui-disabled:h-8' : 'h-8 ui-disabled:h-7']"
           @click="item.action"
         >

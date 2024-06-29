@@ -15,7 +15,12 @@
     }"
   />
   <TheSecondaryColumn
-    v-show="content.currentPostItem && view.availableColumns === 3 && view.secondaryColumn.isOpen"
+    v-show="
+      view.availableColumns === 3 &&
+      view.secondaryColumn.isOpen &&
+      content.currentPostItem &&
+      content.currentPostItemHasLinkAndComments
+    "
     class="min-w-90"
     :class="[
       view.prioritizedView === 'link' || !view.secondaryColumn.isExpandable

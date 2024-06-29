@@ -155,6 +155,16 @@ export const useContentStore = defineStore('content', () => {
   // data of current post item
   const currentPostItem = ref<HackerNewsItem | undefined>(undefined);
 
+  const currentPostItemHasLink = computed(
+    () => currentPostItem.value && currentPostItem.value.url !== undefined
+  );
+  const currentPostItemHasComments = computed(
+    () => currentPostItem.value && currentPostItem.value.descendants !== undefined
+  );
+  const currentPostItemHasLinkAndComments = computed(
+    () => currentPostItemHasLink.value && currentPostItemHasComments.value
+  );
+
   // set a new current post item
   function setCurrentPostItem(postItem: HackerNewsItem) {
     currentPostItem.value = postItem;
@@ -187,6 +197,9 @@ export const useContentStore = defineStore('content', () => {
     fetchPostItem,
     fetchPostItems,
     currentPostItem,
+    currentPostItemHasLink,
+    currentPostItemHasComments,
+    currentPostItemHasLinkAndComments,
     setCurrentPostItem,
     viewedPostIds,
   };

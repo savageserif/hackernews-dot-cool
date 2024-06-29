@@ -14,12 +14,14 @@
         #center
         v-if="content.currentPostItem"
       >
-        <TheLinkColumnTitle v-if="view.prioritizedView === 'link'" />
+        <TheLinkColumnTitle
+          v-if="view.prioritizedView === 'link' && content.currentPostItemHasLink"
+        />
         <TheCommentsColumnTitle v-else />
       </template>
       <template
         #right
-        v-if="content.currentPostItem"
+        v-if="content.currentPostItem && content.currentPostItemHasLinkAndComments"
       >
         <BaseButton
           v-show="view.availableColumns === 3 && !view.secondaryColumn.isOpen"
@@ -42,7 +44,9 @@
     <PageColumnBody v-if="!content.currentPostItem">
       <StatusItem full-height />
     </PageColumnBody>
-    <TheLinkColumnBody v-else-if="view.prioritizedView === 'link'" />
+    <TheLinkColumnBody
+      v-else-if="view.prioritizedView === 'link' && content.currentPostItemHasLink"
+    />
     <TheCommentsColumnBody v-else />
   </PageColumn>
 </template>

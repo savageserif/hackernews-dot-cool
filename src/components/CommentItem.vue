@@ -65,6 +65,7 @@
             </div>
           </div>
           <div
+            ref="commentTextElement"
             v-show="!isCollapsed"
             class="-mt-1 mb-3 select-text space-y-[0.4375rem] leading-paragraph-narrow [overflow-wrap:anywhere] @comment-wide:space-y-1.5 @comment-wide:leading-paragraph-wide"
             v-html="commentText"
@@ -90,7 +91,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watchEffect } from 'vue';
+import { ref, computed, watchEffect, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import DOMPurify from 'dompurify';
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
@@ -116,6 +118,7 @@ const props = withDefaults(
   }
 );
 
+const router = useRouter();
 const content = useContentStore();
 
 // if item data does not contain 'parent' key, this is a post’s description text that appears above the comment threads
@@ -160,7 +163,6 @@ const { text: relativeTimestamp } = useRelativeTimestamp(
   true
 );
 
-
 const domPurifyInstance = DOMPurify();
 
 // optimize/format comment text
@@ -190,12 +192,32 @@ domPurifyInstance.addHook('afterSanitizeAttributes', (node) => {
   }
 });
 
+const commentTextElement = ref<Element | null>(null);
 const commentText = ref('');
 
-// re-format comment text if it changes
+// re-format comment text if it changes (only relevant if this is a post’s description, as that component persists)
 watchEffect(() => {
   // add a prepended p tag because HN comments start with only a text node
   commentText.value = domPurifyInstance.sanitize('<p>' + props.item.text);
+});
+
+// find links to other HN posts and make them open within the app instead of as external links
+onMounted(() => {
+  const linkElements = commentTextElement.value?.querySelectorAll(
+    'a[href^="https://news.ycombinator.com/item"]'
+  );
+
+  if (!linkElements || linkElements.length < 1) return;
+
+  linkElements?.forEach((linkElement) => {
+    const linkedPostId = linkElement.getAttribute('href')?.match(/\d+/);
+    if (!linkedPostId || linkedPostId.length !== 1) return;
+
+    linkElement.addEventListener('click', (event) => {
+      router.push({ name: 'post', params: { postId: linkedPostId[0] } });
+      event.preventDefault();
+    });
+  });
 });
 </script>
 

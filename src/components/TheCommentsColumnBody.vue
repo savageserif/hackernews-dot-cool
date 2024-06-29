@@ -106,25 +106,40 @@ const allThreadInstancesVisible = computed(
   () => threadInstanceCount.value >= threadItemCount.value
 );
 
+let abortController: AbortController | null = null;
+
 // fetch all thread items (thread refers to a top-level comment)
 async function fetchThreadItems() {
+  // abort previous unresolved fetch request if applicable
+  if (abortController) {
+    abortController.abort();
+  }
+
+  abortController = new AbortController();
+  const signal = abortController.signal;
+
   threadItems.value = [];
   threadGroups.value = [];
 
-  const fetchedItems: HackerNewsItem[] = await Promise.all(
-    threadIds.value.map(async (id) => {
-      return await fetch(apiItemUrl(id)).then((response) => response.json());
-    })
-  );
+  try {
+    const fetchedItems: HackerNewsItem[] = await Promise.all(
+      threadIds.value.map(async (id) => {
+        return await fetch(apiItemUrl(id), { signal }).then((response) => response.json());
+      })
+    );
 
-  const validItems = fetchedItems.filter(
-    (threadItem) => !threadItem.dead && !threadItem.deleted && threadItem.text
-  );
+    const validItems = fetchedItems.filter(
+      (threadItem) => !threadItem.dead && !threadItem.deleted && threadItem.text
+    );
 
-  threadItems.value.push(...validItems);
+    threadItems.value.push(...validItems);
 
-  // load the initial group of thread items
-  loadThreadGroup();
+    // load the initial group of thread items
+    isLoadingThreadGroup.value = false;
+    loadThreadGroup();
+  } catch (error) {
+    // fetch request aborted
+  }
 }
 
 // if this is true, it prevents infinite scrolling callbacks from loading multiple thread groups at once

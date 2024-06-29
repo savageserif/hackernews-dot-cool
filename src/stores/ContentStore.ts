@@ -58,7 +58,7 @@ export const useContentStore = defineStore('content', () => {
     // remove old post items for selected category in case they exist
     postItems.value[category] = undefined;
 
-    postIds.value[currentCategory.value] = {
+    postIds.value[category] = {
       ids: [],
       time: Math.floor(Date.now() / 1000),
       error: null,
@@ -92,15 +92,22 @@ export const useContentStore = defineStore('content', () => {
 
   // fetch item details for a specific post ID
   async function fetchPostItem(id: number) {
-    const fetchedItem: HackerNewsItemData = await fetch(apiItemUrl(id)).then((response) =>
-      response.json()
-    );
+    try {
+      const fetchedItem: HackerNewsItemData | null = await fetch(apiItemUrl(id)).then((response) =>
+        response.json()
+      );
 
-    const postItem: HackerNewsItem = Object.assign({}, fetchedItem, {
-      url: fetchedItem.url ? parseUrl(fetchedItem.url) : undefined,
-    });
+      if (fetchedItem === null) return null;
 
-    return postItem;
+      // parse URL string of fetched item to separate hostname and pathname
+      const postItem: HackerNewsItem = Object.assign({}, fetchedItem, {
+        url: fetchedItem.url ? parseUrl(fetchedItem.url) : undefined,
+      });
+
+      return postItem;
+    } catch (error) {
+      return null;
+    }
   }
 
   // fetch a new set of post items from a specific category’s array of post IDs
@@ -121,12 +128,16 @@ export const useContentStore = defineStore('content', () => {
     const newPostCount = currentPostCount + 30;
 
     try {
-      const fetchedItems: HackerNewsItem[] = await Promise.all(
+      const fetchedItems: (HackerNewsItem | null)[] = await Promise.all(
         // slice the array of post IDs to select set of post items following those already fetched previously
         postIds.value[category]!.ids.slice(currentPostCount, newPostCount).map(fetchPostItem)
       );
 
-      postItems.value[category]!.items.push(...fetchedItems);
+      const validItems: HackerNewsItem[] = fetchedItems.filter(
+        (fetchedItem): fetchedItem is Exclude<typeof fetchedItem, null> => fetchedItem !== null
+      );
+
+      postItems.value[category]!.items.push(...validItems);
       postItems.value[category]!.isLoading = false;
     } catch (error) {
       postItems.value[category]!.error = error;
@@ -134,16 +145,8 @@ export const useContentStore = defineStore('content', () => {
     }
   }
 
-  // current post item whose value gets copied/replaced from postItems
+  // data of current post item
   const currentPostItem = ref<HackerNewsItem | undefined>(undefined);
-
-  // change page title to that of the current post item
-  watch(
-    () => currentPostItem.value,
-    () => {
-      document.title = `${currentPostItem.value!.title} · Hacker News` ?? 'Hacker News';
-    }
-  );
 
   // set a new current post item
   function setCurrentPostItem(postItem: HackerNewsItem) {

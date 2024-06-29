@@ -8,8 +8,8 @@
       :key="index"
       :item="postItem"
       :viewed="content.viewedPostIds.includes(postItem.id)"
-      :active="postItem.id === content.currentPostItem?.id"
-      @click="content.setCurrentPostItem(postItem)"
+      :active="route.name === 'post' && postItem.id === content.currentPostItem?.id"
+      @click="router.push({ name: 'post', params: { postId: postItem.id } })"
     />
     <StatusItem
       :full-height="!content.currentCategoryHasSomePostItems"
@@ -20,12 +20,15 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { useInfiniteScroll } from '@vueuse/core';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import PostsListItem from '@/components/PostsListItem.vue';
 import StatusItem from '@/components/StatusItem.vue';
 import { useContentStore } from '@/stores/ContentStore';
 
+const router = useRouter();
+const route = useRoute();
 const content = useContentStore();
 
 const containerElement = ref<HTMLElement | null>(null);

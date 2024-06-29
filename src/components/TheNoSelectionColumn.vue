@@ -1,5 +1,6 @@
 <template>
   <div
+    v-show="view.availableColumns >= 2"
     class="flex flex-1 flex-col items-center justify-center gap-5 overflow-y-auto bg-controls-color pb-2"
   >
     <img
@@ -14,4 +15,7 @@
 
 <script setup lang="ts">
 import placeholderAsset from '@/assets/images/placeholder.png';
+import { useViewStore } from '@/stores/ViewStore';
+
+const view = useViewStore();
 </script>

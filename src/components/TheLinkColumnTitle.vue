@@ -11,6 +11,7 @@
     </span>
   </span>
   <BaseButton
+    v-show="content.currentPostItem"
     icon="external"
     small
     title="Open in External Tab"

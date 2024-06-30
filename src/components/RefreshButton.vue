@@ -1,7 +1,7 @@
 <template>
   <button
-    class="flex items-center rounded ring-focus-color ring-offset-1 ring-offset-controls-color transition-colors duration-200 hover:bg-primary-color/10 hover:duration-0 focus:outline-none focus-visible:ring-2 active:bg-primary-color/15"
-    :class="[view.isTouchDevice ? 'h-10 p-1.5' : 'h-8 p-1']"
+    class="flex items-center rounded ring-focus-color ring-offset-1 ring-offset-controls-color transition-colors duration-200 hover:duration-0 focus:outline-none focus-visible:ring-2 active:bg-primary-color/15"
+    :class="[view.isTouchDevice ? 'h-10 p-1.5' : 'h-8 p-1 hover:bg-primary-color/10']"
     @click="animate()"
   >
     <BaseLabel

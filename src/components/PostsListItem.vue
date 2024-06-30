@@ -4,7 +4,8 @@
     :class="[
       active
         ? 'bg-selection-color text-primary-selected-color shadow-border-y shadow-selection-color'
-        : 'cursor-pointer hover:bg-hover-color',
+        : 'cursor-pointer',
+      !active && !view.isTouchDevice ? 'hover:bg-hover-color' : '',
       viewed && !active ? 'text-secondary-color' : '',
     ]"
   >
@@ -70,12 +71,15 @@ import type { HackerNewsItem } from '@/types';
 import { formatNumber, absoluteTimestamp } from '@/utils';
 import BaseLabel from '@/components/BaseLabel.vue';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
+import { useViewStore } from '@/stores/ViewStore';
 
 const props = defineProps<{
   item: HackerNewsItem;
   viewed?: boolean;
   active?: boolean;
 }>();
+
+const view = useViewStore();
 
 const { text: relativeTimestamp } = useRelativeTimestamp(props.item.time, true);
 </script>

@@ -1,5 +1,4 @@
 import { computed, watchEffect, nextTick } from 'vue';
-import type { ComputedRef } from 'vue';
 import { defineStore } from 'pinia';
 import {
   useStorage,
@@ -8,7 +7,6 @@ import {
   useMediaQuery,
   useInterval,
 } from '@vueuse/core';
-import type { RemovableRef } from '@vueuse/core';
 
 export const useViewStore = defineStore('view', () => {
   const colorScheme = useStorage<'system' | 'light' | 'dark'>('colorScheme', 'system');
@@ -48,14 +46,7 @@ export const useViewStore = defineStore('view', () => {
   });
 
   // state/properties of the secondary column
-  const secondaryColumn: {
-    isOpen: RemovableRef<boolean>;
-    isExpanded: RemovableRef<boolean>;
-    isExpandable: ComputedRef<boolean>;
-    actions: {
-      [key: string]: () => void;
-    };
-  } = {
+  const secondaryColumn = {
     isOpen: useStorage('secondaryColumnIsOpen', true),
     isExpanded: useStorage('secondaryColumnIsExpanded', false),
     isExpandable: computed(() => windowWidth.value >= 1202), // secondary column expandable once it has at least 480px of space
@@ -80,6 +71,12 @@ export const useViewStore = defineStore('view', () => {
     maxWidth: computed(() => Math.min(windowWidth.value - 722, 600) / 16 + 'rem'), // flexible width of expanded comments column up to 600px
   };
 
+  // which view is active within the unified column (availableColumns < 3)
+  const activeUnifiedColumnView = useStorage<'link' | 'comments'>(
+    'activeUnifiedColumnView',
+    'link'
+  );
+
   // ticker which increases every minute to trigger relative timestamp refreshes
   const timestampTicker = useInterval(60000);
 
@@ -92,6 +89,7 @@ export const useViewStore = defineStore('view', () => {
     availableColumns,
     secondaryColumn,
     commentsColumn,
+    activeUnifiedColumnView,
     timestampTicker,
   };
 });

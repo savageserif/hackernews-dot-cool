@@ -14,9 +14,7 @@
         #center
         v-if="content.currentPostItem"
       >
-        <TheLinkColumnTitle
-          v-if="view.prioritizedView === 'link' && content.currentPostItemHasLink"
-        />
+        <TheLinkColumnTitle v-if="showLinkColumn" />
         <TheCommentsColumnTitle v-else />
       </template>
       <template
@@ -41,17 +39,32 @@
         </BaseButton>
       </template>
     </PageColumnControls>
+
     <PageColumnBody v-if="!content.currentPostItem">
       <StatusItem full-height />
     </PageColumnBody>
-    <TheLinkColumnBody
-      v-else-if="view.prioritizedView === 'link' && content.currentPostItemHasLink"
-    />
-    <TheCommentsColumnBody v-else />
+    <template v-else-if="view.availableColumns === 3">
+      <TheLinkColumnBody v-if="showLinkColumn" />
+      <TheCommentsColumnBody v-else />
+    </template>
+    <template v-else>
+      <TheLinkColumnBody v-show="showLinkColumn" />
+      <TheCommentsColumnBody v-show="!showLinkColumn" />
+    </template>
+
+    <PageColumnControls
+      v-if="view.availableColumns <= 2 && content.currentPostItemHasLinkAndComments"
+      class="@container"
+    >
+      <template #center>
+        <TheUnifiedViewControl />
+      </template>
+    </PageColumnControls>
   </PageColumn>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import PageColumn from '@/components/PageColumn.vue';
 import PageColumnControls from '@/components/PageColumnControls.vue';
@@ -62,10 +75,18 @@ import TheLinkColumnTitle from '@/components/TheLinkColumnTitle.vue';
 import TheLinkColumnBody from '@/components/TheLinkColumnBody.vue';
 import TheCommentsColumnTitle from '@/components/TheCommentsColumnTitle.vue';
 import TheCommentsColumnBody from '@/components/TheCommentsColumnBody.vue';
+import TheUnifiedViewControl from '@/components/TheUnifiedViewControl.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 
 const router = useRouter();
 const view = useViewStore();
 const content = useContentStore();
+
+const showLinkColumn = computed(
+  () =>
+    content.currentPostItemHasLink &&
+    ((view.prioritizedView === 'link' && view.availableColumns === 3) ||
+      view.activeUnifiedColumnView === 'link')
+);
 </script>

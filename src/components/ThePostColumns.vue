@@ -15,8 +15,8 @@
     }"
   />
   <TheSecondaryColumn
+    v-if="view.availableColumns === 3"
     v-show="
-      view.availableColumns === 3 &&
       view.secondaryColumn.isOpen &&
       content.currentPostItem &&
       content.currentPostItemHasLinkAndComments

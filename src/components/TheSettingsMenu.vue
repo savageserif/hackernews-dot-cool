@@ -12,28 +12,28 @@
       :class="[view.isTouchDevice ? 'bottom-[2.6875rem]' : 'bottom-[2.1875rem]']"
     >
       <div
-        v-for="(group, index) in menuContents"
+        v-for="(menuGroup, index) in conditionalMenuContents"
         :key="index"
         :class="[view.isTouchDevice ? 'py-2.5' : 'py-2']"
       >
         <MenuItem
-          v-for="(item, index) in group"
+          v-for="(menuItem, index) in menuGroup.items"
           :key="index"
-          :as="item.heading ? 'div' : 'button'"
-          :disabled="item.heading"
+          :as="menuItem.heading ? 'div' : 'button'"
+          :disabled="menuItem.heading"
           class="flex w-full items-center gap-0.5 pl-1 pr-8 text-left *:flex-none ui-active:bg-controls-color ui-disabled:pb-[0.0625rem] ui-disabled:font-medium ui-disabled:tracking-wide ui-disabled:text-secondary-color ui-disabled:[font-feature-settings:'smcp','c2sc'] dark:ui-active:bg-blank-color/75"
           :class="[view.isTouchDevice ? 'h-9 ui-disabled:h-8' : 'h-8 ui-disabled:h-7']"
-          @click="item.action"
+          @click="menuItem.action"
         >
           <BaseIcon
-            v-if="item.selected"
+            v-if="menuItem.selected"
             name="checkmark-list"
           />
           <div
             v-else
             :class="[view.isTouchDevice ? 'size-7' : 'size-6']"
           />
-          <span>{{ item.text }}</span>
+          <span>{{ menuItem.text }}</span>
         </MenuItem>
       </div>
     </MenuItems>
@@ -54,58 +54,72 @@ const { colorScheme, prioritizedView } = storeToRefs(view);
 
 const menuContents = ref<
   {
-    text: string;
-    heading?: boolean;
-    selected?: ComputedRef<boolean>;
-    action?: () => void;
-  }[][]
+    items: {
+      text: string;
+      heading?: boolean;
+      selected?: ComputedRef<boolean>;
+      action?: () => void;
+    }[];
+    showIf?: ComputedRef<boolean>;
+  }[]
 >([
-  [
-    {
-      text: 'Primary View',
-      heading: true,
-    },
-    {
-      text: 'Linked Website',
-      selected: computed(() => prioritizedView.value === 'link'),
-      action: () => (prioritizedView.value = 'link'),
-    },
-    {
-      text: 'Comments',
-      selected: computed(() => prioritizedView.value === 'comments'),
-      action: () => (prioritizedView.value = 'comments'),
-    },
-  ],
-  [
-    {
-      text: 'Color Scheme',
-      heading: true,
-    },
-    {
-      text: 'System',
-      selected: computed(() => colorScheme.value === 'system'),
-      action: () => (colorScheme.value = 'system'),
-    },
-    {
-      text: 'Light',
-      selected: computed(() => colorScheme.value === 'light'),
-      action: () => (colorScheme.value = 'light'),
-    },
-    {
-      text: 'Dark',
-      selected: computed(() => colorScheme.value === 'dark'),
-      action: () => (colorScheme.value = 'dark'),
-    },
-  ],
-  [
-    {
-      text: 'View Source on GitHub',
-      action: () => window.open('https://github.com/savageserif/hackernews-dot-cool', '_blank'),
-    },
-    {
-      text: 'About This Website',
-      action: () => {},
-    },
-  ],
+  {
+    items: [
+      {
+        text: 'Primary View',
+        heading: true,
+      },
+      {
+        text: 'Linked Website',
+        selected: computed(() => prioritizedView.value === 'link'),
+        action: () => (prioritizedView.value = 'link'),
+      },
+      {
+        text: 'Comments',
+        selected: computed(() => prioritizedView.value === 'comments'),
+        action: () => (prioritizedView.value = 'comments'),
+      },
+    ],
+    showIf: computed(() => view.availableColumns === 3),
+  },
+  {
+    items: [
+      {
+        text: 'Color Scheme',
+        heading: true,
+      },
+      {
+        text: 'System',
+        selected: computed(() => colorScheme.value === 'system'),
+        action: () => (colorScheme.value = 'system'),
+      },
+      {
+        text: 'Light',
+        selected: computed(() => colorScheme.value === 'light'),
+        action: () => (colorScheme.value = 'light'),
+      },
+      {
+        text: 'Dark',
+        selected: computed(() => colorScheme.value === 'dark'),
+        action: () => (colorScheme.value = 'dark'),
+      },
+    ],
+  },
+  {
+    items: [
+      {
+        text: 'View Source on GitHub',
+        action: () => window.open('https://github.com/savageserif/hackernews-dot-cool', '_blank'),
+      },
+      {
+        text: 'About This Website',
+        action: () => {},
+      },
+    ],
+  },
 ]);
+
+const conditionalMenuContents = computed(() =>
+  menuContents.value.filter((group) => group.showIf === undefined || group.showIf === true)
+);
 </script>

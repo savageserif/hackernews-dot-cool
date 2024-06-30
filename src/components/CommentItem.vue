@@ -24,11 +24,11 @@
           v-for="index in insideIndentations"
           :key="index"
           class="mb-3.5 mr-3 mt-3.5 w-0.5 flex-none self-stretch rounded bg-indentation-color"
-          :class="
+          :class="[
             index < insideIndentations || !firstOfLevel
               ? 'shadow-indentation-t shadow-indentation-color'
-              : ''
-          "
+              : '',
+          ]"
         />
         <div class="w-full flex-1">
           <div
@@ -42,7 +42,7 @@
               <span class="font-serif text-base-serif italic">{{ item.by }}</span>
               <span
                 v-if="item.by === content.currentPostItem?.by"
-                class="my-[-0.25rem] ml-1.5 inline-block rounded bg-selection-color/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-accent-color [font-feature-settings:'smcp','c2sc']"
+                class="my-[-0.25rem] ml-1.5 inline-block rounded border border-blank-color bg-selection-color/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-accent-color [font-feature-settings:'smcp','c2sc']"
               >
                 OP
               </span>

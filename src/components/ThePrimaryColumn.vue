@@ -86,7 +86,7 @@ const content = useContentStore();
 const showLinkColumn = computed(
   () =>
     content.currentPostItemHasLink &&
-    ((view.prioritizedView === 'link' && view.availableColumns === 3) ||
-      view.activeUnifiedColumnView === 'link')
+    ((view.availableColumns === 3 && view.prioritizedView === 'link') ||
+      (view.availableColumns <= 2 && view.activeUnifiedColumnView === 'link'))
 );
 </script>

@@ -1,12 +1,9 @@
 <template>
-  <span class="select-text">
-    <span>
+  <span class="select-text truncate text-secondary-color">
+    <span class="text-primary-color">
       {{ content.currentPostItem?.url?.hostname }}
     </span>
-    <span
-      v-if="content.currentPostItem?.url?.pathname !== '/'"
-      class="text-secondary-color"
-    >
+    <span>
       {{ content.currentPostItem?.url?.pathname }}{{ content.currentPostItem?.url?.search }}
     </span>
   </span>
@@ -15,7 +12,7 @@
     icon="external"
     small
     title="Open in External Tab"
-    @click="openExternalLink()"
+    @click="openInExternalTab()"
   />
 </template>
 
@@ -25,7 +22,7 @@ import { useContentStore } from '@/stores/ContentStore';
 
 const content = useContentStore();
 
-function openExternalLink() {
+function openInExternalTab() {
   window.open(content.currentPostItem?.url?.href, '_blank');
 }
 </script>

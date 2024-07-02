@@ -83,7 +83,9 @@ const containerElement = ref<ComponentPublicInstance | null>(null);
 const threadIds = computed(() => content.currentPostItem?.kids ?? []);
 
 const hasDescription = computed(() => !!content.currentPostItem?.text);
-const hasComments = computed(() => threadIds.value.length > 0);
+const hasComments = computed(
+  () => content.currentPostItem?.descendants !== 0 && threadIds.value.length > 0
+);
 
 const threadItems = ref<HackerNewsItem[]>([]);
 const threadItemCount = computed(() => threadItems.value.length);

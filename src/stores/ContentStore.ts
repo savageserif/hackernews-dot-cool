@@ -66,16 +66,17 @@ export const useContentStore = defineStore('content', () => {
     };
 
     try {
-      const fetchedIds: number[] = await fetch(apiCategoryUrl(category)).then((response) =>
-        response.json()
-      );
+      const response = await fetch(apiCategoryUrl(category));
+      if (!response.ok) throw new Error(response.statusText);
 
+      const fetchedIds: number[] = await response.json();
       postIds.value[category]!.ids.push(...fetchedIds);
-      postIds.value[category]!.isLoading = false;
 
       fetchPostItems();
     } catch (error) {
+      console.error(`Error fetching post IDs for category ${category}:`, error);
       postIds.value[category]!.error = error;
+    } finally {
       postIds.value[category]!.isLoading = false;
     }
   }
@@ -93,9 +94,10 @@ export const useContentStore = defineStore('content', () => {
   // fetch item details for a specific post ID
   async function fetchPostItem(id: number) {
     try {
-      const fetchedItem: HackerNewsItemData | null = await fetch(apiItemUrl(id)).then((response) =>
-        response.json()
-      );
+      const response = await fetch(apiItemUrl(id));
+      if (!response.ok) throw new Error(response.statusText);
+
+      const fetchedItem: HackerNewsItemData | null = await response.json();
 
       // if request returns null or fetched item is not a post, return null
       if (
@@ -107,12 +109,14 @@ export const useContentStore = defineStore('content', () => {
       }
 
       // parse URL string of fetched item to separate hostname and pathname
-      const postItem: HackerNewsItem = Object.assign({}, fetchedItem, {
+      const postItem: HackerNewsItem = {
+        ...fetchedItem,
         url: fetchedItem.url ? parseUrl(fetchedItem.url) : undefined,
-      });
+      };
 
       return postItem;
     } catch (error) {
+      console.error(`Error fetching post item with ID ${id}:`, error);
       return null;
     }
   }
@@ -125,9 +129,10 @@ export const useContentStore = defineStore('content', () => {
         error: null,
         isLoading: true,
       };
+    } else if (postItems.value[category]!.isLoading) {
+      // return if post items are already being fetched
+      return;
     } else {
-      // return if post items are already being fetched (isLoading true)
-      if (postItems.value[category]!.isLoading) return;
       postItems.value[category]!.isLoading = true;
     }
 
@@ -145,9 +150,10 @@ export const useContentStore = defineStore('content', () => {
       );
 
       postItems.value[category]!.items.push(...validItems);
-      postItems.value[category]!.isLoading = false;
     } catch (error) {
+      console.error(`Error fetching post item data for category ${category}:`, error);
       postItems.value[category]!.error = error;
+    } finally {
       postItems.value[category]!.isLoading = false;
     }
   }

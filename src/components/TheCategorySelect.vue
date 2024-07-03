@@ -25,8 +25,12 @@
         v-slot="{ selected }"
         :key="category"
         :value="category"
-        class="flex cursor-pointer items-center gap-0.5 pl-1 pr-8 ui-active:bg-controls-color dark:ui-active:bg-blank-color/75"
-        :class="[view.isTouchDevice ? 'h-9' : 'h-8']"
+        class="flex cursor-pointer items-center gap-0.5 pl-1 pr-8"
+        :class="[
+          view.isTouchDevice
+            ? 'h-9'
+            : 'h-8 ui-active:bg-controls-color dark:ui-active:bg-blank-color/75',
+        ]"
       >
         <BaseIcon
           v-if="selected"

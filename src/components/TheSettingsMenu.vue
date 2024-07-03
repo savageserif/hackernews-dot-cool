@@ -21,9 +21,11 @@
           :key="index"
           :as="menuItem.heading ? 'div' : 'button'"
           :disabled="menuItem.heading"
-          class="flex w-full items-center gap-0.5 pl-1 pr-8 text-left *:flex-none ui-active:bg-controls-color ui-disabled:pb-[0.0625rem] ui-disabled:font-medium ui-disabled:tracking-wide ui-disabled:text-secondary-color ui-disabled:[font-feature-settings:'smcp','c2sc'] dark:ui-active:bg-blank-color/75"
+          class="flex w-full items-center gap-0.5 pl-1 pr-8 text-left *:flex-none ui-disabled:pb-[0.0625rem] ui-disabled:font-medium ui-disabled:tracking-wide ui-disabled:text-secondary-color ui-disabled:[font-feature-settings:'smcp','c2sc']"
           :class="[
-            view.isTouchDevice ? 'h-9 ui-disabled:h-8' : 'h-8 ui-disabled:h-7',
+            view.isTouchDevice
+              ? 'h-9 ui-disabled:h-8'
+              : 'h-8 ui-active:bg-controls-color ui-disabled:h-7 dark:ui-active:bg-blank-color/75',
             menuItem.faint ? 'text-indentation-color' : '',
           ]"
           @click="menuItem.action"

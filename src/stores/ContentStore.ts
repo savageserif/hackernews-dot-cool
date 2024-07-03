@@ -102,6 +102,8 @@ export const useContentStore = defineStore('content', () => {
       // if request returns null or fetched item is not a post, return null
       if (
         fetchedItem === null ||
+        fetchedItem.deleted ||
+        fetchedItem.dead ||
         !fetchedItem.type ||
         !['story', 'poll', 'job'].includes(fetchedItem.type)
       ) {

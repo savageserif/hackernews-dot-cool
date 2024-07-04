@@ -10,7 +10,8 @@
           ? 'h-10 p-1.5'
           : 'h-8 p-1',
       $slots.default && !icon ? (view.isTouchDevice ? 'px-2.5' : 'px-2') : '',
-      $slots.default && icon ? (view.isTouchDevice ? 'pr-2.5' : 'pr-2') : '',
+      $slots.default && icon && !reversed ? (view.isTouchDevice ? 'pr-2.5' : 'pr-2') : '',
+      $slots.default && icon && reversed && small ? (view.isTouchDevice ? 'pl-2' : 'pl-1.5') : '',
       bordered
         ? 'rounded-outline border border-separator-color active:border-primary-color/10'
         : '',
@@ -23,6 +24,7 @@
     <BaseLabel
       :icon="icon"
       :small="small"
+      :reversed="reversed"
     >
       <slot />
     </BaseLabel>
@@ -36,6 +38,7 @@ import { useViewStore } from '@/stores/ViewStore';
 const props = defineProps<{
   icon?: string;
   small?: boolean;
+  reversed?: boolean;
   bordered?: boolean;
   disabled?: boolean;
 }>();

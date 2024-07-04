@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center gap-1"
+    class="flex items-center gap-1 truncate"
     :class="[reversed ? 'flex-row-reverse' : '']"
   >
     <BaseIcon
@@ -8,6 +8,7 @@
       :name="icon"
       :small="small"
       :inherit-color="inheritColor"
+      class="flex-none"
     />
     <slot />
   </div>
@@ -19,7 +20,7 @@ import BaseIcon from '@/components/BaseIcon.vue';
 const props = defineProps<{
   icon?: string;
   small?: boolean;
-  inheritColor?: boolean;
   reversed?: boolean;
+  inheritColor?: boolean;
 }>();
 </script>

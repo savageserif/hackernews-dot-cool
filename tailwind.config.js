@@ -15,7 +15,7 @@ export default {
       small: ['0.90625rem', { lineHeight: '1.0625rem' }],
     },
     fontWeight: {
-      medium: '500',
+      medium: '485',
       bold: '700',
     },
     colors: {

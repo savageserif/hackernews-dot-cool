@@ -33,10 +33,10 @@ export const useViewStore = defineStore('view', () => {
   });
 
   const isTouchDevice = useMediaQuery('(pointer: coarse)');
+  const isStandaloneDisplayMode = useMediaQuery('(display-mode: standalone)');
+  const { width: windowWidth } = useWindowSize();
 
   const prioritizedView = useStorage<'link' | 'comments'>('prioritizedView', 'link');
-
-  const { width: windowWidth } = useWindowSize();
 
   // number of columns available depending on window width
   const availableColumns = computed((): 1 | 2 | 3 => {
@@ -84,8 +84,9 @@ export const useViewStore = defineStore('view', () => {
     colorScheme,
     darkColorSchemeIsActive,
     isTouchDevice,
-    prioritizedView,
+    isStandaloneDisplayMode,
     windowWidth,
+    prioritizedView,
     availableColumns,
     secondaryColumn,
     commentsColumn,

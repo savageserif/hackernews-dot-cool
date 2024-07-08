@@ -3,7 +3,9 @@
     class="flex flex-initial items-center bg-controls-color"
     :class="[
       view.isTouchDevice ? 'h-12' : 'h-10',
-      bottom && view.isTouchDevice ? 'h-[calc(3rem+env(safe-area-inset-bottom))] py-1' : '',
+      bottom && view.isStandaloneDisplayMode
+        ? 'h-auto pb-[calc(0.25rem+env(safe-area-inset-bottom))] pt-1'
+        : '',
     ]"
   >
     <div class="flex flex-1 items-center gap-1 px-1">

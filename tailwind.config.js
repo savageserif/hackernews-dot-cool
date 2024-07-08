@@ -15,7 +15,10 @@ export default {
       small: ['0.90625rem', { lineHeight: '1.0625rem' }],
     },
     fontWeight: {
-      medium: '485',
+      'normal-serif': '420',
+      normal: '450',
+      'normal-italic': '480',
+      medium: '520',
       bold: '700',
     },
     colors: {

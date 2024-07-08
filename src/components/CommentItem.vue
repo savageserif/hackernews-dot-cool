@@ -289,12 +289,6 @@ div[class*='leading-paragraph'] a:focus-visible {
   @apply outline-focus-color;
 }
 
-div[class*='leading-paragraph'] em,
-div[class*='leading-paragraph'] i,
-div[class*='leading-paragraph'] blockquote {
-  @apply font-medium;
-}
-
 div[class*='leading-paragraph'] ul,
 div[class*='leading-paragraph'] ol {
   @apply ml-3.5;
@@ -314,6 +308,12 @@ div[class*='leading-paragraph'] ul li:before {
 
 div[class*='leading-paragraph'] ol li:before {
   @apply -left-[0.90625rem] tracking-tight text-secondary-color content-[attr(value)_'.'];
+}
+
+div[class*='leading-paragraph'] em,
+div[class*='leading-paragraph'] i,
+div[class*='leading-paragraph'] blockquote {
+  @apply font-normal-italic;
 }
 
 div[class*='leading-paragraph'] blockquote {

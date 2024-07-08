@@ -93,6 +93,7 @@
 <script setup lang="ts">
 import { ref, computed, watchEffect, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useEventListener } from '@vueuse/core';
 import DOMPurify from 'dompurify';
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
@@ -165,24 +166,74 @@ const { text: relativeTimestamp } = useRelativeTimestamp(
 
 const domPurifyInstance = DOMPurify();
 
-// optimize/format comment text
-domPurifyInstance.addHook('afterSanitizeElements', (node) => {
-  if (node.nodeName && node.nodeName === '#text') {
-    if (!node.textContent) return;
+domPurifyInstance.addHook('uponSanitizeElement', (node) => {
+  if (node.tagName !== 'P') return;
 
-    const leadingSpaces = node.textContent.match(/^ {2,}/);
+  if (!node.textContent) {
+    // empty P tags
+    node.remove();
+    return;
+  }
 
-    if (leadingSpaces) {
-      const spacesCount = leadingSpaces[0].length;
-      const firstLinePattern = new RegExp(`^ {${spacesCount}}`);
-      const subsequentLinePattern = new RegExp(`\n {${spacesCount}}`, 'g');
-      node.textContent = node.textContent
-        .replace(firstLinePattern, '')
-        .replace(subsequentLinePattern, '\n');
+  // inline code (enclosed in single backticks)
+  node.innerHTML = node.innerHTML.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+  if (new RegExp('^(<i>)?&gt;').test(node.innerHTML)) {
+    // quotes (starts with '>')
+    let quoteHTML = node.innerHTML;
+
+    while (new RegExp('^(<i>|&gt;| )').test(quoteHTML)) {
+      if (quoteHTML.startsWith('<i>')) {
+        quoteHTML = quoteHTML.substring(3);
+      } else if (quoteHTML.startsWith('&gt;')) {
+        quoteHTML = quoteHTML.substring(4);
+      } else {
+        quoteHTML = quoteHTML.substring(1);
+      }
     }
 
-    node.textContent = smartquotes(node.textContent);
+    node.outerHTML = `<blockquote>${quoteHTML}</blockquote>`;
+  } else if (new RegExp('^(-|\\*) ?.').test(node.innerHTML)) {
+    // unordered list (starts with '-' or '*')
+    let listItemHTML = node.innerHTML;
+
+    while (new RegExp('^(-|\\*| )').test(listItemHTML)) {
+      listItemHTML = listItemHTML.substring(1);
+    }
+
+    node.outerHTML = `<ul><li>${listItemHTML}</li></ul>`;
+  } else if (new RegExp('^\\d\\. .').test(node.innerHTML)) {
+    // ordered list (starts with single digit + '.')
+    const digit = node.innerHTML.match(/^\d/);
+    if (!digit) return;
+
+    let listItemHTML = node.innerHTML;
+
+    while (new RegExp('^(\\d|\\.| )').test(listItemHTML)) {
+      listItemHTML = listItemHTML.substring(1);
+    }
+
+    node.outerHTML = `<ol><li value="${digit[0]}">${listItemHTML}</li></ol>`;
   }
+});
+
+// optimize/format comment text
+domPurifyInstance.addHook('afterSanitizeElements', (node) => {
+  if (!node.nodeName || node.nodeName !== '#text' || !node.textContent) return;
+
+  const leadingSpaces = node.textContent.match(/^ {2,}/);
+
+  if (leadingSpaces) {
+    const spacesCount = leadingSpaces[0].length;
+    const firstLinePattern = new RegExp(`^ {${spacesCount}}`);
+    const subsequentLinePattern = new RegExp(`\n {${spacesCount}}`, 'g');
+
+    node.textContent = node.textContent
+      .replace(firstLinePattern, '')
+      .replace(subsequentLinePattern, '\n');
+  }
+
+  node.textContent = smartquotes(node.textContent);
 });
 
 // add target="_blank" attribute to all links
@@ -213,7 +264,7 @@ onMounted(() => {
     const linkedPostId = linkElement.getAttribute('href')?.match(/\d+/);
     if (!linkedPostId || linkedPostId.length !== 1) return;
 
-    linkElement.addEventListener('click', (event) => {
+    useEventListener(linkElement, 'click', (event) => {
       router.push({ name: 'post', params: { postId: linkedPostId[0] } });
       event.preventDefault();
     });
@@ -239,11 +290,58 @@ div[class*='leading-paragraph'] a:focus-visible {
 }
 
 div[class*='leading-paragraph'] em,
-div[class*='leading-paragraph'] i {
+div[class*='leading-paragraph'] i,
+div[class*='leading-paragraph'] blockquote {
   @apply font-medium;
 }
 
+div[class*='leading-paragraph'] ul,
+div[class*='leading-paragraph'] ol {
+  @apply ml-3.5;
+}
+
+div[class*='leading-paragraph'] li {
+  @apply relative;
+}
+
+div[class*='leading-paragraph'] li:before {
+  @apply absolute;
+}
+
+div[class*='leading-paragraph'] ul li:before {
+  @apply -left-3.5 top-2.5 block h-[0.09375rem] w-[0.53125rem] bg-indentation-color content-[''];
+}
+
+div[class*='leading-paragraph'] ol li:before {
+  @apply -left-[0.90625rem] tracking-tight text-secondary-color content-[attr(value)_'.'];
+}
+
+div[class*='leading-paragraph'] blockquote {
+  @apply relative pl-[0.875rem] italic;
+}
+
+div[class*='leading-paragraph'] blockquote:before,
+div[class*='leading-paragraph'] blockquote:after {
+  @apply absolute left-0 block w-2 content-[''];
+}
+
+div[class*='leading-paragraph'] blockquote:before {
+  @apply bottom-[1rem] top-[0.96875rem] bg-[url('/quote-repeat-light-21.svg')] bg-top bg-repeat-y @comment-wide:bottom-[1.0625rem] @comment-wide:top-[1rem] @comment-wide:bg-[url('/quote-repeat-light-22.svg')] dark:bg-[url('/quote-repeat-dark-21.svg')] @comment-wide:dark:bg-[url('/quote-repeat-dark-22.svg')];
+}
+
+div[class*='leading-paragraph'] blockquote:after {
+  @apply bottom-[0.21875rem] top-[0.21875rem] bg-[url('/quote-edge-light-21.svg'),url('/quote-edge-light-21.svg')] bg-[position:top,bottom] bg-no-repeat @comment-wide:bottom-[0.28125rem] @comment-wide:bg-[url('/quote-edge-light-22.svg'),url('/quote-edge-light-22.svg')] dark:bg-[url('/quote-edge-dark-21.svg'),url('/quote-edge-dark-21.svg')] @comment-wide:dark:bg-[url('/quote-edge-dark-22.svg'),url('/quote-edge-dark-22.svg')];
+}
+
+div[class*='leading-paragraph'] code {
+  @apply rounded bg-controls-color box-decoration-clone px-1 text-small;
+}
+
 div[class*='leading-paragraph'] pre {
-  @apply !my-3 overflow-x-auto rounded bg-controls-color px-3 pb-2.5 pt-2 text-small;
+  @apply !my-3 overflow-x-auto rounded bg-controls-color px-3 pb-2.5 pt-2;
+}
+
+div[class*='leading-paragraph'] pre code {
+  @apply px-0;
 }
 </style>

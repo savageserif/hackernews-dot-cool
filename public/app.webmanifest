@@ -3,9 +3,11 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "icons": {
-    "src": "/apple-touch-icon.png",
-    "sizes": "180x180",
-    "type": "image/png"
-  }
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
 }

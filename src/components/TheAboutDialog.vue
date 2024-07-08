@@ -4,22 +4,24 @@
     title="About This Website"
   >
     <p class="!mt-1.5">
-      A project by
-      <a
-        href="https://simonlou.com/"
-        target="_blank"
-        >Simon</a
-      >
-      and
-      <a
-        href="https://jona.im/"
-        target="_blank"
-        >Jona</a
-      >
+      <em class="!font-normal-serif">
+        A project by
+        <a
+          href="https://simonlou.com/"
+          target="_blank"
+          >Simon</a
+        >
+        and
+        <a
+          href="https://jona.im/"
+          target="_blank"
+          >Jona</a
+        >
+      </em>
     </p>
     <p>
       This project is an attempt at rethinking the experience of browsing Hacker News by unifying
-      the front page, linked websites and discussions as a multi-column web app. Special attention
+      the front page, linked websites and comments into a multi-column web app. Special attention
       has also been paid to improving navigation and readability while keeping the information
       density high.
     </p>

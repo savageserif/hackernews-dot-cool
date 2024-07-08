@@ -5,7 +5,7 @@
   >
     <h3>Impressum</h3>
     <p>Responsible regarding § 5 of the German Telemedia Act:</p>
-    <blockquote class="!my-[0.8125rem] leading-paragraph-narrow">
+    <blockquote class="!font-normal-serif !my-[0.8125rem] leading-paragraph-narrow">
       {{ legalName }}<br />{{ legalStreet }}<br />{{ legalCity }}<br />
       <a href="mailto:contact@hackernews.cool">contact@hackernews.cool</a>
     </blockquote>

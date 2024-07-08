@@ -18,7 +18,7 @@
       </template>
     </PageColumnControls>
     <ThePostsListColumnBody />
-    <PageColumnControls>
+    <PageColumnControls bottom>
       <template #center>
         <span
           v-if="content.currentCategoryPostIds"

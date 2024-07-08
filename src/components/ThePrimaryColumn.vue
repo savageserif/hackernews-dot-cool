@@ -54,6 +54,7 @@
 
     <PageColumnControls
       v-if="view.availableColumns <= 2 && content.currentPostItemHasLinkAndComments"
+      bottom
       class="@container"
     >
       <template #center>

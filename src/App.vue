@@ -1,6 +1,6 @@
 <template>
   <main
-    class="flex h-dvh touch-manipulation select-none gap-px bg-separator-color font-sans text-base text-primary-color antialiased selection:bg-selection-color selection:text-primary-selected-color"
+    class="flex h-dvh gap-px"
     :class="[
       view.isStandaloneDisplayMode
         ? 'pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]'
@@ -41,3 +41,9 @@ watchEffect(() => {
   }
 });
 </script>
+
+<style lang="postcss">
+body {
+  @apply touch-manipulation select-none bg-separator-color font-sans text-base text-primary-color antialiased selection:bg-selection-color selection:text-primary-selected-color;
+}
+</style>

@@ -1,0 +1,50 @@
+<template>
+  <PageDialog
+    id="legal"
+    title="Legal Notice"
+  >
+    <h3>Impressum</h3>
+    <p>Responsible regarding § 5 of the German Telemedia Act:</p>
+    <blockquote class="!my-[0.8125rem] leading-paragraph-narrow">
+      {{ legalName }}<br />{{ legalStreet }}<br />{{ legalCity }}<br />
+      <a href="mailto:contact@hackernews.cool">contact@hackernews.cool</a>
+    </blockquote>
+    <p>
+      We are neither responsible for any content fetched from the official
+      <a
+        href="https://github.com/hackernews/api"
+        target="_blank"
+        >Hacker News API</a
+      >, which includes story titles and comments, nor for the contents of linked websites embedded
+      within the page.
+    </p>
+    <h3>Privacy Policy</h3>
+    <p>
+      We do not collect any personal information from website visitors. We use Plausible Analytics
+      to gather anonymized, aggregated statistics such as browser, operating system, device type,
+      and country (approximated by IP address). Plausible Analytics operates without using cookies
+      and does not collect any personal data. For more information, visit
+      <a
+        href="https://plausible.io/data-policy"
+        target="_blank"
+        >Plausible Analytics’ data policy</a
+      >. This website is hosted by Vercel, which may collect anonymized logs. For more details,
+      visit
+      <a
+        href="https://vercel.com/legal/privacy-policy"
+        target="_blank"
+        >Vercel’s privacy policy</a
+      >. Please contact us at
+      <a href="mailto:contact@hackernews.cool">contact@hackernews.cool</a> if you have any
+      questions.
+    </p>
+  </PageDialog>
+</template>
+
+<script setup lang="ts">
+import PageDialog from '@/components/PageDialog.vue';
+
+const legalName = import.meta.env.VITE_LEGAL_NAME;
+const legalStreet = import.meta.env.VITE_LEGAL_STREET;
+const legalCity = import.meta.env.VITE_LEGAL_CITY;
+</script>

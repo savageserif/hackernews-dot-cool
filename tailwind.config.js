@@ -38,6 +38,7 @@ export default {
       none: '0',
       DEFAULT: '0.1875rem',
       outline: '0.21875rem',
+      dialog: '0.625rem',
     },
     extend: {
       lineHeight: {
@@ -59,6 +60,7 @@ export default {
         menu: '0 0 0 1px rgb(0 0 0 / 0.1), 0 2px 4px rgb(0 0 0 / 0.075), 0 4px 8px rgb(0 0 0 / 0.075)',
         'menu-dark':
           '0 0 0 1px rgb(0 0 0 / 0.1), 0 2px 4px rgb(0 0 0 / 0.15), 0 4px 8px rgb(0 0 0 / 0.15)',
+        dialog: '0 4px 8px rgb(0 0 0 / 0.075), 0 8px 16px rgb(0 0 0 / 0.075)',
       },
       transitionDuration: {
         200: '200ms',

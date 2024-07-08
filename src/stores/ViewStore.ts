@@ -1,4 +1,4 @@
-import { computed, watchEffect, nextTick } from 'vue';
+import { ref, computed, watchEffect, nextTick } from 'vue';
 import { defineStore } from 'pinia';
 import {
   useStorage,
@@ -77,6 +77,17 @@ export const useViewStore = defineStore('view', () => {
     'link'
   );
 
+  // state/actions of modal dialogs
+  const dialogs = {
+    openDialogId: ref<string | undefined>(undefined),
+    open: (id: string) => {
+      dialogs.openDialogId.value = id;
+    },
+    close: () => {
+      dialogs.openDialogId.value = undefined;
+    },
+  };
+
   // ticker which increases every minute to trigger relative timestamp refreshes
   const timestampTicker = useInterval(60000);
 
@@ -91,6 +102,7 @@ export const useViewStore = defineStore('view', () => {
     secondaryColumn,
     commentsColumn,
     activeUnifiedColumnView,
+    dialogs,
     timestampTicker,
   };
 });

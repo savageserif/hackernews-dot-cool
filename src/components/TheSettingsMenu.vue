@@ -43,6 +43,8 @@
       </div>
     </MenuItems>
   </Menu>
+  <TheAboutDialog />
+  <TheLegalDialog />
 </template>
 
 <script setup lang="ts">
@@ -52,6 +54,8 @@ import { storeToRefs } from 'pinia';
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
 import BaseIcon from '@/components/BaseIcon.vue';
 import BaseButton from '@/components/BaseButton.vue';
+import TheAboutDialog from '@/components/TheAboutDialog.vue';
+import TheLegalDialog from '@/components/TheLegalDialog.vue';
 import { useViewStore } from '@/stores/ViewStore';
 
 const view = useViewStore();
@@ -119,12 +123,12 @@ const menuContents = ref<
       },
       {
         text: 'About This Website',
-        action: () => {},
+        action: () => view.dialogs.open('about'),
       },
       {
-        text: 'Imprint / Privacy',
+        text: 'Legal / Privacy',
         faint: true,
-        action: () => {},
+        action: () => view.dialogs.open('legal'),
       },
     ],
   },

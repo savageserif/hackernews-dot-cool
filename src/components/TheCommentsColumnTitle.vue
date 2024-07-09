@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatNumber } from '@/utils';
+import { formatNumber } from '@/utils/formatNumber';
 import { useContentStore } from '@/stores/ContentStore';
 
 const content = useContentStore();

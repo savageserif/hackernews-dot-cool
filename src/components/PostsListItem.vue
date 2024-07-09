@@ -68,7 +68,8 @@
 <script setup lang="ts">
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
-import { formatNumber, absoluteTimestamp } from '@/utils';
+import { formatNumber } from '@/utils/formatNumber';
+import { absoluteTimestamp } from '@/utils/absoluteTimestamp';
 import BaseLabel from '@/components/BaseLabel.vue';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 import { useViewStore } from '@/stores/ViewStore';

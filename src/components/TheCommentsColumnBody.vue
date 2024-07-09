@@ -67,7 +67,7 @@ import type { ComponentPublicInstance } from 'vue';
 import { useInfiniteScroll, useElementBounding } from '@vueuse/core';
 import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 import type { HackerNewsItem } from '@/types';
-import { apiItemUrl } from '@/utils';
+import { apiItemUrl } from '@/utils/apiUrls';
 import BaseButton from '@/components/BaseButton.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
 import CommentItem from '@/components/CommentItem.vue';

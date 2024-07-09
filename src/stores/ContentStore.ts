@@ -2,7 +2,8 @@ import { ref, computed, watch } from 'vue';
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 import type { HackerNewsCategory, HackerNewsItemData, HackerNewsItem } from '@/types';
-import { apiCategoryUrl, apiItemUrl, parseUrl } from '@/utils';
+import { apiCategoryUrl, apiItemUrl } from '@/utils/apiUrls';
+import { parseUrl } from '@/utils/parseUrl';
 
 export const useContentStore = defineStore('content', () => {
   const categoryNames: { [key in HackerNewsCategory]: string } = {

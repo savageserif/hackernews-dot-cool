@@ -118,12 +118,12 @@ const menuContents = ref<
   {
     items: [
       {
-        text: 'View Source on GitHub',
-        action: () => window.open('https://github.com/savageserif/hackernews-dot-cool', '_blank'),
-      },
-      {
         text: 'About This Website',
         action: () => view.dialogs.open('about'),
+      },
+      {
+        text: 'View Source on GitHub',
+        action: () => window.open('https://github.com/savageserif/hackernews-dot-cool', '_blank'),
       },
       {
         text: 'Legal / Privacy',

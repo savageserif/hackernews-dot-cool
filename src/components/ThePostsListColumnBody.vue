@@ -49,7 +49,7 @@ const statusMessage = computed(() => {
   if (content.currentCategoryHasAllPostItems)
     return `You have browsed all “${content.currentCategoryName.replace(' ', '&nbsp;')}” entries. Refresh the list to view newer posts.`;
   else if (content.currentCategoryPostIds?.error)
-    return `An error has occurred while loading new stories (${content.currentCategoryPostIds.error}).`;
+    return `An error has occurred while loading stories (${content.currentCategoryPostIds.error}).`;
   else return undefined;
 });
 </script>

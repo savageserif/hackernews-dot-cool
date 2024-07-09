@@ -9,7 +9,12 @@
       aria-hidden="true"
     />
     <div class="fixed inset-0 w-screen overflow-y-auto">
-      <div class="flex min-h-full items-center justify-center p-2">
+      <div
+        class="flex min-h-full items-center justify-center p-2"
+        :class="[
+          view.isStandaloneDisplayMode ? 'pb-[calc(0.5rem+env(safe-area-inset-bottom))]' : '',
+        ]"
+      >
         <DialogPanel
           class="rounded-dialog shadow-dialog relative w-full max-w-150 select-text space-y-3 bg-blank-color p-5 font-serif text-base-serif leading-paragraph-wide dark:bg-controls-color"
         >

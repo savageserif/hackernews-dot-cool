@@ -5,16 +5,19 @@
   >
     <img
       class="w-[7.625rem]"
-      :src="placeholderAsset"
+      :src="view.darkColorSchemeIsActive ? placeholderDarkAsset : placeholderAsset"
     />
-    <span class="font-serif-heading text-[1.5rem] font-bold text-secondary-color/55">
+    <span
+      class="font-serif-heading text-[1.5rem] font-bold text-secondary-color/55 dark:text-[#000]/40"
+    >
       No story selected
     </span>
   </div>
 </template>
 
 <script setup lang="ts">
-import placeholderAsset from '@/assets/images/placeholder.png';
+import placeholderAsset from '@/assets/images/no-selection.png';
+import placeholderDarkAsset from '@/assets/images/no-selection.dark.png';
 import { useViewStore } from '@/stores/ViewStore';
 
 const view = useViewStore();

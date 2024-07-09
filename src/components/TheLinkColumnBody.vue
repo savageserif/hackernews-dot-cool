@@ -26,7 +26,7 @@
         icon="external"
         bordered
         class="mt-1"
-        @click="openExternalLink()"
+        @click="openInExternalTab()"
       >
         Open in External Tab
       </BaseButton>
@@ -39,12 +39,10 @@ import { ref, computed, watch, nextTick } from 'vue';
 import { useEventListener } from '@vueuse/core';
 import BaseButton from '@/components/BaseButton.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
+import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
-import errorAsset01 from '@/assets/images/error-01.png';
-import errorAsset02 from '@/assets/images/error-02.png';
-import errorAsset03 from '@/assets/images/error-03.png';
-import errorAsset04 from '@/assets/images/error-04.png';
 
+const view = useViewStore();
 const content = useContentStore();
 
 // array of post IDs for which loading error has occurred
@@ -88,18 +86,31 @@ useEventListener(objectElement, 'error', () => {
   }
 });
 
-const errorAssets = [errorAsset01, errorAsset02, errorAsset03, errorAsset04];
-const currentErrorAsset = ref(errorAsset01);
+const maxErrorAssetIndex = 5;
+const errorAssetIndexes = [...Array(maxErrorAssetIndex + 1).keys()];
+
+let currentErrorAssetIndex = 0;
+const currentErrorAsset = ref(undefined);
 
 watch(
-  () => content.currentPostItem,
+  () => [content.currentPostItem, view.darkColorSchemeIsActive],
   () => {
-    const otherErrorAssets = errorAssets.filter((asset) => asset !== currentErrorAsset.value);
-    currentErrorAsset.value = otherErrorAssets[Math.floor(Math.random() * otherErrorAssets.length)];
-  }
+    const otherErrorAssetIndexes = errorAssetIndexes.filter(
+      (asset) => asset !== currentErrorAssetIndex
+    );
+    currentErrorAssetIndex =
+      otherErrorAssetIndexes[Math.floor(Math.random() * otherErrorAssetIndexes.length)];
+
+    import(
+      `@/assets/images/error-${currentErrorAssetIndex + (view.darkColorSchemeIsActive ? '.dark' : '')}.png`
+    ).then((imported) => {
+      currentErrorAsset.value = imported.default;
+    });
+  },
+  { immediate: true }
 );
 
-function openExternalLink() {
+function openInExternalTab() {
   window.open(content.currentPostItem?.url?.href, '_blank');
 }
 </script>

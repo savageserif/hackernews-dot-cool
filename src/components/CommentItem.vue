@@ -99,6 +99,7 @@ import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
 import { apiItemUrl } from '@/utils/apiUrls';
 import { absoluteTimestamp } from '@/utils/absoluteTimestamp';
+import { avoidShortWidows } from '@/utils/avoidShortWidows';
 import BaseIcon from '@/components/BaseIcon.vue';
 import CommentItem from '@/components/CommentItem.vue';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
@@ -234,6 +235,7 @@ domPurifyInstance.addHook('afterSanitizeElements', (node) => {
       .replace(subsequentLinePattern, '\n');
   }
 
+  node.textContent = avoidShortWidows(node.textContent);
   node.textContent = smartquotes(node.textContent);
 });
 

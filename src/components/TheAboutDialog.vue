@@ -22,13 +22,12 @@
     <p>
       This project is an attempt at rethinking the experience of browsing Hacker News by unifying
       the front page, linked websites and comments into a multi-column web app. Special attention
-      has also been paid to improving navigation and readability while keeping the information
+      has also been paid to improving typography and readability while keeping the information
       density high.
     </p>
     <p>
       We are interested to hear whether the interface complements your reading habits and affects
-      your browsing experience — if you have any comments or suggestions, please reach out. Sharing
-      the project is also much appreciated.
+      your browsing experience — if you have any comments or suggestions, please reach out!
     </p>
     <p>
       The project’s source code is

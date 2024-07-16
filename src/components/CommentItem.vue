@@ -196,26 +196,28 @@ domPurifyInstance.addHook('uponSanitizeElement', (node) => {
 
     node.outerHTML = `<blockquote>${quoteHTML}</blockquote>`;
   } else if (new RegExp('^(-|\\*) ?.').test(node.innerHTML)) {
-    // unordered list (starts with '-' or '*')
+    // unordered list (starts with dash or asterisk)
     let listItemHTML = node.innerHTML;
 
     while (new RegExp('^(-|\\*| )').test(listItemHTML)) {
       listItemHTML = listItemHTML.substring(1);
     }
 
+    listItemHTML = listItemHTML.replace(/\n(-|\*) ?/g, '</li></ul><ul><li>');
+
     node.outerHTML = `<ul><li>${listItemHTML}</li></ul>`;
-  } else if (new RegExp('^\\d\\. .').test(node.innerHTML)) {
-    // ordered list (starts with single digit + '.')
-    const digit = node.innerHTML.match(/^\d/);
-    if (!digit) return;
+  } else if (new RegExp('^(\\d|[A-Z])(\\.|\\)) .').test(node.innerHTML)) {
+    // ordered list (starts with digit or uppercase letter followed by period or parenthesis)
+    const counter = node.innerHTML.match(/^(\d|[A-Z])/);
+    if (!counter) return;
 
     let listItemHTML = node.innerHTML;
 
-    while (new RegExp('^(\\d|\\.| )').test(listItemHTML)) {
+    while (new RegExp('^(\\d|[A-Z](\\.|\\))|\\.|\\)| )').test(listItemHTML)) {
       listItemHTML = listItemHTML.substring(1);
     }
 
-    node.outerHTML = `<ol><li value="${digit[0]}">${listItemHTML}</li></ol>`;
+    node.outerHTML = `<ol><li value="${counter[0]}">${listItemHTML}</li></ol>`;
   }
 });
 

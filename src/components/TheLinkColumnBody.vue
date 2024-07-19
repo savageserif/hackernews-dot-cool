@@ -1,36 +1,46 @@
 <template>
-  <PageColumnBody>
+  <PageColumnBody class="relative">
+    <div
+      class="flex h-full flex-col items-center justify-center gap-3 pb-4"
+      :class="[showErrorMessage ? 'bg-controls-color' : '']"
+    >
+      <template v-if="showErrorMessage">
+        <img
+          :src="currentErrorAsset"
+          class="size-32"
+        />
+        <div
+          class="max-w-[28rem] text-balance px-8 text-center leading-paragraph-narrow text-secondary-color"
+        >
+          Unfortunately, this website does not {{ view.isSafari ? 'seem to' : '' }} allow an inline
+          preview. You can open the link externally
+          {{
+            view.isSafari
+              ? `by ${view.isTouchDevice ? 'tapping' : 'clicking'} the URL above`
+              : 'instead'
+          }}.
+        </div>
+        <BaseButton
+          v-if="!view.isSafari"
+          icon="external"
+          bordered
+          class="mt-1"
+          @click="openInExternalTab()"
+        >
+          Open in External Tab
+        </BaseButton>
+      </template>
+      <StatusItem
+        v-else
+        full-height
+      />
+    </div>
     <object
       v-if="renderObject"
-      v-show="!error"
       ref="objectElement"
-      class="h-full w-full"
       :data="content.currentPostItem?.url?.href"
+      class="absolute inset-0 h-full w-full"
     />
-    <div
-      v-show="error"
-      class="flex h-full flex-col items-center justify-center gap-3 bg-controls-color pb-4"
-      :class="[firstErrorForPostId ? 'animate-appear' : '']"
-    >
-      <img
-        :src="currentErrorAsset"
-        class="w-32"
-      />
-      <div
-        class="max-w-150 text-balance px-8 text-center leading-paragraph-narrow text-secondary-color"
-      >
-        Unfortunately, this website does not allow an inline preview. You can open the link
-        externally instead.
-      </div>
-      <BaseButton
-        icon="external"
-        bordered
-        class="mt-1"
-        @click="openInExternalTab()"
-      >
-        Open in External Tab
-      </BaseButton>
-    </div>
   </PageColumnBody>
 </template>
 
@@ -39,6 +49,7 @@ import { ref, computed, watch, nextTick } from 'vue';
 import { useEventListener } from '@vueuse/core';
 import BaseButton from '@/components/BaseButton.vue';
 import PageColumnBody from '@/components/PageColumnBody.vue';
+import StatusItem from '@/components/StatusItem.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 
@@ -48,43 +59,63 @@ const content = useContentStore();
 // array of post IDs for which loading error has occurred
 const errorPostIds = ref<number[]>([]);
 
-// whether loading the current post item results in an error
-const error = computed(() =>
+// whether loading the current post item has previously resulted in an error
+const previousErrorForPostId = computed(() =>
   content.currentPostItem ? errorPostIds.value.includes(content.currentPostItem.id) : false
 );
 
-// whether an error for a specific post ID has just occurred for the first time (relevant for fade-in of error message)
-const firstErrorForPostId = ref(false);
+// Safari-specific timeout for showing error message (see comment below)
+let safariErrorMessageTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
 
-// whether the object element is being rendered (see comment below)
+const showErrorMessage = ref(false);
 const renderObject = ref(true);
 
 watch(
   () => content.currentPostItem,
   async () => {
-    // if error is already apparent, skip replacing object element
-    if (error.value) return;
+    // if error is already apparent, remove object element and show error message immediately
+    if (previousErrorForPostId.value) {
+      renderObject.value = false;
+      showErrorMessage.value = true;
+      return;
+    }
 
-    firstErrorForPostId.value = false;
-
-    // force object element to be replaced when current post item changes
-    // (object element seems to refuse to load new content once it encounters an error)
+    // force object element to re-render (as seems to refuse to load new content once it has encountered an error)
     renderObject.value = false;
     await nextTick();
     renderObject.value = true;
     await nextTick();
-  }
+
+    // hide error message
+    showErrorMessage.value = false;
+
+    // as the object element does not ever fire an error event on Safari, show the error message after a timeout there instead
+    if (view.isSafari) {
+      clearTimeout(safariErrorMessageTimeout);
+
+      safariErrorMessageTimeout = setTimeout(() => {
+        showErrorMessage.value = true;
+      }, 4000);
+    }
+  },
+  { immediate: true }
 );
 
 const objectElement = ref<HTMLElement | null>(null);
 
-useEventListener(objectElement, 'error', () => {
-  // when an error occurs, push ID of unloadable post to errorPostIds array
-  if (content.currentPostItem && !errorPostIds.value.includes(content.currentPostItem.id)) {
-    errorPostIds.value.push(content.currentPostItem.id);
-    firstErrorForPostId.value = true;
-  }
-});
+// on browsers other than Safari, listen for error events on the object element to show the error message
+if (!view.isSafari) {
+  useEventListener(objectElement, 'error', () => {
+    // remove object element and show error message
+    renderObject.value = false;
+    showErrorMessage.value = true;
+
+    // push ID of unloadable post to errorPostIds array
+    if (content.currentPostItem && !errorPostIds.value.includes(content.currentPostItem.id)) {
+      errorPostIds.value.push(content.currentPostItem.id);
+    }
+  });
+}
 
 const maxErrorAssetIndex = 5;
 const errorAssetIndexes = [...Array(maxErrorAssetIndex + 1).keys()];

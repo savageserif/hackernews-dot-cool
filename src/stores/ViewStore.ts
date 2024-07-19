@@ -32,6 +32,7 @@ export const useViewStore = defineStore('view', () => {
       );
   });
 
+  const isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') !== -1;
   const isTouchDevice = useMediaQuery('(pointer: coarse)');
   const isStandaloneDisplayMode = useMediaQuery('(display-mode: standalone)');
   const { width: windowWidth } = useWindowSize();
@@ -94,6 +95,7 @@ export const useViewStore = defineStore('view', () => {
   return {
     colorScheme,
     darkColorSchemeIsActive,
+    isSafari,
     isTouchDevice,
     isStandaloneDisplayMode,
     windowWidth,

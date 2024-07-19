@@ -52,11 +52,11 @@
       class="relative flex flex-1 overflow-hidden bg-blank-color"
     >
       <TheLinkColumnBody
-        class="transition-transform duration-300"
+        class="transition-transform duration-[250ms]"
         :class="[!showLinkColumn ? '-translate-x-full' : '']"
       />
       <TheCommentsColumnBody
-        class="absolute inset-0 transition-transform duration-300"
+        class="absolute inset-0 transition-transform duration-[250ms]"
         :class="[showLinkColumn ? 'translate-x-full' : '']"
       />
     </div>

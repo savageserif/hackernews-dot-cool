@@ -8,6 +8,7 @@
         <img
           :src="currentErrorAsset"
           class="size-32"
+          :class="[view.darkColorSchemeIsActive && view.availableColumns === 1 ? 'opacity-80' : '']"
         />
         <div
           class="max-w-[28rem] text-balance px-8 text-center leading-paragraph-narrow text-secondary-color"

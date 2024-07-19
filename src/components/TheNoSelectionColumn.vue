@@ -8,7 +8,7 @@
       :src="view.darkColorSchemeIsActive ? placeholderDarkAsset : placeholderAsset"
     />
     <span
-      class="font-serif-heading text-[1.5rem] font-bold text-secondary-color/55 dark:text-[#000]/40"
+      class="font-serif-heading text-[1.5rem] font-bold text-secondary-color/55 dark:text-secondary-color/65"
     >
       No story selected
     </span>

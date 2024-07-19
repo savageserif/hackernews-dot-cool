@@ -117,10 +117,9 @@ if (!view.isSafari) {
   });
 }
 
-const maxErrorAssetIndex = 5;
-const errorAssetIndexes = [...Array(maxErrorAssetIndex + 1).keys()];
+const errorAssetIndexes = [...Array(6 /* highest error asset index + 1 */).keys()];
 
-let currentErrorAssetIndex = 0;
+let currentErrorAssetIndex = -1;
 const currentErrorAsset = ref(undefined);
 
 watch(
@@ -129,6 +128,7 @@ watch(
     const otherErrorAssetIndexes = errorAssetIndexes.filter(
       (asset) => asset !== currentErrorAssetIndex
     );
+
     currentErrorAssetIndex =
       otherErrorAssetIndexes[Math.floor(Math.random() * otherErrorAssetIndexes.length)];
 

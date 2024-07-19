@@ -47,10 +47,19 @@
       <TheLinkColumnBody v-if="showLinkColumn" />
       <TheCommentsColumnBody v-else />
     </template>
-    <template v-else>
-      <TheLinkColumnBody v-show="showLinkColumn" />
-      <TheCommentsColumnBody v-show="!showLinkColumn" />
-    </template>
+    <div
+      v-else
+      class="relative flex flex-1 overflow-hidden bg-blank-color"
+    >
+      <TheLinkColumnBody
+        class="transition-transform duration-300"
+        :class="[!showLinkColumn ? '-translate-x-full' : '']"
+      />
+      <TheCommentsColumnBody
+        class="absolute inset-0 transition-transform duration-300"
+        :class="[showLinkColumn ? 'translate-x-full' : '']"
+      />
+    </div>
 
     <PageColumnControls
       v-if="view.availableColumns <= 2 && content.currentPostItemHasLinkAndComments"

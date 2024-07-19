@@ -1,13 +1,13 @@
 <template>
   <PageColumnBody class="relative">
     <div
-      class="flex h-full flex-col items-center justify-center gap-3 pb-4"
+      class="flex h-full flex-col items-center justify-center gap-3"
       :class="[view.availableColumns !== 1 && showErrorMessage ? 'bg-controls-color' : '']"
     >
       <template v-if="showErrorMessage">
         <img
           :src="currentErrorAsset"
-          class="size-32"
+          class="-mt-4 size-32"
           :class="[view.darkColorSchemeIsActive && view.availableColumns === 1 ? 'opacity-80' : '']"
         />
         <div

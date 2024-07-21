@@ -13,16 +13,17 @@
         <div
           class="max-w-[28rem] text-balance px-8 text-center leading-paragraph-narrow text-secondary-color"
         >
-          Unfortunately, this website does not {{ view.isSafari ? 'seem to' : '' }} allow an inline
-          preview. You can open the link externally
+          Unfortunately, this website does not
+          {{ !view.objectErrorEventsSupported ? 'seem to' : '' }} allow an inline preview. You can
+          open the link externally
           {{
-            view.isSafari
+            !view.objectErrorEventsSupported
               ? `by ${view.isTouchDevice ? 'tapping' : 'clicking'} the URL above`
               : 'instead'
           }}.
         </div>
         <BaseButton
-          v-if="!view.isSafari"
+          v-if="view.objectErrorEventsSupported"
           icon="external"
           bordered
           class="mt-1"
@@ -91,7 +92,7 @@ watch(
     showErrorMessage.value = false;
 
     // as the object element does not ever fire an error event on Safari, show the error message after a timeout there instead
-    if (view.isSafari) {
+    if (!view.objectErrorEventsSupported) {
       clearTimeout(safariErrorMessageTimeout);
 
       safariErrorMessageTimeout = setTimeout(() => {
@@ -105,7 +106,7 @@ watch(
 const objectElement = ref<HTMLElement | null>(null);
 
 // on browsers other than Safari, listen for error events on the object element to show the error message
-if (!view.isSafari) {
+if (view.objectErrorEventsSupported) {
   useEventListener(objectElement, 'error', () => {
     // remove object element and show error message
     renderObject.value = false;

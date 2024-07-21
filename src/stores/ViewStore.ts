@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   useInterval,
 } from '@vueuse/core';
+import { testObjectErrorEventsSupport } from '@/utils/testObjectErrorEventsSupport';
 
 export const useViewStore = defineStore('view', () => {
   const colorScheme = useStorage<'system' | 'light' | 'dark'>('colorScheme', 'system');
@@ -32,7 +33,17 @@ export const useViewStore = defineStore('view', () => {
       );
   });
 
-  const isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') !== -1;
+  const objectErrorEventsSupported = ref(true);
+
+  addEventListener('object-error-events-unsupported', () => {
+    objectErrorEventsSupported.value = false;
+  });
+
+  // test support for object tag error events by attempting to embed a URL with the
+  // X-Frame-Options: DENY header; if this does not result in an error event,
+  // the 'object-error-events-unsupported' event is dispatched
+  testObjectErrorEventsSupport();
+
   const isTouchDevice = useMediaQuery('(pointer: coarse)');
   const isStandaloneDisplayMode = useMediaQuery('(display-mode: standalone)');
   const { width: windowWidth } = useWindowSize();
@@ -95,7 +106,7 @@ export const useViewStore = defineStore('view', () => {
   return {
     colorScheme,
     darkColorSchemeIsActive,
-    isSafari,
+    objectErrorEventsSupported,
     isTouchDevice,
     isStandaloneDisplayMode,
     windowWidth,

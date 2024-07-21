@@ -1,3 +1,14 @@
 {
-  "rewrites": [{ "source": "/story/(\\d+)", "destination": "/" }]
+  "rewrites": [{ "source": "/story/\\d+", "destination": "/" }],
+  "headers": [
+    {
+      "source": "/object-error-test.html",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
+      ]
+    }
+  ]
 }

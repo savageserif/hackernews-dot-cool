@@ -1,5 +1,5 @@
 {
-  "rewrites": [{ "source": "/story/\\d+", "destination": "/" }],
+  "rewrites": [{ "source": "/story/(\\d+)", "destination": "/" }],
   "headers": [
     {
       "source": "/object-error-test.html",

@@ -2,7 +2,7 @@
   <PageColumnBody class="relative">
     <div
       class="flex h-full flex-col items-center justify-center gap-3"
-      :class="[view.availableColumns !== 1 && showErrorMessage ? 'bg-controls-color' : '']"
+      :class="[view.availableColumns === 3 && showErrorMessage ? 'bg-controls-color' : '']"
     >
       <template v-if="showErrorMessage">
         <img

@@ -25,6 +25,8 @@
       :icon="icon"
       :small="small"
       :reversed="reversed"
+      :class="labelClass"
+      :style="labelStyle"
     >
       <slot />
     </BaseLabel>
@@ -41,6 +43,8 @@ const props = defineProps<{
   reversed?: boolean;
   bordered?: boolean;
   disabled?: boolean;
+  labelClass?: string;
+  labelStyle?: string;
 }>();
 
 const view = useViewStore();

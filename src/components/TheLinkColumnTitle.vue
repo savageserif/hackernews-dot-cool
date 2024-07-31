@@ -8,7 +8,7 @@
     class="w-full"
     @click="openInExternalTab()"
   >
-    <span class="truncate text-secondary-color">
+    <span class="-my-1 truncate py-1 text-secondary-color">
       <span class="text-primary-color">
         {{ content.currentPostItem?.url?.hostname }}
       </span>

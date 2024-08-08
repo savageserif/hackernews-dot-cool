@@ -15,7 +15,7 @@
     >
       <div class="space-y-0.5 font-serif text-base-serif">
         <h2 class="font-serif-heading font-bold">
-          {{ smartquotes(item.title) }}
+          {{ avoidShortWidows(smartquotes(item.title)) }}
         </h2>
         <div class="[overflow-wrap:anywhere]">
           {{ item.url?.hostname }}
@@ -68,6 +68,7 @@
 <script setup lang="ts">
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
+import { avoidShortWidows } from '@/utils/avoidShortWidows';
 import { formatNumber } from '@/utils/formatNumber';
 import { absoluteTimestamp } from '@/utils/absoluteTimestamp';
 import BaseLabel from '@/components/BaseLabel.vue';

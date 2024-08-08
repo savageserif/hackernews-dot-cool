@@ -1,5 +1,5 @@
 <template>
-  <PageDialog
+  <BaseDialog
     id="legal"
     title="Legal Notice"
   >
@@ -38,11 +38,11 @@
       <a href="mailto:contact@hackernews.cool">contact@hackernews.cool</a> if you have any
       questions.
     </p>
-  </PageDialog>
+  </BaseDialog>
 </template>
 
 <script setup lang="ts">
-import PageDialog from '@/components/PageDialog.vue';
+import BaseDialog from '@/components/BaseDialog.vue';
 
 const legalName = import.meta.env.VITE_LEGAL_NAME;
 const legalStreet = import.meta.env.VITE_LEGAL_STREET;

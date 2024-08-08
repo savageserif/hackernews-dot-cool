@@ -1,5 +1,5 @@
 <template>
-  <PageDialog
+  <BaseDialog
     id="about"
     title="About This Website"
   >
@@ -37,9 +37,9 @@
         >available on GitHub</a
       >.
     </p>
-  </PageDialog>
+  </BaseDialog>
 </template>
 
 <script setup lang="ts">
-import PageDialog from '@/components/PageDialog.vue';
+import BaseDialog from '@/components/BaseDialog.vue';
 </script>

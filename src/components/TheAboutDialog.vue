@@ -4,7 +4,7 @@
     title="About This Website"
   >
     <p class="!mt-1.5">
-      <em class="!font-normal-serif">
+      <em class="font-serif text-base-serif !font-normal-serif">
         A project by
         <a
           href="https://simonlou.com/"

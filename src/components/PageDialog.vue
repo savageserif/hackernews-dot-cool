@@ -16,7 +16,7 @@
         ]"
       >
         <DialogPanel
-          class="rounded-dialog shadow-dialog relative w-full max-w-150 select-text space-y-3 bg-blank-color p-5 font-serif text-base-serif leading-paragraph-wide dark:bg-controls-color"
+          class="relative w-full max-w-150 select-text space-y-3 rounded-dialog bg-blank-color p-5 leading-paragraph-wide shadow-dialog dark:bg-controls-color"
         >
           <DialogTitle class="font-serif-heading text-[1.5rem] font-bold">{{ title }}</DialogTitle>
           <slot />
@@ -49,6 +49,6 @@ const dialogIsOpen = computed(() => view.dialogs.openDialogId === props.id);
 
 <style lang="postcss">
 div[class*='rounded-dialog'] h3 {
-  @apply !mt-6 font-bold;
+  @apply !mt-6 font-serif-heading font-bold;
 }
 </style>

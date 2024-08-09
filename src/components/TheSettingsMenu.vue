@@ -48,17 +48,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import type { ComputedRef } from 'vue';
 import { storeToRefs } from 'pinia';
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
-import BaseIcon from '@/components/BaseIcon.vue';
 import BaseButton from '@/components/BaseButton.vue';
-import TheAboutDialog from '@/components/TheAboutDialog.vue';
-import TheLegalDialog from '@/components/TheLegalDialog.vue';
 import { useViewStore } from '@/stores/ViewStore';
 
 const view = useViewStore();
+
 const { colorScheme, prioritizedView } = storeToRefs(view);
 
 const menuContents = ref<

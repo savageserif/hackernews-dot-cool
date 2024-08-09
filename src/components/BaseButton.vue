@@ -34,8 +34,9 @@
 </template>
 
 <script setup lang="ts">
-import BaseLabel from '@/components/BaseLabel.vue';
 import { useViewStore } from '@/stores/ViewStore';
+
+const view = useViewStore();
 
 const props = defineProps<{
   icon?: string;
@@ -46,6 +47,4 @@ const props = defineProps<{
   labelClass?: string;
   labelStyle?: string;
 }>();
-
-const view = useViewStore();
 </script>

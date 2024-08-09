@@ -39,7 +39,3 @@
     </p>
   </BaseDialog>
 </template>
-
-<script setup lang="ts">
-import BaseDialog from '@/components/BaseDialog.vue';
-</script>

@@ -47,11 +47,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue';
-import { useEventListener } from '@vueuse/core';
-import BaseButton from '@/components/BaseButton.vue';
-import PageColumnBody from '@/components/PageColumnBody.vue';
-import StatusItem from '@/components/StatusItem.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 

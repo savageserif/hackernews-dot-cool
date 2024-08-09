@@ -37,21 +37,17 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import ThePrimaryColumn from '@/components/ThePrimaryColumn.vue';
-import TheSecondaryColumn from '@/components/TheSecondaryColumn.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
+
+const view = useViewStore();
+const content = useContentStore();
+const router = useRouter();
+const route = useRoute();
 
 const props = defineProps<{
   postId: number;
 }>();
-
-const router = useRouter();
-const route = useRoute();
-const view = useViewStore();
-const content = useContentStore();
 
 // whenever the postId prop changes thorugh router, update the current post item
 watch(

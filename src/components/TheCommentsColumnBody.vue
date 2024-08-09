@@ -62,16 +62,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue';
-import type { ComponentPublicInstance } from 'vue';
-import { useInfiniteScroll, useElementBounding } from '@vueuse/core';
 import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 import type { HackerNewsItem } from '@/types';
 import { apiItemUrl } from '@/utils/apiUrls';
-import BaseButton from '@/components/BaseButton.vue';
-import PageColumnBody from '@/components/PageColumnBody.vue';
-import CommentItem from '@/components/CommentItem.vue';
-import StatusItem from '@/components/StatusItem.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 

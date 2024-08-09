@@ -20,15 +20,12 @@
 </template>
 
 <script setup lang="ts">
-import { watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
-import ThePostsListColumn from '@/components/ThePostsListColumn.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 
-const route = useRoute();
 const view = useViewStore();
 const content = useContentStore();
+const route = useRoute();
 
 content.fetchPostIds();
 

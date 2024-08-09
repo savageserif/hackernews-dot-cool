@@ -19,17 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { useInfiniteScroll } from '@vueuse/core';
-import PageColumnBody from '@/components/PageColumnBody.vue';
-import PostsListItem from '@/components/PostsListItem.vue';
-import StatusItem from '@/components/StatusItem.vue';
 import { useContentStore } from '@/stores/ContentStore';
 
+const content = useContentStore();
 const router = useRouter();
 const route = useRoute();
-const content = useContentStore();
 
 const containerElement = ref<HTMLElement | null>(null);
 

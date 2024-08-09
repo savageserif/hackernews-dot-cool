@@ -71,17 +71,16 @@ import type { HackerNewsItem } from '@/types';
 import { avoidShortWidows } from '@/utils/avoidShortWidows';
 import { formatNumber } from '@/utils/formatNumber';
 import { absoluteTimestamp } from '@/utils/absoluteTimestamp';
-import BaseLabel from '@/components/BaseLabel.vue';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 import { useViewStore } from '@/stores/ViewStore';
+
+const view = useViewStore();
 
 const props = defineProps<{
   item: HackerNewsItem;
   viewed?: boolean;
   active?: boolean;
 }>();
-
-const view = useViewStore();
 
 const { text: relativeTimestamp } = useRelativeTimestamp(props.item.time, true);
 </script>

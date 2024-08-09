@@ -42,8 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import BaseDialog from '@/components/BaseDialog.vue';
-
 const legalName = import.meta.env.VITE_LEGAL_NAME;
 const legalStreet = import.meta.env.VITE_LEGAL_STREET;
 const legalCity = import.meta.env.VITE_LEGAL_CITY;

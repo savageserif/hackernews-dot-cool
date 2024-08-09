@@ -10,16 +10,15 @@
 </template>
 
 <script setup lang="ts">
-import { shallowRef, watchEffect } from 'vue';
 import { useViewStore } from '@/stores/ViewStore';
+
+const view = useViewStore();
 
 const props = defineProps<{
   name: string;
   small?: boolean;
   inheritColor?: boolean;
 }>();
-
-const view = useViewStore();
 
 const iconComponent = shallowRef();
 

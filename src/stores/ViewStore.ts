@@ -1,12 +1,4 @@
-import { ref, computed, watchEffect, nextTick } from 'vue';
 import { defineStore } from 'pinia';
-import {
-  useStorage,
-  usePreferredDark,
-  useWindowSize,
-  useMediaQuery,
-  useInterval,
-} from '@vueuse/core';
 import { testObjectErrorEventsSupport } from '@/utils/testObjectErrorEventsSupport';
 
 export const useViewStore = defineStore('view', () => {

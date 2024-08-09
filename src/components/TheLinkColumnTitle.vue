@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import BaseButton from '@/components/BaseButton.vue';
 import { useContentStore } from '@/stores/ContentStore';
 
 const content = useContentStore();

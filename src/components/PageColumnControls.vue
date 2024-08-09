@@ -28,10 +28,10 @@
 <script setup lang="ts">
 import { useViewStore } from '@/stores/ViewStore';
 
+const view = useViewStore();
+
 const props = defineProps<{
   bottom?: boolean;
   divider?: 'right';
 }>();
-
-const view = useViewStore();
 </script>

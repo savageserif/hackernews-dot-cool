@@ -25,11 +25,10 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { RadioGroup, RadioGroupOption } from '@headlessui/vue';
-import BaseLabel from '@/components/BaseLabel.vue';
 import { useViewStore } from '@/stores/ViewStore';
 
 const view = useViewStore();
+
 const { activeUnifiedColumnView } = storeToRefs(view);
 
 const radioOptions = [

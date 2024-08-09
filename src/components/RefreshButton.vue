@@ -8,9 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import BaseButton from '@/components/BaseButton.vue';
-
 const degrees = ref(0);
 
 function animate() {

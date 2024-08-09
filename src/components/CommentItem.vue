@@ -91,19 +91,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watchEffect, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useEventListener } from '@vueuse/core';
 import DOMPurify from 'dompurify';
 import smartquotes from 'smartquotes-ts';
 import type { HackerNewsItem } from '@/types';
 import { apiItemUrl } from '@/utils/apiUrls';
 import { absoluteTimestamp } from '@/utils/absoluteTimestamp';
 import { avoidShortWidows } from '@/utils/avoidShortWidows';
-import BaseIcon from '@/components/BaseIcon.vue';
-import CommentItem from '@/components/CommentItem.vue';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 import { useContentStore } from '@/stores/ContentStore';
+
+const content = useContentStore();
+const router = useRouter();
 
 const props = withDefaults(
   defineProps<{
@@ -120,9 +118,6 @@ const props = withDefaults(
     consecutiveLastLevels: 0,
   }
 );
-
-const router = useRouter();
-const content = useContentStore();
 
 // if item data does not contain 'parent' key, this is a post’s description text that appears above the comment threads
 const isPostDescription = !('parent' in props.item);

@@ -32,17 +32,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Dialog, DialogPanel, DialogTitle } from '@headlessui/vue';
-import BaseButton from '@/components/BaseButton.vue';
 import { useViewStore } from '@/stores/ViewStore';
+
+const view = useViewStore();
 
 const props = defineProps<{
   id: string;
   title: string;
 }>();
-
-const view = useViewStore();
 
 const dialogIsOpen = computed(() => view.dialogs.openDialogId === props.id);
 </script>

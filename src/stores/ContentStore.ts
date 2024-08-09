@@ -1,6 +1,4 @@
-import { ref, computed, watch } from 'vue';
 import { defineStore } from 'pinia';
-import { useStorage } from '@vueuse/core';
 import type { HackerNewsCategory, HackerNewsItemData, HackerNewsItem } from '@/types';
 import { apiCategoryUrl, apiItemUrl } from '@/utils/apiUrls';
 import { parseUrl } from '@/utils/parseUrl';

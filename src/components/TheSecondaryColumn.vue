@@ -36,14 +36,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import PageColumn from '@/components/PageColumn.vue';
-import PageColumnControls from '@/components/PageColumnControls.vue';
-import BaseButton from '@/components/BaseButton.vue';
-import TheLinkColumnTitle from '@/components/TheLinkColumnTitle.vue';
-import TheLinkColumnBody from '@/components/TheLinkColumnBody.vue';
-import TheCommentsColumnTitle from '@/components/TheCommentsColumnTitle.vue';
-import TheCommentsColumnBody from '@/components/TheCommentsColumnBody.vue';
 import { useViewStore } from '@/stores/ViewStore';
 
 const view = useViewStore();

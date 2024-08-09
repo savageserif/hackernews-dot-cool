@@ -48,14 +48,12 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue';
-import BaseIcon from '@/components/BaseIcon.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 
 const view = useViewStore();
-
 const content = useContentStore();
+
 const { currentCategory } = storeToRefs(content);
 </script>

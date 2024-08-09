@@ -74,24 +74,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
-import PageColumn from '@/components/PageColumn.vue';
-import PageColumnControls from '@/components/PageColumnControls.vue';
-import PageColumnBody from '@/components/PageColumnBody.vue';
-import BaseButton from '@/components/BaseButton.vue';
-import StatusItem from '@/components/StatusItem.vue';
-import TheLinkColumnTitle from '@/components/TheLinkColumnTitle.vue';
-import TheLinkColumnBody from '@/components/TheLinkColumnBody.vue';
-import TheCommentsColumnTitle from '@/components/TheCommentsColumnTitle.vue';
-import TheCommentsColumnBody from '@/components/TheCommentsColumnBody.vue';
-import TheUnifiedViewControl from '@/components/TheUnifiedViewControl.vue';
 import { useViewStore } from '@/stores/ViewStore';
 import { useContentStore } from '@/stores/ContentStore';
 
-const router = useRouter();
 const view = useViewStore();
 const content = useContentStore();
+const router = useRouter();
 
 const showLinkColumn = computed(
   () =>

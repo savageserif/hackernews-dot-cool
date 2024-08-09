@@ -42,7 +42,7 @@
               <span class="font-serif text-base-serif italic">{{ item.by }}</span>
               <span
                 v-if="item.by === content.currentPostItem?.by"
-                class="my-[-0.25rem] ml-1.5 inline-block rounded border border-blank-color bg-selection-color/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-accent-color [font-feature-settings:'smcp','c2sc']"
+                class="my-[-0.25rem] ml-1.5 inline-block -translate-y-[0.03125rem] rounded border border-blank-color bg-selection-color/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-accent-color [font-feature-settings:'smcp','c2sc']"
               >
                 OP
               </span>
@@ -128,6 +128,7 @@ const content = useContentStore();
 const isPostDescription = !('parent' in props.item);
 
 const isCollapsed = ref(false);
+
 function toggleCollapsed() {
   if (isPostDescription) return;
   isCollapsed.value = !isCollapsed.value;
@@ -203,6 +204,7 @@ domPurifyInstance.addHook('uponSanitizeElement', (node) => {
       listItemHTML = listItemHTML.substring(1);
     }
 
+    // detect subsequent list items separated by a single line break
     listItemHTML = listItemHTML.replace(/\n(-|\*) ?/g, '</li></ul><ul><li>');
 
     node.outerHTML = `<ul><li>${listItemHTML}</li></ul>`;
@@ -221,10 +223,10 @@ domPurifyInstance.addHook('uponSanitizeElement', (node) => {
   }
 });
 
-// optimize/format comment text
 domPurifyInstance.addHook('afterSanitizeElements', (node) => {
   if (!node.nodeName || node.nodeName !== '#text' || !node.textContent) return;
 
+  // remove superfluous leading spaces in code blocks
   const leadingSpaces = node.textContent.match(/^ {2,}/);
 
   if (leadingSpaces) {
@@ -237,6 +239,7 @@ domPurifyInstance.addHook('afterSanitizeElements', (node) => {
       .replace(subsequentLinePattern, '\n');
   }
 
+  // avoid short words on last line and add typograhic quotes
   node.textContent = avoidShortWidows(node.textContent);
   node.textContent = smartquotes(node.textContent);
 });

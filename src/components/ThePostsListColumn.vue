@@ -37,8 +37,6 @@
 <script setup lang="ts">
 import logoAsset from '@/assets/images/logo.png';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
-import { useViewStore } from '@/stores/ViewStore';
-import { useContentStore } from '@/stores/ContentStore';
 
 const view = useViewStore();
 const content = useContentStore();

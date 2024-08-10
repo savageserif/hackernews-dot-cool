@@ -47,10 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
 import BaseButton from '@/components/BaseButton.vue';
-import { useViewStore } from '@/stores/ViewStore';
-import { useContentStore } from '@/stores/ContentStore';
 
 const view = useViewStore();
 const content = useContentStore();

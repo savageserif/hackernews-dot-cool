@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia';
 import { testObjectErrorEventsSupport } from '@/utils/testObjectErrorEventsSupport';
 
 export const useViewStore = defineStore('view', () => {

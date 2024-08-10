@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia';
 import type { HackerNewsCategory, HackerNewsItemData, HackerNewsItem } from '@/types';
 import { apiCategoryUrl, apiItemUrl } from '@/utils/apiUrls';
 import { parseUrl } from '@/utils/parseUrl';

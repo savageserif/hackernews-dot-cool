@@ -72,7 +72,6 @@ import { avoidShortWidows } from '@/utils/avoidShortWidows';
 import { formatNumber } from '@/utils/formatNumber';
 import { absoluteTimestamp } from '@/utils/absoluteTimestamp';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
-import { useViewStore } from '@/stores/ViewStore';
 
 const view = useViewStore();
 

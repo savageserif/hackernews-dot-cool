@@ -98,7 +98,6 @@ import { apiItemUrl } from '@/utils/apiUrls';
 import { absoluteTimestamp } from '@/utils/absoluteTimestamp';
 import { avoidShortWidows } from '@/utils/avoidShortWidows';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
-import { useContentStore } from '@/stores/ContentStore';
 
 const content = useContentStore();
 const router = useRouter();

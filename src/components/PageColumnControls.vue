@@ -26,8 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import { useViewStore } from '@/stores/ViewStore';
-
 const view = useViewStore();
 
 const props = defineProps<{

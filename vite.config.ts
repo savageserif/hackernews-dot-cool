@@ -11,7 +11,16 @@ import svgLoader from 'vite-svg-loader';
 export default defineConfig({
   plugins: [
     vue(),
-    AutoImport({ imports: ['vue', 'vue-router', '@vueuse/core'] }),
+    AutoImport({
+      imports: [
+        'vue',
+        'vue-router',
+        'pinia',
+        { '@/stores/ContentStore': ['useContentStore'] },
+        { '@/stores/ViewStore': ['useViewStore'] },
+        '@vueuse/core',
+      ],
+    }),
     Components({ resolvers: [HeadlessUiResolver()] }),
     svgLoader({ svgo: false }),
     {

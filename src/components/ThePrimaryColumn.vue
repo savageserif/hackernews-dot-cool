@@ -74,9 +74,6 @@
 </template>
 
 <script setup lang="ts">
-import { useViewStore } from '@/stores/ViewStore';
-import { useContentStore } from '@/stores/ContentStore';
-
 const view = useViewStore();
 const content = useContentStore();
 const router = useRouter();

@@ -18,7 +18,6 @@
 <script setup lang="ts">
 import placeholderAsset from '@/assets/images/no-selection.png';
 import placeholderDarkAsset from '@/assets/images/no-selection.dark.png';
-import { useViewStore } from '@/stores/ViewStore';
 
 const view = useViewStore();
 </script>

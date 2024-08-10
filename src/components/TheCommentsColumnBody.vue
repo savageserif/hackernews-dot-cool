@@ -65,8 +65,6 @@
 import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 import type { HackerNewsItem } from '@/types';
 import { apiItemUrl } from '@/utils/apiUrls';
-import { useViewStore } from '@/stores/ViewStore';
-import { useContentStore } from '@/stores/ContentStore';
 
 const view = useViewStore();
 const content = useContentStore();

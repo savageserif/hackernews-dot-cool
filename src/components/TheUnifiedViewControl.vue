@@ -24,9 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useViewStore } from '@/stores/ViewStore';
-
 const view = useViewStore();
 
 const { activeUnifiedColumnView } = storeToRefs(view);

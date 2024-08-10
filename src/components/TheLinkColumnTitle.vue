@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { useContentStore } from '@/stores/ContentStore';
-
 const content = useContentStore();
 
 function openInExternalTab() {

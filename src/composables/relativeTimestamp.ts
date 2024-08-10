@@ -1,6 +1,5 @@
-import { ref, watch, toValue, isRef } from 'vue';
 import type { Ref } from 'vue';
-import { useViewStore } from '@/stores/ViewStore';
+import { formatNumberWithLabel } from '@/utils/formatNumberWithLabel';
 
 export function useRelativeTimestamp(time?: number | Ref<number | undefined>, capitalized = false) {
   const view = useViewStore();
@@ -15,19 +14,19 @@ export function useRelativeTimestamp(time?: number | Ref<number | undefined>, ca
       return capitalized ? 'Just now' : 'just now';
     } else if (difference < 3600) {
       const minutes = Math.floor(difference / 60);
-      return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+      return `${formatNumberWithLabel(minutes, 'minute')} ago`;
     } else if (difference < 86400) {
       const hours = Math.floor(difference / 3600);
-      return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+      return `${formatNumberWithLabel(hours, 'hour')} ago`;
     } else if (difference < 2620800) {
       const days = Math.floor(difference / 86400);
-      return `${days} day${days !== 1 ? 's' : ''} ago`;
+      return `${formatNumberWithLabel(days, 'day')} ago`;
     } else if (difference < 31449600) {
       const months = Math.floor(difference / 2620800);
-      return `${months} month${months !== 1 ? 's' : ''} ago`;
+      return `${formatNumberWithLabel(months, 'month')} ago`;
     } else {
       const years = Math.floor(difference / 31449600);
-      return `${years} year${years !== 1 ? 's' : ''} ago`;
+      return `${formatNumberWithLabel(years, 'year')} ago`;
     }
   };
 

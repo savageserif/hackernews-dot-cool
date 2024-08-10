@@ -57,11 +57,7 @@
                 name="comment-collapse"
                 small
               />
-              {{
-                isCollapsed
-                  ? `${descendants} comment${descendants !== 1 ? 's' : ''}`
-                  : relativeTimestamp
-              }}
+              {{ isCollapsed ? formatNumberWithLabel(descendants, 'comment') : relativeTimestamp }}
             </div>
           </div>
           <div
@@ -97,6 +93,7 @@ import type { HackerNewsItem } from '@/types';
 import { apiItemUrl } from '@/utils/apiUrls';
 import { absoluteTimestamp } from '@/utils/absoluteTimestamp';
 import { avoidShortWidows } from '@/utils/avoidShortWidows';
+import { formatNumberWithLabel } from '@/utils/formatNumberWithLabel';
 import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 
 const content = useContentStore();

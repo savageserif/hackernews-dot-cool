@@ -1,11 +1,9 @@
 <template>
-  {{ formatNumber(content.currentPostItem?.descendants) }} Comment{{
-    content.currentPostItem?.descendants !== 1 ? 's' : ''
-  }}
+  {{ formatNumberWithLabel(content.currentPostItem?.descendants, 'Comment') }}
 </template>
 
 <script setup lang="ts">
-import { formatNumber } from '@/utils/formatNumber';
+import { formatNumberWithLabel } from '@/utils/formatNumberWithLabel';
 
 const content = useContentStore();
 </script>

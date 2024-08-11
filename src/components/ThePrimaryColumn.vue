@@ -80,8 +80,9 @@ const router = useRouter();
 
 const showLinkColumn = computed(
   () =>
-    content.currentPostItemHasLink &&
-    ((view.availableColumns === 3 && view.prioritizedView === 'link') ||
-      (view.availableColumns <= 2 && view.activeUnifiedColumnView === 'link'))
+    !content.currentPostItemHasComments ||
+    (content.currentPostItemHasLink &&
+      ((view.availableColumns === 3 && view.prioritizedView === 'link') ||
+        (view.availableColumns <= 2 && view.activeUnifiedColumnView === 'link')))
 );
 </script>

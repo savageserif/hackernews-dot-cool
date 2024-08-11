@@ -63,7 +63,6 @@
 
 <script setup lang="ts">
 import scrollIntoView from 'smooth-scroll-into-view-if-needed';
-import type { HackerNewsItem } from '@/types';
 
 const view = useViewStore();
 const content = useContentStore();

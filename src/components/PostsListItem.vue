@@ -68,7 +68,6 @@
 <script setup lang="ts">
 import smartquotes from 'smartquotes-ts';
 import { formatNumber, formatAbsoluteTimestamp, avoidShortWidows } from '@/utils/formatting';
-import type { HackerNewsItem } from '@/types';
 
 const view = useViewStore();
 

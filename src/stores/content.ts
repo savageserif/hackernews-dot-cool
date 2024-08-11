@@ -1,5 +1,3 @@
-import type { HackerNewsCategory, HackerNewsItemData, HackerNewsItem } from '@/types';
-
 export const useContentStore = defineStore('content', () => {
   const categoryNames: { [key in HackerNewsCategory]: string } = {
     top: 'Top Stories',

@@ -90,7 +90,6 @@
 import DOMPurify from 'dompurify';
 import smartquotes from 'smartquotes-ts';
 import { formatNumberWithLabel, formatAbsoluteTimestamp } from '@/utils/formatting';
-import type { HackerNewsItem } from '@/types';
 
 const content = useContentStore();
 const router = useRouter();

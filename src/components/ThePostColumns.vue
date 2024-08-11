@@ -2,37 +2,13 @@
   <ThePrimaryColumn
     v-show="view.availableColumns >= 2 || route.name === 'post'"
     class="min-w-90"
-    :class="[
-      view.prioritizedView === 'comments' &&
-      view.availableColumns === 3 &&
-      view.secondaryColumn.isExpandable &&
-      view.secondaryColumn.isOpen
-        ? 'flex-none'
-        : 'flex-1',
-    ]"
-    :style="{
-      flexBasis: !view.secondaryColumn.isExpanded ? view.commentsColumn.maxWidth : '22.5rem',
-    }"
+    :class="primaryColumnFlex"
   />
   <TheSecondaryColumn
-    v-if="view.availableColumns === 3"
-    v-show="
-      view.secondaryColumn.isOpen &&
-      content.currentPostItem &&
-      content.currentPostItemHasLinkAndComments
-    "
+    v-if="content.currentPostItemHasLinkAndComments && view.availableColumns === 3"
+    v-show="view.secondaryColumn.isOpen"
     class="min-w-90"
-    :class="[
-      view.prioritizedView === 'link' || !view.secondaryColumn.isExpandable
-        ? 'flex-none'
-        : 'flex-1',
-    ]"
-    :style="{
-      flexBasis:
-        view.secondaryColumn.isExpandable && view.secondaryColumn.isExpanded
-          ? view.commentsColumn.maxWidth
-          : '22.5rem',
-    }"
+    :class="secondaryColumnFlex"
   />
 </template>
 
@@ -45,6 +21,50 @@ const route = useRoute();
 const props = defineProps<{
   postId: number;
 }>();
+
+// flex classes for primary column
+const primaryColumnFlex = computed(() => {
+  if (view.availableColumns <= 2 || !view.secondaryColumn.isOpen) {
+    return 'flex-1';
+  }
+
+  if (view.prioritizedView === 'link') {
+    if (
+      view.secondaryColumn.isExpandable &&
+      view.secondaryColumn.isExpanded &&
+      view.windowWidth < 1322
+    ) {
+      return 'flex-none basis-90';
+    } else {
+      return 'flex-1';
+    }
+  } else {
+    if (!view.secondaryColumn.isExpandable && view.windowWidth < 1322) {
+      return 'flex-1';
+    } else if (view.secondaryColumn.isExpandable && view.secondaryColumn.isExpanded) {
+      return 'flex-none basis-150';
+    } else {
+      return 'grow basis-150';
+    }
+  }
+});
+
+// flex classes for secondary column
+const secondaryColumnFlex = computed(() => {
+  if (view.prioritizedView === 'link') {
+    if (view.secondaryColumn.isExpandable && view.secondaryColumn.isExpanded) {
+      return view.windowWidth < 1322 ? 'flex-1' : 'flex-none basis-150';
+    } else {
+      return 'flex-none basis-90';
+    }
+  } else {
+    if (view.secondaryColumn.isExpandable && view.secondaryColumn.isExpanded) {
+      return 'flex-1';
+    } else {
+      return view.windowWidth < 1322 ? 'flex-none basis-90' : 'grow basis-90';
+    }
+  }
+});
 
 // whenever the postId prop changes thorugh router, update the current post item
 watch(

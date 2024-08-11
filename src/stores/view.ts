@@ -50,7 +50,11 @@ export const useViewStore = defineStore('view', () => {
   const secondaryColumn = {
     isOpen: useStorage('secondaryColumnIsOpen', true),
     isExpanded: useStorage('secondaryColumnIsExpanded', false),
-    isExpandable: computed(() => windowWidth.value >= 1202), // secondary column expandable once it has at least 480px of space
+    isExpandable: computed(() =>
+      // expandable once secondary column can grow to at least 480px of space;
+      // different thresholds depending on whether it contains comments or link
+      prioritizedView.value === 'link' ? windowWidth.value >= 1202 : windowWidth.value >= 1562
+    ),
     actions: {
       open: () => {
         secondaryColumn.isOpen.value = true;
@@ -65,11 +69,6 @@ export const useViewStore = defineStore('view', () => {
         secondaryColumn.isExpanded.value = false;
       },
     },
-  };
-
-  // properties of the comments column
-  const commentsColumn = {
-    maxWidth: computed(() => Math.min(windowWidth.value - 722, 600) / 16 + 'rem'), // flexible width of expanded comments column up to 600px
   };
 
   // which view is active within the unified column (availableColumns < 3)
@@ -102,7 +101,6 @@ export const useViewStore = defineStore('view', () => {
     prioritizedView,
     availableColumns,
     secondaryColumn,
-    commentsColumn,
     activeUnifiedColumnView,
     dialogs,
     timestampTicker,

@@ -49,7 +49,7 @@
             </div>
             <div
               class="flex items-center gap-1"
-              :title="!isCollapsed ? absoluteTimestamp(item.time) : ''"
+              :title="!isCollapsed ? formatAbsoluteTimestamp(item.time) : ''"
             >
               <BaseIcon
                 v-show="isCollapsed"
@@ -89,12 +89,8 @@
 <script setup lang="ts">
 import DOMPurify from 'dompurify';
 import smartquotes from 'smartquotes-ts';
+import { formatNumberWithLabel, formatAbsoluteTimestamp } from '@/utils/formatting';
 import type { HackerNewsItem } from '@/types';
-import { apiItemUrl } from '@/utils/apiUrls';
-import { absoluteTimestamp } from '@/utils/absoluteTimestamp';
-import { avoidShortWidows } from '@/utils/avoidShortWidows';
-import { formatNumberWithLabel } from '@/utils/formatNumberWithLabel';
-import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 
 const content = useContentStore();
 const router = useRouter();

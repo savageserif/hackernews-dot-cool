@@ -1,6 +1,4 @@
 import type { HackerNewsCategory, HackerNewsItemData, HackerNewsItem } from '@/types';
-import { apiCategoryUrl, apiItemUrl } from '@/utils/apiUrls';
-import { parseUrl } from '@/utils/parseUrl';
 
 export const useContentStore = defineStore('content', () => {
   const categoryNames: { [key in HackerNewsCategory]: string } = {
@@ -111,7 +109,7 @@ export const useContentStore = defineStore('content', () => {
       // parse URL string of fetched item to separate hostname and pathname
       const postItem: HackerNewsItem = {
         ...fetchedItem,
-        url: fetchedItem.url ? parseUrl(fetchedItem.url) : undefined,
+        url: fetchedItem.url ? parsePostUrl(fetchedItem.url) : undefined,
       };
 
       return postItem;

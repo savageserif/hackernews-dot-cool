@@ -47,7 +47,7 @@
           icon="clock"
           small
           inherit-color
-          :title="absoluteTimestamp(props.item.time)"
+          :title="formatAbsoluteTimestamp(props.item.time)"
         >
           {{ relativeTimestamp }}
         </BaseLabel>
@@ -67,11 +67,8 @@
 
 <script setup lang="ts">
 import smartquotes from 'smartquotes-ts';
+import { formatNumber, formatAbsoluteTimestamp, avoidShortWidows } from '@/utils/formatting';
 import type { HackerNewsItem } from '@/types';
-import { avoidShortWidows } from '@/utils/avoidShortWidows';
-import { formatNumber } from '@/utils/formatNumber';
-import { absoluteTimestamp } from '@/utils/absoluteTimestamp';
-import { useRelativeTimestamp } from '@/composables/relativeTimestamp';
 
 const view = useViewStore();
 

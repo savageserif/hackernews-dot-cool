@@ -1,11 +1,10 @@
 import type { Ref } from 'vue';
-import { formatNumberWithLabel } from '@/utils/formatNumberWithLabel';
 
 export function useRelativeTimestamp(time?: number | Ref<number | undefined>, capitalized = false) {
   const view = useViewStore();
 
   const relativeTimestampText = (past?: number) => {
-    if (past === undefined) return undefined;
+    if (past === undefined) return;
 
     const present = Math.floor(Date.now() / 1000);
     const difference = present - past;

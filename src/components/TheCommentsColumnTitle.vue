@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { formatNumberWithLabel } from '@/utils/formatNumberWithLabel';
+import { formatNumberWithLabel } from '@/utils/formatting';
 
 const content = useContentStore();
 </script>

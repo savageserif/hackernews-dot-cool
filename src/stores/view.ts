@@ -1,5 +1,3 @@
-import { testObjectErrorEventsSupport } from '@/utils/testObjectErrorEventsSupport';
-
 export const useViewStore = defineStore('view', () => {
   const colorScheme = useStorage<'system' | 'light' | 'dark'>('colorScheme', 'system');
   const darkColorSchemeIsActive = computed(

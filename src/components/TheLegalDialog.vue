@@ -14,9 +14,9 @@
       <a
         href="https://github.com/hackernews/api"
         target="_blank"
-        >Hacker News API</a
+        >Hacker News API</a
       >, which includes story titles and comments, nor for the contents of linked websites embedded
-      within the page.
+      within the page.
     </p>
     <h3>Privacy Policy</h3>
     <p>

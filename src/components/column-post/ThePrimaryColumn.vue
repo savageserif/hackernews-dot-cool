@@ -41,7 +41,7 @@
     </PageColumnControls>
 
     <PageColumnBody v-if="!content.currentPostItem">
-      <StatusItem full-height />
+      <BaseStatusIndicator full-height />
     </PageColumnBody>
     <template v-else-if="view.availableColumns === 3">
       <TheLinkColumnBody v-if="showLinkColumn" />

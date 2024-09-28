@@ -11,7 +11,7 @@
         <TheCategorySelect />
       </template>
       <template #right>
-        <RefreshButton
+        <TheRefreshButton
           :title="`Refresh ${content.currentCategoryName}`"
           @click="content.fetchPostIds()"
         />

@@ -11,7 +11,7 @@
       :active="route.name === 'post' && postItem.id === content.currentPostItem?.id"
       @click="router.push({ name: 'post', params: { postId: postItem.id } })"
     />
-    <StatusItem
+    <BaseStatusIndicator
       :full-height="!content.currentCategoryHasSomePostItems"
       :message="statusMessage"
     />

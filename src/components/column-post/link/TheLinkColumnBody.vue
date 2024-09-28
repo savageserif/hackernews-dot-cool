@@ -32,7 +32,7 @@
           Open in External Tab
         </BaseButton>
       </template>
-      <StatusItem
+      <BaseStatusIndicator
         v-else
         full-height
       />
@@ -127,7 +127,7 @@ watch(
       otherErrorAssetIndexes[Math.floor(Math.random() * otherErrorAssetIndexes.length)];
 
     import(
-      `@/assets/images/error-${currentErrorAssetIndex + (view.darkColorSchemeIsActive ? '.dark' : '')}.png`
+      `../../../assets/images/error-${currentErrorAssetIndex + (view.darkColorSchemeIsActive ? '.dark' : '')}.png`
     ).then((imported) => {
       currentErrorAsset.value = imported.default;
     });

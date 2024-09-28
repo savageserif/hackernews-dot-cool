@@ -52,8 +52,8 @@
         />
       </Suspense>
     </template>
-    <StatusItem
-      ref="statusItemInstance"
+    <BaseStatusIndicator
+      ref="statusIndicatorInstance"
       v-show="!hasComments || !someThreadInstancesVisible || !allThreadInstancesVisible"
       :full-height="!hasDescription && (!hasComments || !someThreadInstancesVisible)"
       :message="!hasComments ? 'So far, no comments have been left on this story.' : undefined"
@@ -219,7 +219,7 @@ onMounted(() => {
 const { top: firstThreadTop } = useElementBounding(computed(() => threadInstances.value[0]));
 const firstThreadScrolledPastTop = computed(() => firstThreadTop.value < 83);
 
-const statusItemInstance = ref<ComponentPublicInstance | null>(null);
+const statusIndicatorInstance = ref<ComponentPublicInstance | null>(null);
 
 function scrollThreadIntoView(index: number) {
   index = Math.min(Math.max(index, 0), threadItemCount.value - 1);
@@ -237,7 +237,7 @@ function scrollThreadIntoView(index: number) {
   // (triggering loadThreadGroup)
   const element =
     index >= threadInstanceCount.value
-      ? statusItemInstance.value?.$el
+      ? statusIndicatorInstance.value?.$el
       : threadInstances.value[index].$el;
 
   scrollIntoView(element, {

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import TheNoSelectionColumn from '@/components/TheNoSelectionColumn.vue';
-import ThePostColumns from '@/components/ThePostColumns.vue';
+import TheNoSelectionColumn from '@/components/column-post/TheNoSelectionColumn.vue';
+import ThePostColumns from '@/components/column-post/ThePostColumns.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

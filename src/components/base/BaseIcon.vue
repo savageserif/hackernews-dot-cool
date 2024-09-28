@@ -23,8 +23,10 @@ const iconComponent = shallowRef();
 watchEffect(async () => {
   iconComponent.value = null;
 
-  import(`@/assets/icons/${props.name + (props.small ? '.small' : '')}.svg`).then((imported) => {
-    iconComponent.value = imported.default;
-  });
+  import(`../../assets/icons/${props.name + (props.small ? '.small' : '')}.svg`).then(
+    (imported) => {
+      iconComponent.value = imported.default;
+    }
+  );
 });
 </script>

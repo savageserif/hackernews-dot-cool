@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-px @container">
     <div
-      class="mx-auto flex max-w-150 pl-3.5 pr-3.5 @comment-detached:rounded"
+      class="relative mx-auto flex max-w-150 pl-3.5 pr-3.5 @comment-detached:rounded"
       :class="[isCollapsed ? 'bg-controls-color shadow-border-y shadow-controls-color' : '']"
     >
       <div

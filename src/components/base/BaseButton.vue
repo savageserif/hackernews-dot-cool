@@ -1,6 +1,6 @@
 <template>
   <button
-    class="flex items-center rounded ring-focus-color ring-offset-1 ring-offset-controls-color transition-[background-color,border-color] duration-200 hover:duration-0 focus:outline-none focus-visible:ring-2"
+    class="flex items-center rounded outline-2 outline-offset-1 outline-focus-color transition-[background-color,border-color] duration-200 hover:duration-0 focus-visible:outline"
     :class="[
       small
         ? view.isTouchDevice

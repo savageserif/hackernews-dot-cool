@@ -7,7 +7,7 @@
       v-for="(postItem, index) in content.currentCategoryPostItems?.items"
       :key="index"
       :item="postItem"
-      :viewed="content.viewedPostIds.includes(postItem.id)"
+      :viewed="content.viewedPostIds.has(postItem.id)"
       :active="route.name === 'post' && postItem.id === content.currentPostItem?.id"
       @click="router.push({ name: 'post', params: { postId: postItem.id } })"
     />

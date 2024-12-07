@@ -173,15 +173,13 @@ export const useContentStore = defineStore('content', () => {
   }
 
   // IDs of posts that have previously been viewed
-  const viewedPostIds = useStorage<number[]>('viewedPostIds', []);
+  const viewedPostIds = useStorage<Set<number>>('viewedPostIds', new Set());
 
   // mark a post as viewed when it becomes the current post item
   watch(
     () => currentPostItem.value,
     () => {
-      if (!viewedPostIds.value.includes(currentPostItem.value!.id)) {
-        viewedPostIds.value.push(currentPostItem.value!.id);
-      }
+      viewedPostIds.value.add(currentPostItem.value!.id);
     }
   );
 

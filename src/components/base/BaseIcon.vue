@@ -1,15 +1,16 @@
 <template>
-  <div :class="[small ? 'size-5' : view.isTouchDevice ? 'size-7' : 'size-6']">
-    <component
-      v-if="iconComponent"
-      :is="iconComponent"
-      class="h-full w-full"
-      :class="[inheritColor ? 'text-inherit' : 'text-icon-color']"
-    />
-  </div>
+  <div
+    :class="[
+      small ? 'size-5' : view.isTouchDevice ? 'size-7' : 'size-6',
+      inheritColor ? 'text-inherit' : 'text-icon-color',
+    ]"
+    v-html="svgContent"
+  />
 </template>
 
 <script setup lang="ts">
+import icons from '@/assets/icons';
+
 const view = useViewStore();
 
 const props = defineProps<{
@@ -18,15 +19,8 @@ const props = defineProps<{
   inheritColor?: boolean;
 }>();
 
-const iconComponent = shallowRef();
-
-watchEffect(async () => {
-  iconComponent.value = null;
-
-  import(`../../assets/icons/${props.name + (props.small ? '.small' : '')}.svg`).then(
-    (imported) => {
-      iconComponent.value = imported.default;
-    }
-  );
+const svgContent = computed(() => {
+  const iconName = props.name + (props.small ? '.small' : '');
+  return icons[iconName] || '';
 });
 </script>

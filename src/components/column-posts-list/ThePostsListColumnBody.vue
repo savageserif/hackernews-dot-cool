@@ -23,11 +23,11 @@ const content = useContentStore();
 const router = useRouter();
 const route = useRoute();
 
-const containerElement = ref<HTMLElement | null>(null);
+const containerElement = ref<ComponentPublicInstance | null>(null);
 
 onMounted(() => {
   useInfiniteScroll(
-    containerElement,
+    containerElement.value?.$el,
     () => {
       if (content.currentCategoryHasSomePostItems && !content.currentCategoryHasAllPostItems) {
         content.fetchPostItems();
@@ -36,6 +36,15 @@ onMounted(() => {
     { distance: 60 }
   );
 });
+
+// reset container's scroll position when category is switched
+watch(
+  () => content.currentCategory,
+  () => {
+    if (!containerElement.value) return;
+    containerElement.value.$el.scrollTop = 0;
+  }
+);
 
 const statusMessage = computed(() => {
   if (content.currentCategoryHasAllPostItems)

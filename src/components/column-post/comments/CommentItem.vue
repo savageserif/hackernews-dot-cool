@@ -164,8 +164,8 @@ domPurifyInstance.addHook('uponSanitizeElement', (node) => {
     return;
   }
 
-  // inline code (enclosed in single backticks)
-  node.innerHTML = node.innerHTML.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // code (enclosed in single or triple backticks)
+  node.innerHTML = node.innerHTML.replace(/`{1,3}([^`]+)`{1,3}/g, '<code>$1</code>');
 
   if (/^(<i>)?&gt;/.test(node.innerHTML)) {
     // quotes (starts with '>')

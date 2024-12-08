@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Source Sans 3 Var';
-  src: url(fonts/SourceSans3VF-Upright.otf.woff2);
+  src: url(/fonts/SourceSans3VF-Upright.woff2);
   font-display: block;
   font-weight: 100 900;
   font-style: normal;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Source Sans 3 Var';
-  src: url(fonts/SourceSans3VF-Italic.otf.woff2);
+  src: url(/fonts/SourceSans3VF-Italic.woff2);
   font-display: block;
   font-weight: 100 900;
   font-style: italic;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: 'Source Code Var';
-  src: url(fonts/SourceCodeVF-Upright.otf.woff2);
+  src: url(/fonts/SourceCodeVF-Upright.woff2);
   font-display: block;
   font-weight: 100 900;
   font-style: normal;
@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: 'Nice Var';
-  src: url(fonts/NiceVAR.woff2);
+  src: url(/fonts/NiceVAR.woff2);
   font-display: block;
   font-weight: 100 900;
   font-style: normal;
@@ -32,7 +32,7 @@
 
 @font-face {
   font-family: 'Nice Var';
-  src: url(fonts/NiceVAR-Italic.woff2);
+  src: url(/fonts/NiceVAR-Italic.woff2);
   font-display: block;
   font-weight: 100 900;
   font-style: italic;

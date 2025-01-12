@@ -37,6 +37,7 @@ declare module 'vue' {
     TheCategorySelect: typeof import('./src/components/column-posts-list/header/TheCategorySelect.vue')['default']
     TheCommentsColumnBody: typeof import('./src/components/column-post/comments/TheCommentsColumnBody.vue')['default']
     TheCommentsColumnTitle: typeof import('./src/components/column-post/comments/TheCommentsColumnTitle.vue')['default']
+    TheHeaderLogo: typeof import('./src/components/column-posts-list/header/TheHeaderLogo.vue')['default']
     TheLegalDialog: typeof import('./src/components/column-posts-list/settings/TheLegalDialog.vue')['default']
     TheLinkColumnBody: typeof import('./src/components/column-post/link/TheLinkColumnBody.vue')['default']
     TheLinkColumnTitle: typeof import('./src/components/column-post/link/TheLinkColumnTitle.vue')['default']

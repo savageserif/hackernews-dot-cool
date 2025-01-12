@@ -2,10 +2,7 @@
   <PageColumn>
     <PageColumnControls>
       <template #left>
-        <img
-          :class="[view.isTouchDevice ? 'mx-1.5 h-7' : 'mx-1 h-6']"
-          :src="logoAsset"
-        />
+        <TheHeaderLogo />
       </template>
       <template #center>
         <TheCategorySelect />
@@ -35,8 +32,6 @@
 </template>
 
 <script setup lang="ts">
-import logoAsset from '@/assets/images/logo.png';
-
 const view = useViewStore();
 const content = useContentStore();
 

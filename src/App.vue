@@ -17,6 +17,7 @@
       </KeepAlive>
     </RouterView>
   </main>
+  <BaseSVGFilters />
 </template>
 
 <script setup lang="ts">

@@ -1,14 +1,16 @@
 <template>
   <PageColumnBody class="relative">
     <div
-      class="flex h-full flex-col items-center justify-center gap-3"
+      class="flex h-full flex-col items-center justify-center gap-4"
       :class="[view.availableColumns === 3 && showErrorMessage ? 'bg-controls-color' : '']"
     >
       <template v-if="showErrorMessage">
-        <img
-          :src="currentErrorAsset"
-          class="-mt-4 size-32"
-          :class="[view.darkColorSchemeIsActive && view.availableColumns === 1 ? 'opacity-80' : '']"
+        <div
+          class="-mt-4 size-32 text-secondary-color opacity-30 dark:opacity-45"
+          :style="{
+            filter: !view.darkColorSchemeIsActive ? 'url(#indentation-shadows)' : undefined,
+          }"
+          v-html="errorFaces[currentErrorFaceKey]"
         />
         <div
           class="max-w-[28rem] text-balance px-8 text-center leading-paragraph-narrow text-secondary-color"
@@ -47,6 +49,8 @@
 </template>
 
 <script setup lang="ts">
+import errorFaces from '@/assets/error-faces';
+
 const view = useViewStore();
 const content = useContentStore();
 
@@ -111,26 +115,17 @@ if (view.objectErrorEventsSupported) {
   });
 }
 
-const errorAssetIndexes = [...Array(6 /* highest error asset index + 1 */).keys()];
-
-let currentErrorAssetIndex = -1;
-const currentErrorAsset = ref(undefined);
+const currentErrorFaceKey = ref('');
 
 watch(
-  () => [content.currentPostItem, view.darkColorSchemeIsActive],
+  () => content.currentPostItem,
   () => {
-    const otherErrorAssetIndexes = errorAssetIndexes.filter(
-      (asset) => asset !== currentErrorAssetIndex
+    const otherErrorFaceKeys = Object.keys(errorFaces).filter(
+      (key) => key !== currentErrorFaceKey.value
     );
 
-    currentErrorAssetIndex =
-      otherErrorAssetIndexes[Math.floor(Math.random() * otherErrorAssetIndexes.length)];
-
-    import(
-      `../../../assets/images/error-${currentErrorAssetIndex + (view.darkColorSchemeIsActive ? '.dark' : '')}.png`
-    ).then((imported) => {
-      currentErrorAsset.value = imported.default;
-    });
+    currentErrorFaceKey.value =
+      otherErrorFaceKeys[Math.floor(Math.random() * otherErrorFaceKeys.length)];
   },
   { immediate: true }
 );

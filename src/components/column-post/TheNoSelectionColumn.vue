@@ -3,9 +3,12 @@
     v-show="view.availableColumns >= 2"
     class="flex flex-1 flex-col items-center justify-center gap-5 overflow-y-auto bg-controls-color pb-2"
   >
-    <img
-      class="w-[7.625rem]"
-      :src="view.darkColorSchemeIsActive ? placeholderDarkAsset : placeholderAsset"
+    <div
+      class="w-[7.875rem] text-secondary-color opacity-30 dark:opacity-45"
+      :style="{
+        filter: !view.darkColorSchemeIsActive ? 'url(#indentation-shadows)' : undefined,
+      }"
+      v-html="noSelectionImage"
     />
     <span
       class="font-serif-heading text-[1.5rem] font-bold text-secondary-color/55 dark:text-secondary-color/65"
@@ -16,8 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import placeholderAsset from '@/assets/images/no-selection.png';
-import placeholderDarkAsset from '@/assets/images/no-selection.dark.png';
+import noSelectionImage from '@/assets/no-selection.svg?raw';
 
 const view = useViewStore();
 </script>

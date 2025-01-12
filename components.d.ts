@@ -12,6 +12,7 @@ declare module 'vue' {
     BaseIcon: typeof import('./src/components/base/BaseIcon.vue')['default']
     BaseLabel: typeof import('./src/components/base/BaseLabel.vue')['default']
     BaseStatusIndicator: typeof import('./src/components/base/BaseStatusIndicator.vue')['default']
+    BaseSVGFilters: typeof import('./src/components/base/BaseSVGFilters.vue')['default']
     CommentItem: typeof import('./src/components/column-post/comments/CommentItem.vue')['default']
     Dialog: typeof import('@headlessui/vue')['Dialog']
     DialogPanel: typeof import('@headlessui/vue')['DialogPanel']

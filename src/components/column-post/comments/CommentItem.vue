@@ -237,32 +237,42 @@ domPurifyInstance.addHook('afterSanitizeAttributes', (node) => {
   }
 });
 
-const commentTextElement = ref<Element | null>(null);
+const commentTextElement = ref<HTMLElement | null>(null);
 const commentText = ref('');
 
-// re-format comment text if it changes (only relevant if this is a post’s description, as that component persists)
+// format comment text, and re-run formatting if the text changes
+// (only relevant if this is a post’s description, as that component persists)
 watchEffect(() => {
   // add a prepended p tag because HN comments start with only a text node
   commentText.value = domPurifyInstance.sanitize('<p>' + props.item.text);
 });
 
-// find links to other HN posts and make them open within the app instead of as external links
+// find links to other HN posts and make them open within the app instead of
+// as external links, and re-run this as well if comment text changes
 onMounted(() => {
-  const linkElements = commentTextElement.value?.querySelectorAll(
-    'a[href^="https://news.ycombinator.com/item"]'
+  watch(
+    commentText,
+    async () => {
+      await nextTick();
+
+      const linkElements = commentTextElement.value?.querySelectorAll(
+        'a[href^="https://news.ycombinator.com/item"]'
+      );
+
+      if (!linkElements || linkElements.length < 1) return;
+
+      linkElements?.forEach((linkElement) => {
+        const linkedPostId = linkElement.getAttribute('href')?.match(/\d+/);
+        if (!linkedPostId || linkedPostId.length !== 1) return;
+
+        useEventListener(linkElement, 'click', (event) => {
+          router.push({ name: 'post', params: { postId: linkedPostId[0] } });
+          event.preventDefault();
+        });
+      });
+    },
+    { immediate: true }
   );
-
-  if (!linkElements || linkElements.length < 1) return;
-
-  linkElements?.forEach((linkElement) => {
-    const linkedPostId = linkElement.getAttribute('href')?.match(/\d+/);
-    if (!linkedPostId || linkedPostId.length !== 1) return;
-
-    useEventListener(linkElement, 'click', (event) => {
-      router.push({ name: 'post', params: { postId: linkedPostId[0] } });
-      event.preventDefault();
-    });
-  });
 });
 </script>
 

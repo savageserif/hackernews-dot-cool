@@ -13,6 +13,7 @@ export function parsePostUrl(url: string) {
 
   const customUrl = {
     hostname: parsedUrl.hostname,
+    highlightedPathname: '',
     pathname: parsedUrl.pathname,
     href: parsedUrl.href,
     search: parsedUrl.search,
@@ -21,7 +22,7 @@ export function parsePostUrl(url: string) {
   customUrl.hostname = customUrl.hostname.replace(/^www\./g, '');
 
   if (customUrl.hostname === 'github.com') {
-    customUrl.hostname = customUrl.hostname + '/' + customUrl.pathname.split('/')[1];
+    customUrl.highlightedPathname = '/' + customUrl.pathname.split('/')[1];
     customUrl.pathname = '/' + customUrl.pathname.split('/').slice(2).join('/');
   }
 

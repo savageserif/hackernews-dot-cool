@@ -24,6 +24,7 @@ declare global {
   interface HackerNewsItem extends Omit<HackerNewsItemData, 'url'> {
     url?: {
       hostname: string;
+      highlightedPathname: string;
       pathname: string;
       href: string;
       search: string;

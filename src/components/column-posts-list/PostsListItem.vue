@@ -18,7 +18,7 @@
           {{ avoidShortWidows(smartquotes(item.title)) }}
         </h2>
         <div class="[overflow-wrap:anywhere]">
-          {{ item.url?.hostname }}
+          {{ item.url?.hostname }}{{ item.url?.highlightedPathname }}
           <span
             class="italic"
             :class="[

@@ -28,7 +28,6 @@
           v-if="view.objectErrorEventsSupported"
           icon="external"
           bordered
-          class="mt-1"
           @click="openInExternalTab()"
         >
           Open in External Tab
@@ -54,16 +53,20 @@ import errorFaces from '@/assets/error-faces';
 const view = useViewStore();
 const content = useContentStore();
 
-// array of post IDs for which loading error has occurred
-const errorPostIds = ref<number[]>([]);
+// set of hostnames that have previously been unembeddable (object tag fired error event)
+const unembeddableHostnames = new Set<string>();
 
-// whether loading the current post item has previously resulted in an error
-const previousErrorForPostId = computed(() =>
-  content.currentPostItem ? errorPostIds.value.includes(content.currentPostItem.id) : false
-);
+// whether loading the current post item has previously resulted in an error or the post’s URL matches known error hostnames
+const anticipatedErrorForCurrentPostId = computed(() => {
+  if (!content.currentPostItem) return false;
+
+  return (
+    content.currentPostItem.url && unembeddableHostnames.has(content.currentPostItem.url.hostname)
+  );
+});
 
 // Safari-specific timeout for showing error message (see comment below)
-let safariErrorMessageTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
+let errorMessageTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
 
 const showErrorMessage = ref(false);
 const renderObject = ref(true);
@@ -72,7 +75,7 @@ watch(
   () => content.currentPostItem,
   async () => {
     // if error is already apparent, remove object element and show error message immediately
-    if (previousErrorForPostId.value) {
+    if (anticipatedErrorForCurrentPostId.value) {
       renderObject.value = false;
       showErrorMessage.value = true;
       return;
@@ -89,9 +92,9 @@ watch(
 
     // as the object element does not ever fire an error event on Safari, show the error message after a timeout there instead
     if (!view.objectErrorEventsSupported) {
-      clearTimeout(safariErrorMessageTimeout);
+      clearTimeout(errorMessageTimeout);
 
-      safariErrorMessageTimeout = setTimeout(() => {
+      errorMessageTimeout = setTimeout(() => {
         showErrorMessage.value = true;
       }, 4000);
     }
@@ -99,7 +102,7 @@ watch(
   { immediate: true }
 );
 
-const objectElement = ref<HTMLElement | null>(null);
+const objectElement = ref<HTMLObjectElement | null>(null);
 
 // on browsers other than Safari, listen for error events on the object element to show the error message
 if (view.objectErrorEventsSupported) {
@@ -108,9 +111,9 @@ if (view.objectErrorEventsSupported) {
     renderObject.value = false;
     showErrorMessage.value = true;
 
-    // push ID of unloadable post to errorPostIds array
-    if (content.currentPostItem && !errorPostIds.value.includes(content.currentPostItem.id)) {
-      errorPostIds.value.push(content.currentPostItem.id);
+    // push hostname of unloadable post to unembeddableHostnames set
+    if (content.currentPostItem?.url) {
+      unembeddableHostnames.add(content.currentPostItem.url.hostname);
     }
   });
 }

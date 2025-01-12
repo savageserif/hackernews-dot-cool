@@ -30,7 +30,7 @@
               : '',
           ]"
         />
-        <div class="w-full flex-1">
+        <div class="w-full min-w-0 flex-1">
           <div
             class="flex items-center pb-3 pt-2.5 text-secondary-color"
             :class="[

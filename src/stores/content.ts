@@ -183,6 +183,9 @@ export const useContentStore = defineStore('content', () => {
     }
   );
 
+  // set of hostnames that have previously been unembeddable (object tag fired error event)
+  const unembeddableHostnames = new Set<string>();
+
   return {
     categoryNames,
     currentCategory,
@@ -202,5 +205,6 @@ export const useContentStore = defineStore('content', () => {
     currentPostItemHasLinkAndComments,
     setCurrentPostItem,
     viewedPostIds,
+    unembeddableHostnames,
   };
 });

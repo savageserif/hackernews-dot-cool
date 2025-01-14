@@ -53,15 +53,13 @@ import errorFaces from '@/assets/error-faces';
 const view = useViewStore();
 const content = useContentStore();
 
-// set of hostnames that have previously been unembeddable (object tag fired error event)
-const unembeddableHostnames = new Set<string>();
-
 // whether loading the current post item has previously resulted in an error or the post’s URL matches known error hostnames
 const anticipatedErrorForCurrentPostId = computed(() => {
   if (!content.currentPostItem) return false;
 
   return (
-    content.currentPostItem.url && unembeddableHostnames.has(content.currentPostItem.url.hostname)
+    content.currentPostItem.url &&
+    content.unembeddableHostnames.has(content.currentPostItem.url.hostname)
   );
 });
 
@@ -113,7 +111,7 @@ if (view.objectErrorEventsSupported) {
 
     // push hostname of unloadable post to unembeddableHostnames set
     if (content.currentPostItem?.url) {
-      unembeddableHostnames.add(content.currentPostItem.url.hostname);
+      content.unembeddableHostnames.add(content.currentPostItem.url.hostname);
     }
   });
 }

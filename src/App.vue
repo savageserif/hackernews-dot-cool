@@ -1,6 +1,6 @@
 <template>
   <main
-    class="fixed inset-0 flex gap-px"
+    class="flex h-dvh gap-px"
     :class="[
       view.isStandaloneDisplayMode
         ? 'pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]'
@@ -39,6 +39,6 @@ watchEffect(() => {
 
 <style lang="postcss">
 body {
-  @apply touch-manipulation select-none bg-separator-color font-sans text-base text-primary-color antialiased selection:bg-selection-color selection:text-primary-selected-color;
+  @apply touch-manipulation select-none overflow-hidden bg-separator-color font-sans text-base text-primary-color antialiased selection:bg-selection-color selection:text-primary-selected-color;
 }
 </style>

@@ -68,19 +68,6 @@ export default {
       transitionDuration: {
         200: '200ms',
       },
-      animation: {
-        appear: 'appear 0.2s',
-        step: 'step 0.75s steps(8) infinite',
-      },
-      keyframes: {
-        appear: {
-          '0%': { opacity: 0 },
-          '100%': { opacity: 1 },
-        },
-        step: {
-          '100%': { transform: 'rotate(360deg)' },
-        },
-      },
     },
   },
   plugins: [require('@tailwindcss/container-queries'), require('@headlessui/tailwindcss')],

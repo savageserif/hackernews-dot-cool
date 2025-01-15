@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      small ? 'size-5' : view.isTouchDevice && name !== 'loading' ? 'size-7' : 'size-6',
+      small ? 'size-5' : view.isTouchDevice ? 'size-7' : 'size-6',
       inheritColor ? 'text-inherit' : 'text-icon-color',
     ]"
     v-html="svgContent"

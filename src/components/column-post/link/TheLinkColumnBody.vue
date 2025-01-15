@@ -2,7 +2,12 @@
   <PageColumnBody class="relative">
     <div
       class="flex h-full flex-col items-center justify-center gap-4"
-      :class="[view.availableColumns === 3 && showErrorMessage ? 'bg-controls-color' : '']"
+      :class="[
+        view.availableColumns === 3 && showErrorMessage ? 'bg-controls-color' : '',
+        view.isStandaloneDisplayMode &&
+          (!content.currentPostItemHasComments || view.availableColumns === 3) &&
+          'pb-[env(safe-area-inset-bottom)]',
+      ]"
     >
       <template v-if="showErrorMessage">
         <div

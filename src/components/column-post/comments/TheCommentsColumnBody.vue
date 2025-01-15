@@ -1,5 +1,12 @@
 <template>
-  <PageColumnBody ref="containerElement">
+  <PageColumnBody
+    ref="containerElement"
+    :class="[
+      view.isStandaloneDisplayMode &&
+        (!content.currentPostItemHasLink || view.availableColumns === 3) &&
+        'pb-[env(safe-area-inset-bottom)]',
+    ]"
+  >
     <Suspense>
       <CommentItem
         v-if="hasDescription"

@@ -1,6 +1,6 @@
 <template>
   <main
-    class="flex h-dvh gap-px"
+    class="fixed inset-0 flex gap-px"
     :class="[
       view.isStandaloneDisplayMode
         ? 'pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]'

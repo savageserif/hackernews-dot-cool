@@ -8,7 +8,7 @@
       class="fixed inset-0 bg-primary-color/75 dark:bg-[#111]/85"
       aria-hidden="true"
     />
-    <div class="fixed inset-0 w-screen overflow-y-auto">
+    <div class="fixed inset-0 overflow-y-auto">
       <div
         class="flex min-h-full items-center justify-center p-2"
         :class="[

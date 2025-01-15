@@ -34,7 +34,7 @@
         </BaseButton>
       </template>
       <BaseStatusIndicator
-        v-else
+        v-else-if="showLoadingIcon"
         full-height
       />
     </div>
@@ -67,6 +67,7 @@ const anticipatedErrorForCurrentPostId = computed(() => {
 let errorMessageTimeout: ReturnType<typeof setTimeout> | undefined = undefined;
 
 const showErrorMessage = ref(false);
+const showLoadingIcon = ref(true);
 const renderObject = ref(true);
 
 watch(
@@ -85,8 +86,9 @@ watch(
     renderObject.value = true;
     await nextTick();
 
-    // hide error message
+    // hide error message and unhide loading icon
     showErrorMessage.value = false;
+    showLoadingIcon.value = true;
 
     // as the object element does not ever fire an error event on Safari, show the error message after a timeout there instead
     if (!view.objectErrorEventsSupported) {
@@ -114,6 +116,11 @@ if (view.objectErrorEventsSupported) {
       content.unembeddableHostnames.add(content.currentPostItem.url.hostname);
     }
   });
+
+  // if loading succeeds, hide loading icon in case the embedded website has a transparent background
+  useEventListener(objectElement, 'load', () => {
+    showLoadingIcon.value = false;
+  });
 }
 
 const currentErrorFaceKey = ref('');
@@ -121,6 +128,7 @@ const currentErrorFaceKey = ref('');
 watch(
   () => content.currentPostItem,
   () => {
+    // switch to an error face different from the last one
     const otherErrorFaceKeys = Object.keys(errorFaces).filter(
       (key) => key !== currentErrorFaceKey.value
     );

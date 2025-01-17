@@ -156,7 +156,7 @@ const { text: relativeTimestamp } = useRelativeTimestamp(
 const domPurifyInstance = DOMPurify();
 
 domPurifyInstance.addHook('uponSanitizeElement', (node) => {
-  if (node.tagName !== 'P') return;
+  if (!(node instanceof HTMLElement) || node.tagName !== 'P') return;
 
   if (!node.textContent) {
     // empty P tags

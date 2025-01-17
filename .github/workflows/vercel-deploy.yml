@@ -1,5 +1,5 @@
 # vercel-deploy.yml
-name: Deploy to Vercel on `main` commit
+name: Deploy to Vercel on push to `main`
 on:
   push:
     branches:

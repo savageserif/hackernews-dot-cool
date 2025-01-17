@@ -30,7 +30,7 @@
           <BaseButton
             icon="chevron-up"
             small
-            :disabled="!firstThreadScrolledPastTop"
+            :disabled="!firstThreadScrolledPastTopEdge"
             @click="scrollThreadIntoView(currentThreadIndex - 1)"
           />
           <BaseButton
@@ -222,11 +222,17 @@ onMounted(() => {
   );
 });
 
+// offset of the visible top edge of the comments list towards the top of the viewport
+const commentsTopEdgeOffset = view.isTouchDevice ? 99 : 83;
+
 // determine whether the first thread is scrolled past its top edge (enabling the "up" button)
 const { top: firstThreadTop } = useElementBounding(computed(() => threadInstances.value[0]));
-const firstThreadScrolledPastTop = computed(() => firstThreadTop.value < 83);
+const firstThreadScrolledPastTopEdge = computed(() => firstThreadTop.value < commentsTopEdgeOffset);
 
 const statusIndicatorInstance = ref<ComponentPublicInstance | null>(null);
+
+// whether browser is Safari, needed for changing smooth scrolling method (see below)
+const isSafari = /^Apple/.test(navigator.vendor) && !(window as any).chrome;
 
 function scrollThreadIntoView(index: number) {
   index = Math.min(Math.max(index, 0), threadItemCount.value - 1);
@@ -235,22 +241,34 @@ function scrollThreadIntoView(index: number) {
   // of the current thread instead of scrolling to the previous one
   if (
     index < currentThreadIndex.value &&
-    threadInstances.value[currentThreadIndex.value].$el.getBoundingClientRect().top < 83
+    threadInstances.value[currentThreadIndex.value].$el.getBoundingClientRect().top <
+      commentsTopEdgeOffset - 2
   ) {
     index = currentThreadIndex.value;
   }
 
   // if the index points to a thread that is not yet visible, scroll the loading item into view instead
   // (triggering loadThreadGroup)
-  const element =
+  const element: HTMLElement =
     index >= threadInstanceCount.value
       ? statusIndicatorInstance.value?.$el
       : threadInstances.value[index].$el;
 
-  scrollIntoView(element, {
+  const scrollOptions = {
+    behavior: 'smooth',
     block: 'start',
     duration: 250,
-    ease: (x) => (x === 1 ? 1 : 1 - Math.pow(2, -10 * x)),
-  });
+  } as const;
+
+  // on iOS Safari, scrollIntoView from 'smooth-scroll-into-view-if-needed' breaks subsequent
+  // getBoundingClientRect() calls, therefore use native scrollIntoView method for Safari instead
+  if (isSafari) {
+    element.scrollIntoView(scrollOptions);
+  } else {
+    scrollIntoView(element, {
+      ...scrollOptions,
+      ease: (x) => (x === 1 ? 1 : 1 - Math.pow(2, -10 * x)),
+    });
+  }
 }
 </script>

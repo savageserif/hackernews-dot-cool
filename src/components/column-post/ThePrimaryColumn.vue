@@ -33,7 +33,7 @@
         >
           {{
             view.prioritizedView === 'link'
-              ? content.currentPostItem?.descendants
+              ? formatNumber(content.currentPostItem?.descendants)
               : content.currentPostItem?.url?.hostname
           }}
         </BaseButton>
@@ -74,6 +74,8 @@
 </template>
 
 <script setup lang="ts">
+import { formatNumber } from '@/utils/formatting';
+
 const view = useViewStore();
 const content = useContentStore();
 const router = useRouter();

@@ -10,30 +10,34 @@
       <a href="mailto:contact@hackernews.cool">contact@hackernews.cool</a>
     </blockquote>
     <p>
-      We are neither responsible for any content fetched from the official
+      We are neither responsible for content fetched from the official
       <a
         href="https://github.com/hackernews/api"
         target="_blank"
-        >Hacker News API</a
+      >
+        Hacker News API</a
       >, which includes story titles and comments, nor for the contents of linked websites embedded
       within the page.
     </p>
     <h3>Privacy Policy</h3>
     <p>
-      We do not collect any personal information from website visitors. We use Plausible Analytics
-      to gather anonymized, aggregated statistics such as browser, operating system, device type,
-      and country (approximated by IP address). Plausible Analytics operates without using cookies
-      and does not collect any personal data. For more information, visit
+      We do not collect any personal information from website visitors. We use TelemetryDeck to
+      gather anonymized, aggregated statistics such as browser, operating system, device type,
+      language, and country (approximated from the first three triplets of the IP address).
+      TelemetryDeck operates without using cookies and does not collect any personal data. For more
+      information, visit
       <a
-        href="https://plausible.io/data-policy"
+        href="https://telemetrydeck.com/privacy"
         target="_blank"
-        >Plausible Analytics’ data policy</a
+      >
+        TelemetryDeck’s privacy policy</a
       >. This website is hosted by Vercel, which may collect anonymized logs. For more details,
       visit
       <a
         href="https://vercel.com/legal/privacy-policy"
         target="_blank"
-        >Vercel’s privacy policy</a
+      >
+        Vercel’s privacy policy</a
       >. Please contact us at
       <a href="mailto:contact@hackernews.cool">contact@hackernews.cool</a> if you have any
       questions.

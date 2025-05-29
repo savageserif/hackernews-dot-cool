@@ -23,6 +23,7 @@
 <script setup lang="ts">
 const view = useViewStore();
 const content = useContentStore();
+const router = useRouter();
 const route = useRoute();
 
 content.fetchPostIds();
@@ -34,6 +35,28 @@ watchEffect(() => {
   } else {
     document.title = `${content.currentCategoryName} · Hacker News`;
   }
+});
+
+const telemetryDeckAppId = import.meta.env.VITE_TELEMETRYDECK_APP_ID;
+const telemetryDeckTestMode = window.location.hostname !== 'hackernews.cool';
+
+// send a page view signal to TelemetryDeck after each route change
+router.afterEach(() => {
+  fetch('https://nom.telemetrydeck.com/v2/w/', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      appID: telemetryDeckAppId,
+      isTestMode: telemetryDeckTestMode,
+      telemetryClientVersion: 'WebSDK 1.1.0',
+      url: window.location.href,
+      referrer: document.referrer,
+      locale: navigator.language,
+    }),
+  });
 });
 </script>
 

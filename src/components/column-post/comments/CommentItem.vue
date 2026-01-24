@@ -88,7 +88,8 @@
 
 <script setup lang="ts">
 import DOMPurify from 'dompurify';
-import smartquotes from 'smartquotes-ts';
+// @ts-ignore
+import smartquotes from 'smartquotes';
 import { formatNumberWithLabel, formatAbsoluteTimestamp } from '@/utils/formatting';
 
 const content = useContentStore();

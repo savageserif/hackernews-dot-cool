@@ -66,7 +66,8 @@
 </template>
 
 <script setup lang="ts">
-import smartquotes from 'smartquotes-ts';
+// @ts-ignore
+import smartquotes from 'smartquotes';
 import { formatNumber, formatAbsoluteTimestamp, avoidShortWidows } from '@/utils/formatting';
 
 const view = useViewStore();

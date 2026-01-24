@@ -1,0 +1,38 @@
+# vercel-deploy.yml
+name: Deploy to Cloudflare on push to `main`
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4.1.0
+        with:
+          version: 10
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Install Dependencies
+        run: pnpm i
+      - name: Build Project
+        run: pnpm build
+        env:
+          VITE_LEGAL_NAME: ${{ secrets.VITE_LEGAL_NAME }}
+          VITE_LEGAL_STREET: ${{ secrets.VITE_LEGAL_STREET }}
+          VITE_LEGAL_CITY: ${{ secrets.VITE_LEGAL_CITY }}
+          VITE_TELEMETRYDECK_APP_ID: ${{ secrets.VITE_TELEMETRYDECK_APP_ID }}
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: pages deploy dist --project-name=hackernews-dot-cool

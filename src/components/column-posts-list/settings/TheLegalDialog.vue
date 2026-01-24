@@ -31,13 +31,13 @@
         target="_blank"
       >
         TelemetryDeck’s privacy policy</a
-      >. This website is hosted by Vercel, which may collect anonymized logs. For more details,
+      >. This website is hosted by Cloudflare, which may collect anonymized logs. For more details,
       visit
       <a
-        href="https://vercel.com/legal/privacy-policy"
+        href="https://www.cloudflare.com/privacypolicy/"
         target="_blank"
       >
-        Vercel’s privacy policy</a
+        Cloudflare’s privacy policy</a
       >. Please contact us at
       <a href="mailto:contact@hackernews.cool">contact@hackernews.cool</a> if you have any
       questions.

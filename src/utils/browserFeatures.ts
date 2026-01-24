@@ -5,7 +5,7 @@ export function testObjectErrorEventsSupport() {
   objectElement.style.width = '0';
   objectElement.style.height = '0';
 
-  objectElement.data = '/object-error-test.html';
+  objectElement.data = '/object-error-test';
 
   objectElement.addEventListener('error', () => {
     // object tag error events are supported

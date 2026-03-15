@@ -3,7 +3,7 @@
     <div
       ref="scrollContainerElement"
       class="h-full overflow-y-auto"
-      :class="class"
+      :class="props.class"
     >
       <slot />
     </div>

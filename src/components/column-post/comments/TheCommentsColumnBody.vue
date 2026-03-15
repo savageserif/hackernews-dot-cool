@@ -1,6 +1,6 @@
 <template>
   <PageColumnBody
-    ref="containerElement"
+    ref="pageColumnBodyInstance"
     :class="[
       view.isStandaloneDisplayMode &&
         (!content.currentPostItemHasLink || view.availableColumns === 3) &&
@@ -71,6 +71,7 @@
 
 <script setup lang="ts">
 import scrollIntoView from 'smooth-scroll-into-view-if-needed';
+import type PageColumnBody from '@/components/page/PageColumnBody.vue';
 
 const view = useViewStore();
 const content = useContentStore();
@@ -148,7 +149,9 @@ watch(
   { immediate: true }
 );
 
-const containerElement = ref<ComponentPublicInstance | null>(null);
+const pageColumnBodyInstance = ref<InstanceType<typeof PageColumnBody> | null>(null);
+const scrollContainerElement = computed(() => pageColumnBodyInstance.value?.scrollContainerElement);
+
 const threadVisibilities = ref<boolean[]>([]);
 const currentThreadIndex = computed(() =>
   Math.max(
@@ -167,7 +170,7 @@ onMounted(() => {
       });
     },
     {
-      root: containerElement.value?.$el,
+      root: scrollContainerElement.value,
       rootMargin: `${view.isTouchDevice ? -50 : -42}px 0px 0px 0px`,
     }
   );

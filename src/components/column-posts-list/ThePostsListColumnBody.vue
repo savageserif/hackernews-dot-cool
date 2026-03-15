@@ -1,6 +1,6 @@
 <template>
   <PageColumnBody
-    ref="containerElement"
+    ref="pageColumnBodyInstance"
     class="space-y-px"
   >
     <PostsListItem
@@ -19,15 +19,18 @@
 </template>
 
 <script setup lang="ts">
+import type PageColumnBody from '@/components/page/PageColumnBody.vue';
+
 const content = useContentStore();
 const router = useRouter();
 const route = useRoute();
 
-const containerElement = ref<ComponentPublicInstance | null>(null);
+const pageColumnBodyInstance = ref<InstanceType<typeof PageColumnBody> | null>(null);
+const scrollContainerElement = computed(() => pageColumnBodyInstance.value?.scrollContainerElement);
 
 onMounted(() => {
   useInfiniteScroll(
-    containerElement.value?.$el,
+    scrollContainerElement.value,
     () => {
       if (content.currentCategoryHasSomePostItems && !content.currentCategoryHasAllPostItems) {
         content.fetchPostItems();
@@ -41,8 +44,8 @@ onMounted(() => {
 watch(
   () => content.currentCategory,
   () => {
-    if (!containerElement.value) return;
-    containerElement.value.$el.scrollTop = 0;
+    if (!scrollContainerElement.value) return;
+    scrollContainerElement.value.scrollTop = 0;
   }
 );
 

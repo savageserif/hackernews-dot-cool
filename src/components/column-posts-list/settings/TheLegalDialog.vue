@@ -15,8 +15,14 @@
         href="https://github.com/hackernews/api"
         target="_blank"
       >
-        Hacker News API</a
-      >, which includes story titles and comments, nor for the contents of linked websites embedded
+        Hacker News API
+      </a>
+      and unofficial
+      <a
+        href="https://github.com/cheeaun/node-hnapi"
+        target="_blank"
+        >HackerWeb API</a
+      >, which provide story and comments data, nor for the contents of linked websites embedded
       within the page.
     </p>
     <h3>Privacy Policy</h3>

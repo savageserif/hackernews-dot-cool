@@ -1,4 +1,5 @@
 const apiBaseUrl = 'https://hacker-news.firebaseio.com/v0/';
+const hackerwebApiBaseUrl = 'https://api.hackerwebapp.com/';
 
 export function apiCategoryUrl(category: HackerNewsCategory) {
   return apiBaseUrl + category + 'stories.json';
@@ -6,6 +7,10 @@ export function apiCategoryUrl(category: HackerNewsCategory) {
 
 export function apiItemUrl(id: number) {
   return apiBaseUrl + 'item/' + id + '.json';
+}
+
+export function hackerwebApiItemUrl(id: number) {
+  return hackerwebApiBaseUrl + 'item/' + id;
 }
 
 export function parsePostUrl(url: string) {

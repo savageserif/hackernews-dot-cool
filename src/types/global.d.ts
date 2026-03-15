@@ -31,6 +31,21 @@ declare global {
     };
   }
 
+  interface HackerWebItem {
+    id: number;
+    title?: string;
+    points?: number;
+    user?: string;
+    time?: number;
+    time_ago?: string;
+    type?: string;
+    url?: string;
+    domain?: string;
+    level?: number;
+    content?: string;
+    comments?: HackerWebItem[];
+  }
+
   interface HackerNewsUser {
     id: string;
     created: number;

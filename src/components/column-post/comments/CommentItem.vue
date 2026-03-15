@@ -16,9 +16,7 @@
       />
       <div
         class="flex w-full min-w-0 flex-1"
-        :class="[
-          !isPostDescription && !isCollapsed ? 'shadow-border-b shadow-separator-color' : '',
-        ]"
+        :class="[!isDescription && !isCollapsed ? 'shadow-border-b shadow-separator-color' : '']"
       >
         <div
           v-for="index in insideIndentations"
@@ -33,15 +31,13 @@
         <div class="w-full min-w-0 flex-1">
           <div
             class="flex items-center pb-3 pt-2.5 text-secondary-color"
-            :class="[
-              !isPostDescription ? (isCollapsed ? 'cursor-s-resize' : 'cursor-n-resize') : '',
-            ]"
+            :class="[!isDescription ? (isCollapsed ? 'cursor-s-resize' : 'cursor-n-resize') : '']"
             @click="toggleCollapsed()"
           >
             <div class="flex-1">
-              <span class="font-serif text-base-serif italic">{{ item.by }}</span>
+              <span class="font-serif text-base-serif italic">{{ item.user }}</span>
               <span
-                v-if="item.by === content.currentPostItem?.by"
+                v-if="item.user === content.currentPostItem?.by"
                 class="my-[-0.25rem] ml-1.5 inline-block -translate-y-[0.03125rem] rounded border border-blank-color bg-selection-color/90 px-1 pb-[0.21875rem] pt-[0.0625rem] leading-3 text-accent-color [font-feature-settings:'smcp','c2sc']"
               >
                 OP
@@ -57,7 +53,11 @@
                 name="comment-collapse"
                 small
               />
-              {{ isCollapsed ? formatNumberWithLabel(descendants, 'comment') : relativeTimestamp }}
+              {{
+                isCollapsed
+                  ? formatNumberWithLabel(recursiveDescendants, 'comment')
+                  : relativeTimestamp
+              }}
             </div>
           </div>
           <div
@@ -70,18 +70,14 @@
       </div>
     </div>
     <CommentItem
-      v-for="(kidItem, index) in kidItems"
+      v-for="(commentItem, index) in commentItems"
       v-show="!isCollapsed"
       :key="index"
-      :item="kidItem"
+      :item="commentItem"
       :level="level + 1"
       :first-of-level="index === 0"
-      :last-of-level="index === kidItems.length - 1"
-      :consecutive-last-levels="index === kidItems.length - 1 ? consecutiveLastLevels + 1 : 0"
-      @count-descendant="
-        descendants += 1;
-        $emit('countDescendant');
-      "
+      :last-of-level="index === commentItems.length - 1"
+      :consecutive-last-levels="index === commentItems.length - 1 ? consecutiveLastLevels + 1 : 0"
     />
   </div>
 </template>
@@ -97,7 +93,8 @@ const router = useRouter();
 
 const props = withDefaults(
   defineProps<{
-    item: HackerNewsItem;
+    item: HackerWebItem;
+    isDescription?: boolean;
     level?: number;
     firstOfLevel?: boolean;
     lastOfLevel?: boolean;
@@ -111,42 +108,32 @@ const props = withDefaults(
   }
 );
 
-// if item data does not contain 'parent' key, this is a post’s description text that appears above the comment threads
-const isPostDescription = !('parent' in props.item);
+const commentItems =
+  !props.isDescription && props.item.comments
+    ? props.item.comments.filter((commentItem) => commentItem.content !== null)
+    : [];
+
+function countDescendants(item?: HackerWebItem): number {
+  return (item ? (item.comments ?? []) : commentItems).reduce(
+    (recursiveDescendants, commentItem) => recursiveDescendants + countDescendants(commentItem),
+    1
+  );
+}
+
+const recursiveDescendants = countDescendants();
 
 const isCollapsed = ref(false);
 
 function toggleCollapsed() {
-  if (isPostDescription) return;
+  if (props.isDescription) return;
   isCollapsed.value = !isCollapsed.value;
 }
 
-// count total recursive descendants by emitting events to potential higher-level comment instances
-const descendants = ref(1);
-const emit = defineEmits(['countDescendant']);
-emit('countDescendant');
-
-const kidIds = ref<number[]>(!isPostDescription && props.item.kids ? props.item.kids : []);
-const kidItems = ref<HackerNewsItem[]>([]);
-
-// fetch nested comments if kids exist
-const fetchedItems: HackerNewsItem[] = await Promise.all(
-  kidIds.value.map(async (id) => {
-    return await fetch(apiItemUrl(id)).then((response) => response.json());
-  })
-);
-
-const validItems = fetchedItems.filter(
-  (threadItem) => !threadItem.dead && !threadItem.deleted && threadItem.text
-);
-
-kidItems.value.push(...validItems);
-
-// if a comment is the last of its current level and has no kids, it needs an inside indentation
-// for each consecutive last level counting down from the current one. in all other cases,
-// only outside indentations are needed
+// if a comment is the last of its current level and has no children, it needs an
+// inside indentation for each consecutive last level counting down from the current one;
+// in all other cases, only outside indentations are needed
 const insideIndentations =
-  props.lastOfLevel && kidIds.value.length === 0 ? props.consecutiveLastLevels : 0;
+  props.lastOfLevel && commentItems.length === 0 ? props.consecutiveLastLevels : 0;
 const outsideIndentations = props.level - insideIndentations;
 
 const { text: relativeTimestamp } = useRelativeTimestamp(
@@ -244,8 +231,7 @@ const commentText = ref('');
 // format comment text, and re-run formatting if the text changes
 // (only relevant if this is a post’s description, as that component persists)
 watchEffect(() => {
-  // add a prepended p tag because HN comments start with only a text node
-  commentText.value = domPurifyInstance.sanitize('<p>' + props.item.text);
+  commentText.value = domPurifyInstance.sanitize(props.item.content || '');
 });
 
 // find links to other HN posts and make them open within the app instead of

@@ -7,15 +7,19 @@
         'pb-[env(safe-area-inset-bottom)]',
     ]"
   >
-    <Suspense>
-      <CommentItem
-        v-if="hasDescription"
-        :item="content.currentPostItem!"
-        class="relative z-20 -mb-2"
-      />
-    </Suspense>
+    <CommentItem
+      v-if="hasDescription"
+      :item="{
+        id: content.currentPostItem!.id,
+        user: content.currentPostItem!.by,
+        time: content.currentPostItem!.time,
+        content: content.currentPostItem!.text,
+      }"
+      is-description
+      class="relative z-20 -mb-2"
+    />
     <div
-      v-show="hasComments && someThreadInstancesVisible"
+      v-show="hasComments && !threadItemsError && !threadItemsLoading"
       class="sticky top-0 z-10 mx-auto max-w-150 bg-gradient-to-b from-blank-color from-20% to-blank-color/0 px-2 pt-2"
     >
       <div class="flex rounded-outline border border-separator-color bg-controls-color px-2 py-1">
@@ -42,28 +46,23 @@
         </div>
       </div>
     </div>
-    <template
-      v-for="(threadItems, groupIndex) in threadGroups"
-      :key="groupIndex"
-    >
-      <Suspense @resolve="isLoadingThreadGroup = false">
-        <CommentItem
-          v-for="(threadItem, itemIndex) in threadItems"
-          ref="threadInstances"
-          :key="itemIndex"
-          :item="threadItem"
-          :class="[
-            groupIndex * threadGroupSize + (itemIndex + 1) < threadItemCount ? 'mb-px' : '',
-            view.isTouchDevice ? 'scroll-mt-[3.125rem]' : 'scroll-mt-[2.625rem]',
-          ]"
-        />
-      </Suspense>
-    </template>
+    <CommentItem
+      v-for="(threadItem, index) in threadItems"
+      ref="threadInstances"
+      :key="index"
+      :item="threadItem"
+      :class="[
+        index + 1 < threadItemCount ? 'mb-px' : '',
+        view.isTouchDevice ? 'scroll-mt-[3.125rem]' : 'scroll-mt-[2.625rem]',
+      ]"
+    />
     <BaseStatusIndicator
       ref="statusIndicatorInstance"
-      v-show="!hasComments || !someThreadInstancesVisible || !allThreadInstancesVisible"
-      :full-height="!hasDescription && (!hasComments || !someThreadInstancesVisible)"
-      :message="!hasComments ? 'So far, no comments have been left on this story.' : undefined"
+      v-show="!hasComments || threadItemsError || threadItemsLoading"
+      :full-height="
+        !hasDescription && (!hasComments || threadItemsError !== null || threadItemsLoading)
+      "
+      :message="statusMessage"
     />
   </PageColumnBody>
 </template>
@@ -74,39 +73,34 @@ import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 const view = useViewStore();
 const content = useContentStore();
 
-const containerElement = ref<ComponentPublicInstance | null>(null);
-
-const threadIds = computed(() => content.currentPostItem?.kids ?? []);
-
 const hasDescription = computed(() => !!content.currentPostItem?.text);
 const hasComments = computed(
-  () => content.currentPostItem?.descendants !== 0 && threadIds.value.length > 0
+  () =>
+    content.currentPostItem?.descendants !== 0 &&
+    content.currentPostItem?.kids &&
+    content.currentPostItem?.kids.length > 0
 );
 
-const threadItems = ref<HackerNewsItem[]>([]);
+const threadItems = ref<HackerWebItem[]>([]);
 const threadItemCount = computed(() => threadItems.value.length);
 
-// thread items are grouped together to enable incrementally loading subsequent groups;
-// the items within these groups are what is rendered as CommentItem instances
-const threadGroups = ref<HackerNewsItem[][]>([]);
-
-// depending on the number of total comments, the number of items in a group is between 3 and 10
-const threadGroupSize = computed(() =>
-  Math.min(Math.max(Math.round(500 / (content.currentPostItem?.descendants ?? 1)), 3), 10)
-);
-
-const groupedThreadItemsCount = computed(() => threadGroups.value.flat().length);
+const threadItemsError = ref<null | unknown>(null);
+const threadItemsLoading = ref(true);
 
 const threadInstances = ref<ComponentPublicInstance[]>([]);
 const threadInstanceCount = computed(() => threadInstances.value.length);
-const someThreadInstancesVisible = computed(() => threadInstanceCount.value > 0);
-const allThreadInstancesVisible = computed(
-  () => threadInstanceCount.value >= threadItemCount.value
-);
+
+const statusMessage = computed(() => {
+  if (!hasComments.value) {
+    return 'So far, no comments have been left on this story.';
+  } else if (threadItemsError.value) {
+    return 'An error has occurred while loading this post’s comments.';
+  }
+});
 
 let abortController: AbortController | null = null;
 
-// fetch all thread items (thread refers to a top-level comment)
+// get all thread items (top-level comments) by fetching post item from HackerWeb API
 async function fetchThreadItems() {
   // abort previous unresolved fetch request if applicable
   if (abortController) {
@@ -117,45 +111,30 @@ async function fetchThreadItems() {
   const signal = abortController.signal;
 
   threadItems.value = [];
-  threadGroups.value = [];
+  threadItemsError.value = null;
+  threadItemsLoading.value = true;
 
   try {
-    const fetchedItems: HackerNewsItem[] = await Promise.all(
-      threadIds.value.map(async (id) => {
-        return await fetch(apiItemUrl(id), { signal }).then((response) => response.json());
-      })
+    const response = await fetch(hackerwebApiItemUrl(content.currentPostItem!.id), { signal });
+    if (!response.ok) throw new Error(response.statusText);
+
+    const fetchedPostItem: HackerWebItem | null = await response.json();
+    if (!fetchedPostItem || !fetchedPostItem.comments) return;
+
+    const validThreadItems = fetchedPostItem.comments.filter(
+      (threadItem) => threadItem.content !== null
     );
 
-    const validItems = fetchedItems.filter(
-      (threadItem) => !threadItem.dead && !threadItem.deleted && threadItem.text
-    );
-
-    threadItems.value.push(...validItems);
-
-    // load the initial group of thread items
-    isLoadingThreadGroup.value = false;
-    loadThreadGroup();
+    threadItems.value.push(...validThreadItems);
   } catch (error) {
-    // fetch request aborted
+    console.error(
+      `Error fetching HackerWeb post item with ID ${content.currentPostItem!.id}:`,
+      error
+    );
+    threadItemsError.value = error;
+  } finally {
+    threadItemsLoading.value = false;
   }
-}
-
-// if this is true, it prevents infinite scrolling callbacks from loading multiple thread groups at once
-const isLoadingThreadGroup = ref(false);
-
-// push the next slice of threadItems as a new thread group
-function loadThreadGroup() {
-  if (isLoadingThreadGroup.value) return;
-
-  // when the Suspense component surrounding the thread group's items resolves, this is set back to false
-  isLoadingThreadGroup.value = true;
-
-  threadGroups.value.push(
-    threadItems.value.slice(
-      groupedThreadItemsCount.value,
-      groupedThreadItemsCount.value + threadGroupSize.value
-    )
-  );
 }
 
 // when the current post changes, re-fetch thread items
@@ -167,23 +146,7 @@ watch(
   { immediate: true }
 );
 
-// load a new thread group when bottom of comments list is reached
-onMounted(() => {
-  useInfiniteScroll(
-    containerElement.value?.$el,
-    () => {
-      if (
-        someThreadInstancesVisible.value &&
-        !allThreadInstancesVisible.value &&
-        !isLoadingThreadGroup.value
-      ) {
-        loadThreadGroup();
-      }
-    },
-    { distance: 60 }
-  );
-});
-
+const containerElement = ref<ComponentPublicInstance | null>(null);
 const threadVisibilities = ref<boolean[]>([]);
 const currentThreadIndex = computed(() =>
   Math.max(

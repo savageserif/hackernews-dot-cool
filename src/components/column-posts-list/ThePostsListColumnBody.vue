@@ -1,7 +1,7 @@
 <template>
   <PageColumnBody
     ref="pageColumnBodyInstance"
-    class="space-y-px"
+    scroll-container-class="space-y-px"
   >
     <PostsListItem
       v-for="(postItem, index) in content.currentCategoryPostItems?.items"

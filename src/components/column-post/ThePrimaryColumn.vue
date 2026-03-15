@@ -49,7 +49,7 @@
     </template>
     <div
       v-else
-      class="relative flex flex-1 overflow-hidden bg-blank-color"
+      class="relative flex flex-1 overflow-hidden"
     >
       <TheLinkColumnBody
         class="transition-transform duration-[250ms]"

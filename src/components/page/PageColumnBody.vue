@@ -3,7 +3,7 @@
     <div
       ref="scrollContainerElement"
       class="h-full overflow-y-auto"
-      :class="props.class"
+      :class="scrollContainerClass"
     >
       <slot />
     </div>
@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  class?: string | (string | false)[];
+  scrollContainerClass?: string | (string | false)[];
 }>();
 
 const scrollContainerElement = ref<HTMLDivElement | null>(null);

@@ -63,5 +63,6 @@ router.afterEach(() => {
 <style lang="postcss">
 body {
   @apply touch-manipulation select-none overflow-hidden bg-separator-color font-sans text-base text-primary-color antialiased selection:bg-selection-color selection:text-primary-selected-color;
+  scrollbar-color: hsl(var(--base-950) / 0.5) transparent;
 }
 </style>

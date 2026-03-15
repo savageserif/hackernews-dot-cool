@@ -20,9 +20,11 @@
     />
     <div
       v-show="hasComments && !threadItemsError && !threadItemsLoading"
-      class="sticky top-0 z-10 mx-auto max-w-150 bg-gradient-to-b from-blank-color from-20% to-blank-color/0 px-2 pt-2"
+      class="sticky top-0 z-10 mx-auto max-w-150 px-2 pt-2"
     >
-      <div class="flex rounded-outline border border-separator-color bg-controls-color px-2 py-1">
+      <div
+        class="flex rounded-outline border border-separator-color bg-controls-color px-2 py-1 shadow-[0_-1rem_0.125rem_-0.1875rem] shadow-blank-color"
+      >
         <div class="flex flex-1 items-center gap-1"></div>
         <div class="flex items-center gap-0.5 px-1 text-secondary-color">
           Thread {{ currentThreadIndex + 1 }} of {{ threadItemCount }}

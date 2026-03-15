@@ -28,7 +28,7 @@ export default defineConfig({
       name: 'objectErrorTest',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
-          if (req.url?.startsWith('/object-error-test.html')) {
+          if (req.url?.startsWith('/object-error-test')) {
             res.setHeader('X-Frame-Options', 'DENY');
           }
           next();

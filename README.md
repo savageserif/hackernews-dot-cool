@@ -1,6 +1,6 @@
 # hackernews.cool
 
-_A multi-column Hacker News reader by @simonlou and @jonamil_
+_A multi-column Hacker News reader by [Simon](https://github.com/simonlouschueler) and [Jona](https://github.com/jonamil)_
 
 ![](public/social-preview.png)
 

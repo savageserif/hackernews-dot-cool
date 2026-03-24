@@ -2,9 +2,11 @@
   <main
     class="flex h-dvh gap-px"
     :class="[
-      view.isStandaloneDisplayMode
-        ? 'pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]'
-        : '',
+      view.isStandaloneDisplayMode &&
+        'pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]',
+      view.isStandaloneDisplayMode &&
+        view.availableColumns >= 2 &&
+        'border-t border-separator-color',
     ]"
   >
     <ThePostsListColumn

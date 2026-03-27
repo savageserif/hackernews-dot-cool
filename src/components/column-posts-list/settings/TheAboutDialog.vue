@@ -20,14 +20,15 @@
       </em>
     </p>
     <p>
-      This project is an attempt at rethinking the experience of browsing Hacker News by unifying
-      the front page, linked websites and comments into a multi-column web app. Special attention
-      has also been paid to improving typography and readability while keeping the information
-      density high.
+      Navigating Hacker News usually means jumping back and forth between the front page, comments
+      pages and external links. This website arranges them as columns of one unified page, making it
+      possible to browse linked websites and discussion threads side-by-side. A customizable layout
+      and tweaks to the formatting of comments additionally enhance the reading experience, and
+      PWA support allows using the website as a standalone app.
     </p>
     <p>
       We are interested to hear whether the interface complements your reading habits and affects
-      your browsing experience — if you have any comments or suggestions, please reach out!
+      your browsing experience — if you have any comments, please reach out!
     </p>
     <p>
       The project’s source code is

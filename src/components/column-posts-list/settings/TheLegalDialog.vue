@@ -10,20 +10,20 @@
       <a href="mailto:contact@hackernews.cool">contact@hackernews.cool</a>
     </blockquote>
     <p>
-      We are neither responsible for content fetched from the official
+      We are neither responsible for content fetched from the
       <a
         href="https://github.com/hackernews/api"
         target="_blank"
       >
-        Hacker News API
+        official Hacker News API
       </a>
-      and unofficial
+      and
       <a
         href="https://github.com/cheeaun/node-hnapi"
         target="_blank"
-        >HackerWeb API</a
-      >, which provide story and comments data, nor for the contents of linked websites embedded
-      within the page.
+        >unofficial API by @cheeaun</a
+      >, which provide story and comments data respectively, nor for the contents of linked websites
+      embedded within the page.
     </p>
     <h3>Privacy Policy</h3>
     <p>

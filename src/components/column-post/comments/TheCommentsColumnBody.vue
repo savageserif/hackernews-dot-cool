@@ -125,7 +125,7 @@ async function fetchThreadItems() {
     if (!fetchedPostItem || !fetchedPostItem.comments) return;
 
     const validThreadItems = fetchedPostItem.comments.filter(
-      (threadItem) => threadItem.content !== null
+      (threadItem) => threadItem.user && threadItem.content
     );
 
     threadItems.value.push(...validThreadItems);

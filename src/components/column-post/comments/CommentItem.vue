@@ -110,7 +110,7 @@ const props = withDefaults(
 
 const commentItems =
   !props.isDescription && props.item.comments
-    ? props.item.comments.filter((commentItem) => commentItem.content !== null)
+    ? props.item.comments.filter((commentItem) => commentItem.user && commentItem.content)
     : [];
 
 function countDescendants(item?: HackerWebItem): number {

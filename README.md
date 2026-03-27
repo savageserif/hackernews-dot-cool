@@ -4,9 +4,7 @@ _A multi-column Hacker News reader by [Simon](https://github.com/simonlouschuele
 
 ![](public/social-preview.png)
 
-Navigating the original Hacker News website and most third-party web readers means jumping back and forth between the front page, external links and comments pages. [hackernews.cool](https://hackernews.cool/) arranges these as columns of one unified page, making it possible to browse linked websites and discussion threads side-by-side.
-
-Also, a customizable layout and tweaks to the formatting of comments enhance the reading experience. In addition, PWA support allows using the website as a standalone app.
+Navigating Hacker News usually means jumping back and forth between the front page, comments pages and external links. [hackernews.cool](https://hackernews.cool/) arranges them as columns of one unified page, making it possible to browse linked websites and discussion threads side-by-side. A customizable layout and tweaks to the formatting of comments additionally enhance the reading experience, and PWA support allows using the website as a standalone app.
 
 ### Typefaces
 
